@@ -1,0 +1,103 @@
+<% /*
+    Form for inviting users to a (newly created) site (and part of
+    the onboarding process).
+    Date: 08/16/13
+ */ %>
+
+<%
+  template.inherit('header3.ejs');
+  helpers.includeJQuery();
+  helpers.includeCss("base.less");
+  helpers.includeCss("pro/new-site.less");
+  helpers.includeCss("animate/fadeInLeft.css");
+  helpers.includeCss("animate/fadeInRight.css");
+  helpers.includeCss("animate/fadeOut.css");
+  helpers.includeCss("jquery.autocomplete.less");
+  helpers.includeJs("jquery-ui-1.10.3.shake.min.js");
+
+  helpers.includeJs('lib/ribbon_messages.js');
+  helpers.includeJs('lib/ZeroClipboard.min.js');
+  helpers.includeJs('jquery.placeholder.js');
+  helpers.includeJs("jquery.validate.js");
+  helpers.includeJs("lib/jquery.transition.js");
+  helpers.includeJs('modals.js');
+  helpers.includeJs("pad_utils.js");
+  helpers.includeJs("jquery.autocomplete.js");
+  helpers.includeJs("invite.js");
+
+  helpers.includeJs('multiStepFlowLibrary.js');
+  helpers.includeJs('new_site.js');
+  helpers.includeJs('new_site_invite_form.js');
+  helpers.includeJs('onboarding_configuration.js');
+%>
+
+<!--[if IE 8]>
+  <script type="text/javascript" nonce="<%= helpers.cspNonce() %>" src="/static/js/lib/selectivizr-min.js"></script>
+  <link href="/static/css/pro/new-site-ie8.css" rel="stylesheet" type="text/css" onerror="this.loadError=true;">
+<![endif]-->
+
+<header>
+  <div class="wrapper">
+    <div class="logo"></div>
+  </div>
+</header>
+
+<div class="progress wrapper">
+  <ul id="progress_indicator">
+    <li>Create space</li>
+    <li class="active">Invite collaborators</li>
+  </ul>
+</div>
+
+<% template.define('invite_form', function() { var ejs_data=''; %>
+
+<div id="invite_step" class="step" data-class="newSiteInviteForm">
+  <div id='welcome_email_modal' class='modaldialog modaldialog-2' style="width: 530px; margin-left: -265px;">
+    <div class="spinner">Loading</div>
+  </div>
+  <div class="wrapper">
+    <form id="invite_form">
+      <%- helpers.xsrfTokenElement() %>
+      <div class="form_bounds">
+      <h1>Invite people to your new space</h1>
+        <div class="form_body">
+          <ol class="invites">
+            <li><input type="email" name="invites[]" class="email-invite" placeholder="Invitee Email"></li>
+            <li><input type="email" name="invites[]" class="email-invite" placeholder="Invitee Email"></li>
+            <li><input type="email" name="invites[]" class="email-invite" placeholder="Invitee Email"></li>
+            <li><input type="email" name="invites[]" class="email-invite" placeholder="Invitee Email"></li>
+          </ol>
+          <hr />
+          <% if (newSiteData.domain) {  %>
+          <div class="allow-all">
+            <span class="help-icon" data-tooltip="Users that sign up with a verified email from this domain will automatically gain edit access to your space."></span>
+            <input type="checkbox" name="allow-all-domain-users" value="1" id="allow_all_checkbox" <% if (newSiteData.allowAllFromDomain == "true") { %>checked<% } %>>
+            <label for="allow_all_checkbox">Allow all users from <span><%=newSiteData.domain%></span></label>
+            <!--div class="welcome-email-field" <% if (newSiteData.allowAllFromDomain != "true") { %> style="height: 0;" <% } %>>
+              <hr />
+              <label for="mailing-list-invite">Send a welcome email to this mailing list (optional)</label>
+              <button id="preview_button" type="button" class="preview primary-button">Preview</button>
+              <input type="email" name="mailing-list" id="mailing-list-invite" placeholder="Notification address" <% if (newSiteData.notificationAddress) { %> value="<%= newSiteData.notificationAddress %>" <% } %>>
+            </div-->
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="form_buttons">
+        <button type="button" name="back" class="muted-button"></button>
+        <button type="submit" class="primary-button" name="finish"></button>
+      </div>
+
+    </form>
+</div>
+<% helpers.addClientVars({ newSiteData: newSiteData }) %>
+<% return ejs_data; }); %>
+
+<div id="viewport">
+  <ul id="ajax_wrapper" class="clearfix">
+    <li id="step-2" class="step">
+      <%- template.use('invite_form'); %>
+    </li>
+  </ul>
+</div>

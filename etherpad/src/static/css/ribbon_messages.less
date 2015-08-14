@@ -1,0 +1,120 @@
+@import 'fonts.less';
+@import 'lesshat.less';
+@import 'theme.less';
+@import 'sprites.less';
+
+.animated {
+  .animation-duration(500ms);
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+       -o-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+.ribbon-message {
+  .medium-font;
+  font-size: 16px;
+  position: absolute;
+  color: white;
+  line-height: 29px;
+  // padding: 0 0 0 18px;
+  .animation-iteration-count(1);
+  
+  &[data-layout="right"] {
+    .border-top-right-radius(5px);
+    .border-bottom-right-radius(5px);
+    padding-right: 18px;
+
+    &:before {
+      left: -14px;
+    }
+
+    span {
+      padding-left: 4px;
+    }
+  }
+  &[data-layout="left"] {
+    .border-top-left-radius(5px);
+    .border-bottom-left-radius(5px);
+    padding-left: 14px;
+    &:after {
+      // right: -14px;
+    }
+
+    span {
+      padding-right: 8px;
+    }
+  }
+
+  &:before, &:after {
+    position: absolute;
+    .opacity(0.9);
+  }
+
+  span {
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    width: auto;
+    height: auto;
+  }
+
+  &[data-outcome="success"] {
+    background-color: fadeout(@success_color, 10%);
+
+    span {
+      &:before {
+        .sprites;
+        .sprite-green-tick-icon;
+        display: inline-block;
+        content: "";
+        position: relative;
+        top: 2px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  &[data-outcome="error"] {
+    background-color: fadeout(@error_color, 10%);
+
+    span {
+      &:before {
+        .sprites;
+        .sprite-red-cross-icon;
+        display: inline-block;
+        content: "";
+        position: relative;
+        top: 2px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  // Label tips
+  &[data-outcome="success"][data-layout="right"]:before {
+    content: "";
+    display: inline-block;
+    .sprites;
+    .sprite-success-tip-left;
+  }
+  &[data-outcome="success"][data-layout="left"]:after {
+    content: "";
+    display: inline-block;
+    .sprites;
+    .sprite-success-tip-right;
+  }
+  &[data-outcome="error"][data-layout="right"]:before {
+    content: "";
+    display: inline-block;
+    .sprites;
+    .sprite-error-tip-left;
+  }
+  &[data-outcome="error"][data-layout="left"]:after {
+    content: "";
+    display: inline-block;
+    .sprites;
+    .sprite-error-tip-right;
+  }
+
+}

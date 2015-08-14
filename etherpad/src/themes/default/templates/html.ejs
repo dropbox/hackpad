@@ -1,0 +1,68 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="origin-when-crossorigin">
+    <%- helpers.robotsMeta() %>
+    <title><%= helpers.htmlTitle() %></title>
+    <base href="<%= helpers.baseHref() %>">
+    <link rel="shortcut icon" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="57x57"
+        href="/static/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="/static/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="72x72"
+        href="/static/apple-touch-icon-144.png" />
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="/static/apple-touch-icon-144.png" />
+
+    <%
+      helpers.includeCss("hpfont/css/hackpad.css");
+    %>
+    <%- helpers.cssIncludes() %>
+    <link rel="search" type="application/opensearchdescription+xml"
+        title="hackpad" href="/static/opensearch.xml" />
+
+    <% helpers.includeJQuery() %>
+    <%- helpers.headExtra() %>
+
+    <%- helpers.documentDomain() %>
+  </head>
+
+  <body id="<%= helpers.bodyId() %>" class="<%= helpers.bodyClasses() %>">
+    <%- bodyHtml %>
+
+    <% helpers.addClientVars(
+        { facebookClientId: appjet.config.facebookClientId }) %>
+    <% helpers.addClientVars({ xsrf: helpers.xsrfToken() }) %>
+    <%- helpers.clientVarsScript() %>
+    <%- helpers.track() %>
+    <%- helpers.jsIncludes() %>
+
+    <%- helpers.tailExtra() %>
+    <%- helpers.profileTicks() %>
+    <%- helpers.hijackBlankClicks() %>
+
+    <noscript>
+      <div>
+        You'll need to turn on JavaScript to use Hackpad in all of its
+        awesomeness. ^_^
+      </div>
+    </noscript>
+  </body>
+</html>

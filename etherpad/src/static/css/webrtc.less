@@ -1,0 +1,57 @@
+@import "globals.less";
+
+@video_height: 100px;
+@video_width: @video_height * 1.333;
+@video_border_width: 5px;
+
+#webrtc,
+#webrtc2 {
+  display: none;
+  position: fixed;
+  top: @sitebar_height + @mainbar_height + 40px;
+  left: 30px;
+  overflow: visible !important;
+}
+#webrtc2 {
+  display: block;
+  top: 205px;
+  background-color: transparent !important;
+}
+
+
+body .OT_video-container {
+  background-color: transparent;
+  overflow: visible;
+}
+#webrtc video,
+#webrtc2 video {
+  display: block;
+  width: @video_width;
+  height: @video_height;
+/*  border: 5px solid white;*/
+  box-shadow: 0 0 1px #ccc;
+  margin-bottom: 10px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  transition: box-shadow 0.1s;
+}
+
+#webrtc video.speaking {
+  box-shadow: 0 0 10px 0 blue;
+}
+
+#remote-videos video {
+  display: none;
+}
+
+.webrtc-username {
+  display: block;
+  font-weight: bold;
+  width: @video_width;
+  text-shadow: none;
+  font-size: 12px;
+  padding: 3px 5px;
+  box-shadow: 0 0 1px #ccc;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}

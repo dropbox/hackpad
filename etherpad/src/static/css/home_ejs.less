@@ -1,0 +1,575 @@
+@import "colors.less";
+@import "fonts.less";
+@import "mixins.less";
+
+body, html {
+  height: 100%;
+}
+
+body {
+  font-family: @base_font_new;
+  background: #fff;
+  margin: 0px;
+  background-color:#eee;
+}
+
+ul {
+  list-style: none;
+}
+
+#home {
+  height: 100%;
+  margin: 0 auto;
+}
+
+#top-center {
+  height: 100%;
+  .gradient(~"to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.6) 100%");
+}
+
+#top,
+#top-blur-image {
+  background: url(<%=helpers.cdn()%>/static/img/main.jpg);
+  background-size: cover;
+  background-position: 50% 30%;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transform: translate3d(0,0,0); /* enable hardware acceleration. */
+}
+
+#modaloverlay {
+  /* Makes login popup animation smoother when scrolled down
+   * (and blur effect on hero image is in play). */
+  -webkit-transform: translate3d(0,0,0); /* enable hardware acceleration. */
+}
+
+#top-blur-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+body:not(.mobile-web) #top-blur-image {
+  -webkit-mask-box-image: -webkit-linear-gradient(transparent 0%, transparent 65%, black 75%);
+}
+
+button.signin-button {
+  margin-left: 10px;
+  font-size: 18px;
+  padding: 15px 20px;
+}
+
+#app-store-badge {
+  vertical-aslign:middle;
+  margin-top:30px;
+  margin-right:10px;
+  display:block;
+  float:right;
+  z-index:1;
+  position:relative;
+}
+
+#app-store-badge span {
+  width:144px;
+  height:50px;
+  display: inline-block;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("<%=helpers.cdn()%>/static/img/appstore-flat.png?v1");
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dppx) {
+     background-image: url("<%=helpers.cdn()%>/static/img/appstore-flat@2x.png?v1");
+  }
+}
+
+
+#top-right-signin-button {
+  font-size: 14px;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 1;
+  right: 10px;
+  top: 10px;
+  float: right;
+}
+
+.signin-button em {
+  text-transform: lowercase;
+  font-size: 15px;
+  margin: 0 2px;
+}
+
+#collaborate {
+  position: absolute;
+  bottom: 120px;
+  color: #fff;
+  font-size: 27px;
+  line-height: 60px;
+  width:100%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#collaborate h1 {
+  font-weight: bold;
+  font-size: 70px;
+}
+
+#collaborate h2 {
+  font-size: 32px;
+  font-weight: 100;
+}
+
+#title {
+  position: fixed;
+  top: 0;
+  left: 10px;
+  display: inline-block;
+  background-color: black;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 35px;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 3px 10px;
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
+#logo-bar {
+  width: 10px;
+  height: 41px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: @color_actionable;
+  display: inline-block;
+  z-index: 1;
+  margin-right: 10px;
+}
+
+#subtitle {
+  text-align: center;
+  color: #444;
+}
+
+#middle,
+#blur {
+  text-align: center;
+  margin-top: -100px;
+  height: 100px;
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#middle {
+  box-shadow: 1px -2px 1px #666;
+}
+
+#blur {
+  background-color: rgba(0,0,0,0.5);
+  z-index: 0;
+}
+
+#promo {
+/*  float:right;*/
+  width:350px;
+  margin-top:100px;
+}
+
+#promo p {
+  text-shadow: 0px 1px 1px white;
+  color:#444;
+  font-size:45px;
+  line-height: 60px;
+}
+
+#featured-screenshot {
+  float:left;
+  width: 420px
+}
+#featured-screenshot iframe {
+  width:374px;
+  height:210px;
+  margin:auto;
+  background:white;
+  margin-top: 35px;
+  margin-bottom: 40px;
+
+  box-shadow: 0px 0px 2px #666;
+  border: 8px solid white;
+
+
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  cursor:pointer;
+}
+
+
+
+#features {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  min-height: 82%;
+  width: 900px;
+  margin: auto;
+  font-size: 30px;
+  text-align: center;
+  line-height: 45px;
+  z-index: 1;
+}
+
+#features-signup-button {
+  font-size: 23px;
+  letter-spacing: 2px;
+  display: inline-block;
+  padding: 10px 50px;
+  margin-top: 60px;
+  float: none;
+}
+
+.featurebox {
+  margin-bottom:20px;
+}
+
+.featurebox h2 {
+  font-size:18px;
+  font-weight: normal;
+  color: #555;
+  font-weight:bold;
+  margin-top:4px;
+  margin-bottom:4px;
+}
+
+.featurebox p {
+  float:left;
+  width:300px;
+  font-size:17px;
+  margin-top:4px;
+  color: #666;
+  margin-left:38px;
+  text-shadow: 0px 1px 1px solid white;
+}
+
+.featurebox .feature-lhs {
+  width:350px;
+  float:left;
+}
+
+.feature-screenshot {
+  border: 8px solid #fff;
+  box-shadow: 0px 1px 2px #AAA;
+  -moz-box-shadow: 0px 1px 2px #AAA;
+  -webkit-box-shadow: 0px 1px 2px #AAA;
+
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  float:right;
+}
+
+#get-started-button {
+  margin-left:60px;
+}
+
+.blue-button:hover {
+  background: #6db4eb; /* Old browsers */
+  background: -moz-linear-gradient(top, #6db4eb 0%, #2b7ad5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6db4eb), color-stop(100%,#2b7ad5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* IE10+ */
+  background: linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6db4eb', endColorstr='#2b7ad5',GradientType=0 ); /* IE6-9 */
+}
+
+.blue-button, a.blue-button {
+  cursor: pointer;
+  line-height: 35px;
+  display: inline-block;
+  color: white;
+  font-size:20px;
+  box-shadow: 0px 2px 0px #1e5799;
+  border: 1px solid #449fe5;
+  border-bottom: 1px solid #449fe5;
+  text-decoration: none;
+
+
+  /**-moz-box-shadow: 0px 0px 3px #ccc;
+  -webkit-box-shadow: 0px 0px 3px #ccc;
+  */
+  height:35px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  background: #6db4eb; /* Old browsers */
+  background: -moz-linear-gradient(top, #6db4eb 0%, #2b7ad5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6db4eb), color-stop(100%,#2b7ad5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* IE10+ */
+  background: linear-gradient(top, #6db4eb 0%,#2b7ad5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6db4eb', endColorstr='#2b7ad5',GradientType=0 ); /* IE6-9 */
+}
+
+
+#public-pad-list {
+  width: 900px;
+  margin: auto;
+  margin-top: 20px;
+
+}
+
+#login-button {
+  margin:auto;
+  display:block;
+}
+
+
+.editor-line div {
+  float: left;
+}
+.editor-line {
+  height: 31px;
+  clear: both;
+}
+.name {
+  text-align: right;
+  width: 130px;
+  padding-right: 5px;
+  float: left;
+  color: #999;
+  position:relative;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+#public-pad-list-title {
+  margin-left:10px;
+  font-size: 22px;
+  color: #AAA;
+  margin-bottom: 10px;
+}
+
+.pad-link {
+  float: left;
+  width: 290px;
+  margin-left:10px;
+  margin-bottom:20px;
+}
+
+
+.black-overlay{
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index:1001;
+  -moz-opacity: 0.6;
+  opacity:.60;
+  filter: alpha(opacity=60);
+}
+.login-input {
+  font-size:12px;
+  height:24px;
+  margin-bottom:12px;
+  margin-top:4px;
+  width:170px;
+  outline:none;
+}
+.login-input:focus {
+  background:#fffbdc;
+}
+
+
+
+label.error {
+  color:#ba4552;
+  font-size:11px;
+  margin-bottom:4px;
+}
+
+#footer {
+  width:850px;
+  text-align:center;
+  margin:auto;
+  position:relative;
+  top:10px;
+  color: #AAA;
+  padding-left:10px;
+  text-align: right;
+  font-size: 13px;
+  line-height:17px;
+  text-shadow: 0 1px 0 white;
+}
+
+label.placeholder {
+  padding: 6px 4px 4px 6px;
+}
+
+#signin-form label.placeholder {
+  padding-top: 7px;
+}
+
+
+.signin-button-container {
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 20px 0;
+  line-height: 25px;
+  z-index: 1;
+}
+
+#used-by {
+  display: inline-block;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 14px;
+  line-height: 40px;
+  vertical-align: middle;
+  font-weight: 700;
+  color: #fff;
+  margin-right: 50px;
+}
+
+#try-it {
+  display: inline-block;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: @color_actionable;
+  color: #fff;
+  border-radius: 3px;
+  line-height: 25px;
+  vertical-align: middle;
+  font-size: 13px;
+  padding: 5px 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#try-it .icon-close {
+  margin-top: -20px;
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#customerlogos {
+  margin:auto;
+  text-align:center;
+  padding: 30px 0;
+  white-space: nowrap;
+}
+
+#customerlogos img {
+  margin-right: 3%;
+}
+
+#customerlogos img {
+  width: 8%;
+  vertical-align: middle;
+  zoom:1;
+
+  opacity: 0.7;
+
+  padding-left:2px;
+  padding-right:2px;
+}
+
+#customerlogos img:hover {
+  opacity: 0.9;
+}
+
+#features h3,
+#features p {
+  color: white;
+  text-align: left;
+}
+
+#features h3 {
+  font-size: 24px;
+}
+
+#features p {
+  margin-bottom: 60px;
+  font-size: 18px;
+}
+
+.feature {
+  width: 44%;
+  float: left;
+  line-height: 1em;
+}
+
+.feature-left {
+  margin-right: 10%;
+}
+
+.big-feature {
+  clear: both;
+  line-height: 1em;
+  margin-right: 5%;
+}
+
+#iphone-badger {
+  margin-bottom: 80px;
+}
+
+#home-pricing {
+  color: white;
+  padding-bottom: 50px;
+  -webkit-transform: translate3d(0,0,0); /* enable hardware acceleration. */
+}
+
+#home-copy {
+  position: relative;
+  left: 5%;
+  width: 86%;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  -webkit-transform: translate3d(0,0,0); /* enable hardware acceleration. */
+}
+
+
+@media only screen and (max-device-width: 480px) {
+  .signin-button-container {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    text-align: center;
+  }
+
+  #collaborate {
+    bottom: 0;
+    height: auto;
+    font-size: 9px;
+    line-height: 30px;
+  }
+
+  #collaborate h1 {
+    font-size: 30px;
+  }
+
+  #collaborate h2 {
+    font-size: 11px;
+  }
+}

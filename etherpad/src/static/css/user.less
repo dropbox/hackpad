@@ -1,0 +1,196 @@
+@import "colors.less";
+
+@icon_height: 24px;
+
+.connected-dot {
+  display: block;
+  position: absolute;
+  bottom: 3px;
+  right: 1px;
+  width: 6px;
+  height: 6px;
+  background-color: @color_connected;
+  border-radius: 10px;
+  border: 2px solid #fff;
+}
+
+#otherusers-facepile-wrapper {
+  position: relative;
+  display: inline-block;
+
+  .connected {
+    .connected-dot;
+  }
+}
+
+#otheruserstable {
+  display: none !important;
+  margin: 5px 0;
+  overflow: hidden;
+  height: 44px;
+  max-height: none;
+  width: 44px;
+  border: 2px solid transparent;
+
+  li {
+    position: relative;
+    float: left;
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .user-image {
+    display: inline-block;
+    position: relative;
+    float: left;
+    height: @icon_height;
+  }
+
+  img {
+    margin-right: 1px;
+    width: @icon_height;
+    height: @icon_height;
+    border-radius: 12px;
+  }
+
+  figcaption {
+    display: none;
+    float: left;
+    width: 122px;
+    padding-left: 4px;
+    font-size: 13px;
+    line-height: @icon_height;
+    color: @color_text_dark;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .killuser {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 18px;
+    height: 15px;
+    margin: 4px 0 4px 4px;
+  }
+
+  .connected {
+    .connected-dot;
+    bottom: -1px;
+    left: -1px;
+  }
+}
+
+#otheruserstable.open {
+  display: block !important;
+  overflow: auto;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  min-height: 200px;
+  max-height: 300px;
+  background-color: @color_bg_transparent;
+  box-shadow: @box_shadow;
+  border-radius: 2px;
+  padding: 5px 0;
+  border: 0;
+
+ .killuser {
+    top: 5px;
+    right: 18px;
+  }
+
+  li {
+    display: block;
+    padding: 6px;
+    float: none;
+  }
+
+  li:hover {
+    background-color: #000;
+  }
+
+  figcaption {
+    display: block;
+    color: #fff;
+    width: 108px;
+  }
+
+  li:hover .killuser {
+    display: block;
+    background: transparent url(/static/img/x.png) no-repeat -17px 0px;
+  }
+
+  figcaption .killuser:hover {
+    background: transparent url(/static/img/x.png) no-repeat -34px 0px;
+  }
+}
+
+#sharesummarywrapper {
+  float: right;
+  width: ~"calc(100% - 50px)";
+  min-height: 50px;
+  white-space: normal;
+}
+
+#sharesummary {
+  border-bottom: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: @color_border;
+}
+
+#sharesummary:hover {
+  border-bottom: 0;
+  color: @color_actionable;
+}
+
+#otheruserstable-wrapper {
+  position: relative;
+  clear: both;
+}
+
+#otheruserstable-wrapper.open:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -7px;
+  left: 13px;
+  border: 7px solid transparent;
+  border-bottom-color: @color_bg_transparent;
+  border-bottom-width: 6px;
+}
+
+#otherusers-facepile {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 19px;
+}
+
+.single-facepile {
+  border: 2px solid @color_border;
+  padding: 1px;
+  background-color: #fff;
+}
+
+.multiple-facepile {
+  .single-facepile;
+  box-shadow: 1px 1px 0 0 @color_shadow, 3px 2px 0 0 @color_button, 4px 3px 0 0 @color_shadow, 5px 4px 0 0 @color_button;
+}
+
+#otherusers-facepile {
+  float: left;
+  .single-facepile;
+}
+
+#otherusers-facepile.multiple {
+  .multiple-facepile;
+}

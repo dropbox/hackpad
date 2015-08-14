@@ -1,0 +1,34 @@
+<%
+  template.inherit('page3.ejs');
+
+  helpers.includeCss("ace2/editor.less");
+  helpers.includeCss("ace2/inner.less");
+  helpers.includeCss("ace2/syntax.less");
+  helpers.includeCss("pad_summary.less");
+
+  helpers.includeJs("ace2/cssmanager.js");
+  helpers.includeJs("ace2/linestylefilter.js");
+  helpers.includeJs("pad_summary.js");
+
+  helpers.addToHead(
+      '\n<style type="text/css" title="dynamicsyntax"></style>\n');
+%>
+
+<% template.define('contentArea', function() { var ejs_data=''; %>
+  <br/>
+  <br/>
+  <h3><a href="/<%=padId%>" ><%= padTitle %></a> edit history</h3>
+  <br/>
+
+  <% for (var i=0; i<padDiffs.length; i++) { %>
+    <% if (padDiffs[i]) { %>
+    <div id="padcontent" class="authorColors">
+        <%- padDiffs[i] %>
+    </div>
+    <% } %>
+  <% } %>
+
+  <div id="show-more">
+    <a href="#">Show more</a>
+  </div>
+<% return ejs_data; }); %>

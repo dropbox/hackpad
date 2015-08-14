@@ -1,0 +1,49 @@
+<%
+  template.inherit('pad/editor_base.ejs');
+  template.inherit('header3.ejs');
+  template.inherit('pad/toolbar.ejs');
+
+  helpers.addBodyClass("embed");
+
+  helpers.includeCss("ace2/embed.less");
+%>
+
+
+<% template.define('topbar', function() { var ejs_data=''; %>
+  <header>
+    <a href="/" target="_blank" id="topbarBrand">
+      <span class="iphonehide">hackpad</span>
+    </a>
+    <%- template.use('toolbar'); %>
+  </header>
+<% return ejs_data; }); %>
+
+
+<% template.define('editor', function() { var ejs_data=''; %>
+  <%- template.use('ace'); %>
+<% return ejs_data; }); %>
+
+
+<% template.define('padSidebar', function() { var ejs_data=''; %>
+<% return ejs_data; }); %>
+
+
+<% template.define('padBottom', function() { var ejs_data=''; %>
+<% return ejs_data; }); %>
+
+
+<% template.define('bottomBar', function() { var ejs_data=''; %>
+  <div id="padusers">
+    <div id="sharingsettings">
+      <%- template.use('userlist') %>
+      <div id="sharesummarywrapper">
+        <a href="/<%=localPadId%>" target="_blank">This Hackpad</a>
+        followed by
+        <span id="sharesummary"> </span>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+<% return ejs_data; }); %>
+
+

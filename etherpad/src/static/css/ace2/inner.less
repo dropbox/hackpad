@@ -1,0 +1,349 @@
+/* Included in html.ejs */
+/* @import "/static/css/icons-ace.css"; */
+@import "/static/css/colors.less";
+@import "/static/css/globals.less";
+@import "/static/css/mixins.less";
+
+#editor {
+  /* Firefox (3) is bad about keeping the text cursor in design mode;
+     various actions (clicking, dragging, scroll-wheel) lose it and it
+     doesn't come back easily, presumably because of optimizations.
+     These rules try to maximize the chance Firefox will think the cursor
+     needs changing again.
+  */
+  cursor: text; /* in Safari, produces text cursor for whole doc (inc. below body) */
+  position: relative;
+  text-shadow: none;
+} /* End #editor rule */
+
+#editor span { cursor: auto; }
+
+/* prevent pasted line jumpiness */
+.ace-line .ace-line {
+  padding-left: 0px!important;
+  border-left:0px!important;
+}
+
+.ace-line .attrlink {
+  cursor: pointer;
+}
+
+.ace-line .internal a,
+.ace-line .internal a:hover {
+  text-decoration: underline;
+}
+
+.ace-line ul,
+.ace-line ol,
+.ace-line li {
+  padding: 0;
+  margin: 0;
+}
+.ace-line ul { margin-left: 1.5em; }
+.ace-line ol { margin-left: 1.5em; }
+.ace-line ul ul { margin-left: 0 !important; }
+
+ul.listindent1, ol.listindent1 { margin-left: 1.5em; }
+ul.listindent2, ol.listindent2 { margin-left: 3em; }
+ul.listindent3, ol.listindent3 { margin-left: 4.5em; }
+ul.listindent4, ol.listindent4 { margin-left: 6em; }
+ul.listindent5, ol.listindent5 { margin-left: 7.5em; }
+ul.listindent6, ol.listindent6 { margin-left: 9em; }
+ul.listindent7, ol.listindent7 { margin-left: 10.5em; }
+ul.listindent8, ol.listindent8 { margin-left: 12em; }
+
+.ace-line ul { list-style-type: none; }
+ul.list-bullet1, ul.list-bullet4, ul.list-bullet7 { list-style-type: disc; }
+ul.list-bullet2, ul.list-bullet5, ul.list-bullet8 { list-style-type: circle; }
+ul.list-bullet3, ul.list-bullet6 { list-style-type: square; }
+
+/*********************************************************************/
+
+ul.listtype-task {
+  list-style: none;
+  cursor: text;
+}
+
+ul.listtype-task li {
+  width: auto;
+  height: auto;
+  padding-left: 1.5em;
+  margin-left: -1.5em;
+  cursor: pointer;
+}
+
+ul.listtype-task li:before {
+  .icon-mixin;
+  content: '\e600';
+  font-size: 18px;
+  margin-top: 5px;
+
+  @media all and (max-width: @new_medium_window) {
+    margin-top: 3px;
+  }
+
+  @media all and (max-width: @new_narrow_window) {
+    margin-top: 3px;
+  }
+}
+
+ul.listtype-taskdone {
+  list-style: none;
+  color: #888;
+  font-style: italic;
+  cursor: text;
+}
+
+ul.listtype-taskdone li {
+  width: auto;
+  height: auto;
+  padding-left: 1.5em;
+  margin-left: -1.5em;
+  cursor: pointer;
+}
+
+ul.listtype-taskdone li:before {
+  .icon-mixin;
+  color: @color_actionable;
+  font-size: 18px;
+  margin-top: 5px;
+  content: '\e600';
+  color: #666;
+
+  @media all and (max-width: @new_medium_window) {
+    margin-top: 3px;
+  }
+
+  @media all and (max-width: @new_narrow_window) {
+    margin-top: 3px;
+  }
+}
+
+ul.listtype-taskdone:before {
+  .icon-mixin;
+  margin-left: -1.51em;
+  font-size: 17.1px;
+  margin-top: 6px;
+  content: '\e627';
+  color: @color_actionable;
+
+  @media all and (max-width: @new_medium_window) {
+    margin-top: 4px;
+  }
+
+  @media all and (max-width: @new_narrow_window) {
+    margin-top: 4px;
+  }
+}
+
+
+/*********************************************************************/
+
+
+ul.list-code,
+ul.list-code1 {
+  list-style-type: none;
+  font-family: monospace;
+  color: @color_code;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/*********************************************************************/
+
+ul.listtype-indent {
+  list-style-type: none;
+}
+
+/*********************************************************************/
+
+ul.listtype-comment {
+  list-style: none;
+  cursor: text;
+}
+
+ul.listtype-comment li {
+  width: auto;
+  height: auto;
+  list-style-type: none;
+  font-style: italic;
+  padding-left: 1.5em;
+  margin-left: -1.5em;
+  color: #888;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+ul.listtype-commentcollapsed li {
+  width: auto;
+  height: auto;
+  font-style: italic;
+  padding-left: 1.5em;
+  margin-left: -1.5em;
+}
+
+ul.listtype-comment li:before,
+ul.listtype-commentcollapsed li:before {
+  .icon-mixin;
+  content: '\e611';
+  color: #c6c8ca;
+  font-size: 18px;
+}
+
+.listtype-commentautocollapsed {
+  max-height: .01em;
+  overflow:hidden;
+}
+
+ul.listtype-commentcollapsed {
+  list-style: none;
+  cursor: text;
+}
+
+
+/*********************************************************************/
+
+
+ol { list-style-type: decimal; }
+
+ol.list-number1, ol.list-number4, ol.list-number7 { list-style-type: decimal; }
+ol.list-number2, ol.list-number5, ol.list-number8 { list-style-type: lower-latin; }
+ol.list-number3, ol.list-number6 { list-style-type: lower-roman; }
+
+
+/*********************************************************************/
+
+.inline-embed {
+  position: relative;
+}
+
+.remove-media{
+  cursor: pointer;
+  display:none;
+  vertical-align: top;
+  width:18px;
+  height:18px;
+  background: url(/static/img/x.png) no-repeat -17px 0px;
+
+  position: absolute;
+  top: 0;
+  right: -25px;
+}
+
+/*********************************************************************/
+
+/* HEADINGS */
+
+ul.listtype-hone {
+  list-style:none;
+  cursor: text;
+  margin-left: 0em;
+  border-bottom: 1px solid @color_toolbar;
+  line-height: 34px;
+  margin-bottom: 10px;
+}
+
+ul.listtype-hone li {
+  margin-left:-1.3em;
+  background-repeat: no-repeat;
+  background-position: 10px 2px;
+  padding-left: 1.3em;
+  padding-bottom:2px;
+  font-weight: bold;
+  font-size: 26px;
+}
+
+ul.listtype-hone li span {
+  font-size: 26px;
+}
+
+#editor {
+  ul.listtype-hone li:hover {
+    background-repeat: no-repeat;
+    background-position: 10px 12px;
+    background-image: url('/static/img/arrow.png');
+    cursor: pointer;
+  }
+}
+
+ul.listtype-htwo { list-style:none; cursor:text; margin-left: 0em}
+
+ul.listtype-htwo li {
+  margin-left:-1.3em;
+  background-repeat: no-repeat;
+/*  background-position: 10px 2px;*/
+  padding-left: 1.3em;
+  padding-bottom:2px;
+  font-size:16px;
+  font-weight: bold;
+}
+
+#editor {
+  ul.listtype-htwo li:hover {
+    background-repeat: no-repeat;
+    background-position: 18px 8px;
+    background-image: url('/static/img/arrow.png');
+    cursor: pointer;
+  }
+}
+
+ul.listtype-hthree { list-style:none; cursor:text; margin-left: 0em}
+
+ul.listtype-hthree li {
+  background-repeat: no-repeat;
+  font-size: 17px;
+  margin-left: -34px;
+  padding-left: 34px;
+  background-position: 10px 12px;
+  padding-bottom: 2px;
+  font-weight: bold;
+}
+
+#editor {
+  ul.listtype-hthree li:hover {
+    background-image: url('/static/img/arrow.png');
+    cursor: pointer;
+  }
+}
+
+.highlight {
+  background-color: #FFFF99;
+}
+
+#editor.searching ::selection {
+  background: #fff2a8;
+}
+
+#editor.authorColors .ace-line:hover .attrimg .remove-media,
+#editor.authorColors .ace-line:hover .inline-embed .remove-media {
+  display:inline-block!important;
+}
+
+#editor .toc-entry:hover {
+  background-repeat: no-repeat;
+  background-position: 30px 12px;
+  background-image: url('/static/img/arrow.png');
+  cursor: pointer;
+}
+
+.emoji-glyph {
+  width: 20px;
+  height: 20px;
+  line-height: 1em;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  color: transparent;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  vertical-align: top;
+  margin-top: 0.1em;
+
+  /* Magic. */
+  -moz-user-modify: read-only;
+  -webkit-user-modify: read-only;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}

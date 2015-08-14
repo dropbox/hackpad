@@ -1,0 +1,40 @@
+This file has been automatically created using
+git log | grep Author: | sort | uniq | sed -e "s+Author: ++g" > CONTRIBUTORS
+Manual annotations in braces. Email addresses might or might not be proper email addresses.
+
+Aaron Iba <aaroniba@gmail.com>
+Chris Ball <cjb@laptop.org>
+Christian Geier <cg@oberon.local>
+Colin Zwiebel <computercolin@etherpad.(none)>
+Dan Bentley <dtbentley@gmail.com>
+David Greenspan <davidgreenspan@gmail.com>
+Egil Moeller <egil.moller@freecode.no>
+Elliot Kroo <elliot.kroo@gmail.com>
+Elliot Kroo <elliot@kroo.net>
+Elliot Kroo <kroo@appjet.com>
+etherpad <etherpad@localhost.(none)>
+geier <github@lostpackets.de>
+Han Wei <laughinghan@gmail.com>
+holtzermann17 <holtzermann17@gmail.com>
+Jeff Mitchell <etherpad@jefferai.org>
+Jeppe Toustrup <jeppe@tenzer.dk>
+Joe Corneli <holtzermann17@gmail.com>
+Joe Corneli <joe@planetmath-laptop.(none)>
+Joseph Corneli <jac2349@lwkm013.open.ac.uk>
+Michael Forrest <michael.forrest@gmail.com>
+Michael Prasuhn <mike@mikeyp.net>
+Mikko Rantalainen <mikko.rantalainen@peda.net>
+Mikyter <mikyter@gmail.com>
+penSec.IT UG (haftungsbeschränkt) <etherpad@pensec.it>
+Per Andersson <avtobiff@gmail.com>
+Peter Martischka <petermartischka@googlemail.com>
+Peter Martischka <pita@googlemail.com>
+Peter Martischka <pita@pitapoison.de>
+redhog <redhog@thalariel.(none)> (Egil Möller)
+root <root@primarypad.com> (John McLear)
+root <root@sp.primarypad.com> (John McLear)
+Sam Freilich <sam@complexmeme.net>
+Simon Bohlin <simon.bohlin@gmail.com>
+Simon B @piratpartiet <simonb@redhog.org>
+soh335 <sugarbabe335@gmail.com>
+TechKid <mail@techkid.co.uk>

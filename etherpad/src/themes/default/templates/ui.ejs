@@ -1,0 +1,64 @@
+<%# Button/menu UI options:
+  id: id of the dom element
+  type: the main type of the button (primary, secondary, popup, toolbar, action, edit)
+  icon: sprite icon for the button
+  fontIcon: font icon for the button
+  iconSrc: direct image for the button
+  label: label for the button
+  html: html label for the button
+  disabled: whether the button is disabled
+
+  more options:
+  tooltip: desired tooltip
+  className: extra class you want to add to the button
+  onclick: onclick action
+  onsubmit: onsubmit action
+  attrs: extra html attrs to add
+  menu: array of objects that can have:
+    id
+    label
+    html
+    className
+    onclick
+%>
+<%# Lack of whitespace important here. %>
+<% template.define('button', function(options) { var ejs_data=''; %><%
+    helpers.includeCss("ui.less");
+    helpers.includeJs("ui.js");
+%><<% if (options.menu) { %>div<% } else { %>button type="<% if (options.buttonType) { %><%= options.buttonType %><% } else { %>button<% } %>"<% } %>
+    <% if (options.id) { %> id="<%= options.id %>" <% } %>
+    <% if (options.tooltip) { %> data-tooltip="<%= options.tooltip %>" <% } %>
+    <% if (options.menu) { %> role="menu" aria-haspopup="true" <% } %>
+    <% if (options.disabled) { %> disabled <% } %>
+    <% if (options['data-click']) { %> data-click="<%= options['data-click'] %>" <% } %>
+    <% if (options['data-submit']) { %> data-submit="<%= options['data-submit'] %>" <% } %>
+    <% if (options['data-modal']) { %> data-modal="<%= options['data-modal'] %>" <% } %>
+    <% if (options.onclick) { %> onclick="<%= options.onclick %>" <% } %>
+    <% if (options.onsubmit) { %> onsubmit="<%= options.onsubmit %>" <% } %>
+    <% if (options.attrs) { %> <%- options.attrs %> <% } %>
+    class="hp-ui-button <% if (options.className) { %><%= options.className %><% } %> <% if (options.menu) { %> hp-ui-button-menu <% } %> hp-ui-button-<% if (options.type) { %><%= options.type %><% } else { %>primary<% } %>"
+><<% if (options.href) { %>a<% } else { %>span<% } %> class="hp-ui-button-content <% if (options.fontIcon) { %><%= options.fontIcon %><% } %>" <% if (options.href) { %>href="<%= options.href %>" data-click="cancelclick"<% } %>><% if (options.icon || options.iconSrc) { %>
+      <img class="hp-ui-button-icon <%= options.icon %>"
+          src="<% if (options.iconSrc) { %><%= options.iconSrc %><% } else { %><%= helpers.cdn() %>/static/img/pixel.gif<% } %>"
+          alt="<%= N_('Icon') %>" title="<%= options.label %>">
+    <% } %><% if (options.html) { %><%- options.html %><% } else { %><%= options.label %><% } %></<% if (options.href) { %>a<% } else { %>span<% } %>><% if (options.menu && options.menu.length) { %>
+    <img src="<%= helpers.cdn() %>/static/img/pixel.gif"
+        alt="<%= N_('Arrow') %>" class="hp-ui-button-arrow">
+    <div class="hp-ui-button-menu-wrapper">
+      <ul class="hp-ui-button-list-ul">
+        <% options.menu.forEach(function(value, index, array) { %>
+          <% if (value.label || value.html) { %>
+          <li><a href="<% if (value.href) { %><%= value.href %><% } else { %>#<% } %>" <% if (value.className) { %>class="<%= value.className %>"<% } %> <% if (value.id) { %> id="<%= value.id %>" <% } %>
+            <% if (value['data-click']) { %> data-click="<%= value['data-click'] %>" <% } %>
+            <% if (options.onclick) { %> onclick="<%= options.onclick %>" <% } %>>
+            <% if (value.html) { %>
+              <%- value.html %>
+            <% } else { %>
+              <%= value.label %>
+            <% } %>
+          </a></li>
+          <% } %>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %></<% if (options.menu) { %>div<% } else { %>button<% } %>><% return ejs_data; }); %>

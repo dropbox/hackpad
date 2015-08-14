@@ -1,0 +1,29 @@
+<%
+  template.inherit('pad/editor_base.ejs');
+  template.inherit('_invite_control.ejs');
+  template.inherit('pad/toolbar.ejs');
+
+  helpers.addBodyClass("desktop-app");
+
+  helpers.includeCss("ace2/desktop-app.less");
+%>
+
+
+<% template.define('topbar', function() { var ejs_data=''; %>
+  <header>
+    <%- template.use('editorSidebarCommon'); %>
+    <%- template.use('toolbarEditbar'); %>
+  </header>
+<% return ejs_data; }); %>
+
+
+<% template.define('editorMoreModals', function() { var ejs_data=''; %>
+  <%- template.use('editorModalsCommon'); %>
+<% return ejs_data; }); %>
+
+
+<% template.define('padSidebar', function() { var ejs_data=''; %>
+<% return ejs_data; }); %>
+
+<% template.define('padBottom', function() { var ejs_data=''; %>
+<% return ejs_data; }); %>

@@ -1,0 +1,273 @@
+/**
+ * It may be useful to copy the below styles and use on your page
+ */
+.dataTable {
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.3em;
+  font-size: 13px;
+}
+
+.dataTable table {
+  border-collapse: separate;
+  position: relative;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  border-spacing: 0;
+}
+
+.dataTable th,
+.dataTable td {
+  border-right: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+  min-width: 50px;
+  height: 22px;
+  line-height: 16px;
+  padding: 0 4px 0 4px; /* top, bottom padding different than 0 is handled poorly by FF with HTML5 doctype */
+}
+
+.dataTable div.minWidthFix {
+  width: 50px;
+}
+
+.dataTable tr:first-child th.htNoFrame,
+.dataTable th:first-child.htNoFrame,
+.dataTable th.htNoFrame {
+  border-left-width: 0;
+  background-color: white;
+  border-color: #FFF;
+}
+
+.dataTable tr:last-child {
+  opacity: 0.4;
+   -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  /* ...and now for the proper property */
+  transition:.5s;
+}
+.dataTable td:last-child {
+  opacity: 0;
+   -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s linear;
+  /* ...and now for the proper property */
+  transition:.5s linear;
+}
+.dataTable:hover tr:last-child {
+  opacity: 1;
+   -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s linear;
+  /* ...and now for the proper property */
+  transition:.5s linear;
+}
+.dataTable:hover td:last-child {
+  opacity: 1 ;
+ -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s linear;
+  /* ...and now for the proper property */
+  transition:.5s linear;
+}
+.dataTable.selected tr:last-child {
+  opacity: 1;
+   -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s linear;
+  /* ...and now for the proper property */
+  transition:.5s linear;
+}
+.dataTable.selected td:last-child {
+  opacity: 1 ;
+ -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s linear;
+  /* ...and now for the proper property */
+  transition:.5s linear;
+}
+
+.dataTable th:first-child,
+.dataTable td:first-child,
+.dataTable .htNoFrame + th,
+.dataTable .htNoFrame + td {
+  border-left: 1px solid #CCC;
+}
+
+.dataTable tr:first-child th,
+.dataTable tr:first-child td {
+  border-top: 1px solid #CCC;
+}
+
+.dataTable thead tr:last-child th {
+  border-bottom-width: 0;
+}
+
+.dataTable thead tr.lastChild th {
+  border-bottom-width: 0;
+}
+
+.dataTable td:last-child {
+  min-width: 16px;
+}
+
+.dataTable th {
+  background-color: #EEE;
+  color: #222;
+  text-align: center;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.dataTable th .small {
+  font-size: 12px;
+}
+
+.dataTable thead th {
+  padding: 2px 4px;
+}
+
+.dataTable th.active {
+  background-color: #CCC;
+}
+
+/* border background */
+.dataTable .htBorderBg {
+  position: absolute;
+  font-size: 0;
+}
+
+.dataTable .htBorderBg.selection {
+  background-color: #EEF4FF;
+}
+
+/* border line */
+.dataTable .htBorder {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #000;
+  font-size: 0;
+}
+
+.dataTable .htBorder.current {
+  background: #5292F7;
+  width: 2px;
+  height: 2px;
+}
+
+.dataTable .htBorder.selection {
+  background: #89AFF9;
+  width: 1px;
+  height: 1px;
+}
+
+/* fill handle */
+.dataTable .htFillHandle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #5292F7;
+  border: 1px solid #fff;
+  font-size: 0;
+  cursor: crosshair;
+}
+
+.dataTable .htBorder.htFillBorder {
+  background: red;
+  width: 1px;
+  height: 1px;
+}
+
+/* textarea border color */
+textarea.handsontableInput {
+  border: 2px solid #5292F7;
+  outline-width: 0;
+  margin: 0;
+  padding: 1px 4px 0 2px;
+  font-family: Arial, Helvetica, sans-serif; /*repeat from .dataTable (inherit doesn't work with IE<8) */
+  line-height: 1.3em;
+  font-size: 13px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+  resize: none;
+  word-break: break-all;
+}
+
+.handsontableInputHolder.htHidden textarea.handsontableInput {
+  border-color: #5292F7;
+  background: #5292F7;
+  color: #5292F7;
+}
+
+.handsontableInputHolder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* typeahead rules. Needed only if you are using the autocomplete feature */
+.typeahead {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  float: left;
+  display: none;
+  min-width: 160px;
+  padding: 4px 0;
+  margin: 0;
+  list-style: none;
+  background-color: white;
+  border-color: #CCC;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  margin-top: 2px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.typeahead li {
+  line-height: 18px;
+  display: list-item;
+}
+
+.typeahead a {
+  display: block;
+  padding: 3px 15px;
+  clear: both;
+  font-weight: normal;
+  line-height: 18px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.typeahead li > a:hover, .typeahead .active > a, .typeahead .active > a:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #08C;
+}
+
+.typeahead a {
+  color: #08C;
+  text-decoration: none;
+}

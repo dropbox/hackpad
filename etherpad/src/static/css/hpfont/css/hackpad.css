@@ -1,0 +1,210 @@
+@font-face {
+	font-family: 'hackpad';
+	src:url('/static/css/hpfont/font/hackpad.eot?v16');
+	src:url('/static/css/hpfont/font/hackpad.eot?v16#iefix') format('embedded-opentype'),
+		url('/static/css/hpfont/font/hackpad.ttf?v16') format('truetype'),
+		url('/static/css/hpfont/font/hackpad.woff?v16') format('woff'),
+		url('/static/css/hpfont/font/hackpad.svg?v16#hackpad') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'hackpad';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  cursor: pointer;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-link:before {
+	content: "\e603";
+}
+.icon-dropbox:before {
+	content: "\e60a";
+}
+.icon-close:before {
+	content: "\e60b";
+}
+.icon-new:before {
+	content: "\e60e";
+}
+.icon-gear:before {
+	content: "\e61e";
+}
+.icon-follow:before {
+	content: "\e61f";
+}
+.icon-back:before {
+	content: "\e620";
+}
+.icon-addcollection:before {
+	content: "\e601";
+}
+.icon-move:before {
+	content: "\e622";
+}
+.icon-pin:before {
+	content: "\e623";
+}
+.icon-invite:before {
+	content: "\e624";
+}
+.icon-delete:before {
+	content: "\e625";
+}
+.icon-grippy:before {
+	content: "\e626";
+}
+.icon-checkMark:before {
+	content: "\e627";
+}
+.icon-privacy-link-inspace:before {
+	content: "\e62a";
+}
+.icon-privacy-public:before {
+	content: "\e62c";
+}
+.icon-paragraph:before {
+	content: "\e605";
+}
+.icon-uncheck:before {
+	content: "\e600";
+}
+.icon-menu-web:before {
+	content: "\e618";
+}
+.icon-textformat:before {
+	content: "\e617";
+}
+.icon-comment-inline:before {
+	content: "\e606";
+}
+.icon-x:before {
+	content: "\e615";
+}
+.icon-mention:before {
+	content: "\e610";
+}
+.icon-header2:before {
+	content: "\e604";
+}
+.icon-header1:before {
+	content: "\e607";
+}
+.icon-forward:before {
+	content: "\e621";
+}
+.icon-privacy-inspace:before {
+	content: "\e628";
+}
+.icon-search:before {
+	content: "\e61d";
+}
+.icon-edit:before {
+	content: "\e62e";
+}
+.icon-edit-active:before {
+	content: "\e62f";
+}
+.icon-load-c:before {
+	content: "\e630";
+}
+.icon-bold:before {
+	content: "\e608";
+}
+.icon-italic:before {
+	content: "\e609";
+}
+.icon-underline:before {
+	content: "\e60d";
+}
+.icon-strikethrough:before {
+	content: "\e60f";
+}
+.icon-comment:before {
+	content: "\e611";
+}
+.icon-bullet:before {
+	content: "\e613";
+}
+.icon-number:before {
+	content: "\e614";
+}
+.icon-code:before {
+	content: "\e616";
+}
+.icon-link2:before {
+	content: "\e61b";
+}
+.icon-photo:before {
+	content: "\e61c";
+}
+.icon-table:before {
+	content: "\e62b";
+}
+.icon-insert:before {
+	content: "\e62d";
+}
+.icon-check:before {
+	content: "\e619";
+}
+.icon-indent:before {
+	content: "\e61a";
+}
+.icon-outdent:before {
+	content: "\e631";
+}
+.icon-gear-hollow:before {
+	content: "\e602";
+}
+.icon-home:before {
+	content: "\e632";
+}
+.icon-newpad:before {
+	content: "\e633";
+}
+.icon-privacy-link:before {
+	content: "\e634";
+}
+.icon-lock:before {
+	content: "\e629";
+}
+.icon-privacy-invite:before {
+	content: "\e635";
+}
+.icon-user:before {
+	content: "\e636";
+}
+.icon-list:before {
+	content: "\e60c";
+}
+.icon-stream:before {
+	content: "\e612";
+}

@@ -1,0 +1,186 @@
+/* TODO: unify 120px vars. */
+
+@import "/static/css/globals.less";
+@import "/static/css/mixins.less";
+
+body.embed {
+  background: transparent;
+  overflow: hidden;
+  width: auto;
+  margin-left: 120px !important;
+
+  & > header {
+    position: fixed;
+    padding: 14px 10px;
+    height: inherit;
+    box-shadow: inherit;
+    background-color: #3b3a3c; /* TODO: @color_text */
+    min-width: 0 !important;
+    margin-left: 120px !important;
+    width: calc(~"100% - 140px");
+  }
+
+  #topbarBrand {
+    display: inline-block;
+    float: left;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    opacity: 1;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-family: nova, arial, sans-serif; /* TODO: @base_font_new */
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+    position: relative;
+    left: 0px;
+    top: 0;
+  }
+
+  #toolbar {
+    float: left;
+  }
+
+  #page-login-box {
+    top: 0px;
+  }
+
+  #settingsbutton,
+  #follow-container {
+    display: none;
+  }
+
+  #padeditor #editorbottombox {
+    margin-top: 0;
+    font-size: 12px;
+    display: none;
+  }
+
+  #otherusers {
+    float: right;
+    margin-right: 10px;
+  }
+
+  #otheruserstable-wrapper {
+    display: none;
+  }
+
+  #otheruserstable {
+    margin: 0px;
+    border: 0px;
+    float: right;
+    max-width: 125px;
+  }
+
+  #sharesummarywrapper {
+    float: right;
+    margin-right: 5px;
+    margin-top: 7px;
+    width: 50%;
+    text-align: right;
+    min-height: 25px;
+    display: block;
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #sharingsettings {
+    width: auto;
+    clear:both;
+    margin: 0px;
+  }
+
+  #padpage {
+    padding-top: 0;
+    min-height: 0;
+    margin-top: 0px;
+    width: inherit;
+    overflow: visible !important;
+  }
+
+  #toolbar {
+    display: inline-block;
+    opacity: 1;
+    right: 45px;
+  }
+
+  #padeditor {
+    width: calc(~"100% - 1px") !important;
+    margin-left: 0 !important;
+  }
+
+  #editor {
+    vertical-align: top;
+    padding-top: 70px;
+  }
+
+  div.ace-line:before {
+    display: block;
+    content: attr(data-author-name);
+  }
+
+  #otheruserstable:not(.open) .user-image img {
+    width: 16px;
+    height: 16px;
+  }
+
+  #editbutton {
+    right: 10px;
+  }
+
+  #sharesummary,
+  #otherusers-facepile {
+    cursor: default;
+  }
+
+  #sharesummary {
+    border-bottom: 0;
+  }
+
+  #padusers {
+    background: #ddd;
+    border: 1px solid #ccc;
+    border-top: 0;
+    margin-right: 0px;
+  }
+
+  @media all and (max-width: 800px) {
+    #toolbar {
+      top: 39px;
+      right: 0;
+    }
+
+    #toolbar-arrow {
+      right: 20px;
+      top: -2px;
+      .transform(~"rotate(-90deg)");
+    }
+  }
+
+  @media only screen and (max-device-width: 480px) {
+    & > header {
+      width: auto;
+    }
+
+    div.ace-line:before {
+      content: attr(data-author-initials);
+    }
+
+    div.ace-line:not(.line-list-type-comment):before {
+      left: -75px;
+    }
+  }
+
+  /* iPhone specific */
+  @media only screen and (max-device-width: @mobileMaxDeviceWidth) {
+    &,
+    & > header {
+      margin-left: 25px;
+    }
+  }
+}

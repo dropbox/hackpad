@@ -1,0 +1,30 @@
+<%
+  helpers.includeJQuery();
+  helpers.includeJs("modals.js");
+  helpers.includeJs('jquery.validate.js');
+  helpers.includeJs('jquery.placeholder.js');
+
+  helpers.includeCss("base.less");
+  helpers.includeCss("home.less");
+
+  helpers.addToHead("<meta content='hackpad.com' name='title' />");
+  helpers.addToHead("<meta content='Real-time collaborative wiki' name='description' />");
+
+%>
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+$(document).ready(function(){
+  modals.showModal("#confirmation-dialog", 0);
+  $("#modaloverlay").hide();
+});
+</script>
+
+<div id="confirmation-dialog" class="modaldialog">
+  <h1>Thanks!</h2>
+  <div class="modaldialog-inner">
+      <br/>
+      You've given <b><%=fullName%></b> access to <b><%=proTitle%></b>.  They've been notified.</br></br>
+      <a href="<%=padUrl%>">Go to '<%=proTitle%>'</a> or <a href="/">head to the homepage</a>.
+  </div>
+</div>
+
+

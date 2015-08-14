@@ -1,0 +1,167 @@
+
+<% template.inherit('pro/_pro_navpage.ejs'); %>
+
+<%
+  helpers.setHtmlTitle(displayAccount.fullName);
+  helpers.includeJs("download_pads.js");
+  helpers.includeJs("imgshrink.js");
+  helpers.includeCss("pro/profile.less");
+%>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  $(document).ready(function() {
+    $('input[placeholder]').placeholder();
+
+    var MAX_SEARCH_RESULTS = 8;
+    function parse(response) {
+      trackEvent("profileInvite", { query: $('#pad-picker').val() });
+      trackPageview('/virtual/profile-invite-results?q='+$('#pad-picker').val());
+
+      var data = "";
+      if (response.success) {
+        data = response.data;
+      } else {
+        modals.showHTMLModal(response.html);
+        $("input").blur();
+        return [];
+      }
+
+      var parsed = [];
+
+      var rows = data.split("\n");
+      for (var i=0; i < rows.length; i++) {
+        var row = $.trim(rows[i]);
+        if (row) {
+          row = row.split("|");
+          parsed.push({
+            data: row,
+            value: row[0],
+            result: row[0]
+          });
+        }
+      }
+      if (parsed.length >= MAX_SEARCH_RESULTS) {
+        parsed = parsed.slice(0, MAX_SEARCH_RESULTS - 1);
+      }
+
+      return parsed;
+    }
+
+    $('#pad-picker').autocomplete("/ep/search/autocomplete",
+      {max:MAX_SEARCH_RESULTS, parse: parse, delay: 0, noCache:true, selectFirst: true, width: $('#pad-picker').width() + 22 + "px"}).result(function(event, item) {
+        $('#pad-picker').addClass("ac_loading");
+        $.post("/ep/pad/hackpadinvite", { userId: <%= displayAccount.id %>, padId: item[1] }, function (resp) {
+          alert("Ok, we sent them an invite.");
+          $('#pad-picker').val("").blur();
+        });
+      });
+
+    trackEvent("profile-visit", null, null, { userId: <%= displayAccount.id %>, fullName: "<%= displayAccount.fullName %>", isMyAccount: <%= isMyAccount %> });
+  });
+
+  function uploadNewPhoto(input) {
+    if (!!window.FileReader) {
+      var file = input.files[0];
+
+      imgshrink.maybeShrinkImage(file, function(shrunk) {
+        var form = new FormData();
+        form.append('photo', shrunk);
+
+        $.ajax({
+          url: '/ep/account/settings/update-profile-photo',
+          data: form,
+          processData: false,
+          contentType: false,
+          headers: {'X-Xsrf-Protection': clientVars.xsrf},
+          type: "POST",
+          success: function() {
+            trackEvent("file-attach-profile", null, null, { success: true, userId: clientVars.userId, type: file.type, path: file.name, size: file.size, uploadSize: shrunk.size });
+            window.location.reload();
+          }
+        });
+      }, 500, 500);
+    } else {
+      window.location.href = 'http://gravatar.com';
+    }
+  }
+
+</script>
+
+
+<%- template.define('homeleft', function() { var ejs_data=''; %>
+
+  <% if (!isMyAccount) { %>
+    <div id="pad-picker-div" style="height: 25px; width:200px;float:right; position:relative; margin-top: -1px;">
+      <img src="<%=helpers.cdn()%>/static/img/pixel.gif" class="sprite-icons-loupe">
+
+      <input type="text" id="pad-picker" style="font-size:13px;width:174px;padding-left:22px; padding-right:0px;" placeholder="invite this person to a pad" />
+    </div>
+  <% } %>
+
+  <h1 style='font-size: 1.4em; font-weight: bold; color: #666;'><%= displayAccount.fullName %></h1>
+  <% if (showEmail) { %>
+  <h2 style='font-size: 1em; color: #666;'><%= displayAccount.email %></h1>
+  <% } %>
+
+
+  <% if (!displayAccount.lastLoginDate) { %>
+    <h1 style='margin-top: 1em;'><em>Account has not been activated.</em></h1>
+    <!-- fixme: allow sending new invite -->
+  <% } else if (pads.length > 0) { %>
+
+    <div id="recent-pads" style='margin-top: 1em;'>
+      <div id="listwrap" style="clear: both;">
+        <%- padHtml %>
+      </div>
+    </div>
+
+  <% } else if (!isMyAccount) { %>
+    <h1 style='margin-top: 1em; color: #666;'><em>Invite <%= displayAccount.fullName %> to edit with you.</em></h1>
+    <!-- fixme: allow inviting to a pad -->
+  <% } else { %>
+    <h1 style='margin-top: 1em; color: #666;'><em>Welcome to Hackpad!</em> To get started, <a href="/ep/pad/newpad">create a new pad</a>.</h1>
+  <% } %>
+
+<% return ejs_data; }); %>
+
+
+<%- template.define('homeright', function() { var ejs_data=''; %>
+
+    <% if (displayUserPic) { %>
+      <img src="<%= displayUserPic %>" class="hp-profile-photo" />
+    <% } %>
+
+    <div style="clear:both"></div>
+
+
+    <% if (isMyAccount) { %>
+    <div id="hp-profile-upload-photo" style="font-size:13px; text-align:right; padding-top:20px;">
+      Change profile photo
+      <input type="file" onchange="uploadNewPhoto(this)">
+    </div>
+    <% } %>
+    <% if (isMyAccount) { %>
+    <div style="font-size:13px; text-align:right; padding-top:20px;">
+      <a href="/ep/account/settings/">Account Settings</a>
+    </div>
+    <% } %>
+
+    <% if (isMyAccount) { %>
+      <% if (pads && pads.length > 0) { %>
+        <%- template.use('button', null, {
+          id: 'hp-download-pads',
+          type: 'large-popup',
+          'data-click': 'downloadpads',
+          label: N_('Download Pads'),
+          attrs: "data-url='/ep/padlist/my_pads.zip'",
+          menu: [
+            {label: 'as HTML', id: "download-pads-html"},
+            {label: 'as Markdown', id: "download-pads-md"},
+            {label: 'as Plaintext', id: "download-pads-txt"},
+          ]
+        }); %>
+      <% } %>
+
+    <% } %>
+
+<% return ejs_data; }); %>

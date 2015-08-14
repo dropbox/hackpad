@@ -1,0 +1,26 @@
+<%   template.inherit('email/_base.ejs'); %>
+
+
+<% template.define('content', function() { var ejs_data=''; %>
+<style>
+
+<%- content %>
+
+<% return ejs_data; }); %>
+
+
+<% template.define('footer', function() { var ejs_data=''; %>
+
+<br/><br/>
+<div style="font-size:12px; color:#aaa; text-align:center;">
+  We are emailing you because you are a Hackpad user. <br/>
+  You can <a href="<%=unsubscribeUrl%>">Unsubscribe</a> from Product Announcements.
+</div>
+
+<% return ejs_data; }); %>
+
+
+<% template.define('header', function() { var ejs_data=''; %>
+<% return ejs_data; }); %>
+
+

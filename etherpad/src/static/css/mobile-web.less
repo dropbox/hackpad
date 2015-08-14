@@ -1,0 +1,78 @@
+@import "globals.less";
+
+body.mobile-web {
+  body > header {
+    min-width: @page_width;
+  }
+
+  ul.listtype-task li,
+  ul.listtype-taskdone li {
+    padding-left: 1.75em;
+  }
+
+  ul.listtype-comment li:before,
+  ul.listtype-commentcollapsed li:before {
+    margin-top: 6px;
+    width: 1.7em;
+  }
+
+  ul.listtype-task li:before,
+  ul.listtype-taskdone li:before {
+    margin-top: 3px;
+    margin-left: -1.5em;
+    margin-right: 1px;
+    font-size: 20px;
+  }
+
+  ul.listtype-taskdone:before {
+    margin-left: -1.3em;
+    font-size: 19.4px;
+  }
+
+  .streamtable .segment {
+    padding-right: 5px;
+    margin-right: -5px;
+  }
+
+  .streamtable .segment-wrapper {
+    margin-right: 0;
+  }
+
+  .segment .gear-drop {
+    opacity: 1;
+  }
+
+  #padsidebar {
+    opacity: 1;
+  }
+
+  #padsidebar.fixed {
+    bottom: auto;
+  }
+
+  #mainbar .padfollow,
+  #mainbar .padunfollow,
+  #follow-container .groupfollow,
+  #follow-container .groupunfollow {
+    padding: 7px 8px;
+  }
+
+  #toolbar #toolbar-attach-group button {
+    display: none;
+  }
+
+  &.edit-mode #toolbar #toolbar-attach-group #attachbutton,
+  &.edit-mode #toolbar #toolbar-attach-group.open button {
+    display: inline-block;
+  }
+
+  #editor .toc-entry:hover {
+    background-image: none !important;
+  }
+
+  #editor ul.listtype-hone li:hover,
+  #editor ul.listtype-htwo li:hover,
+  #editor ul.listtype-hthree li:hover {
+    background-image: none !important;
+  }
+}

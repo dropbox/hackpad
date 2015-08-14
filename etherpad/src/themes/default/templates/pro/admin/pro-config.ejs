@@ -1,0 +1,99 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<% template.inherit("ui.ejs"); %>
+
+<%- messageDiv() %>
+
+<form action="<%= request.path %>" method="post">
+<%- helpers.xsrfTokenElement(); %>
+
+<table id="t-pro-config" cellspacing="0">
+  <tr>
+    <th width="50%" valign="top">Site Name:</th>
+    <td width="50%" valign="top">
+      <input type="text" name="siteName" value="<%=
+      config.siteName %>" id="siteName" />
+    </td>
+  </tr>
+
+  <tr>
+    <th valign="top">Site Access:</th>
+    <td valign="top">
+      <select name="publicDomain">
+        <option value="" <% if (!config.publicDomain) { %>selected="selected"<% } %> >Private</option>
+        <option value="true" <% if (config.publicDomain) { %>selected="selected"<% } %> >Public</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <th width="50%" valign="top">Automatically create accounts for users with an email address at:</th>
+    <td width="50%" valign="top">
+      <input type="text" name="allowDomain" value="<%=
+      config.allowDomain %>" id="allowDomain" />
+    </td>
+  </tr>
+
+  <tr>
+  <th valign="top">New User Welcome Pad URL:</th>
+  <td valign="top">
+    <input type="text" style="width:300px" name="welcomePadURL" id="welcomePadURL" value="<%=
+    config.welcomePadURL %>"/>
+  </td>
+  </tr>
+
+  <tr>
+  <th valign="top">Pinned Home Pad URL:</th>
+  <td valign="top">
+    <input type="text" style="width:300px" name="homePadURL" id="homePadURL" value="<%=
+    config.homePadURL %>"/>
+  </td>
+  </tr>
+
+  <tr>
+    <th valign="top">Pads to show by default:</th>
+    <td valign="top">
+      <select name="showHome">
+        <option value="" <% if (!config.showHome) { %>selected="selected"<% } %> >All Pads (good for smaller groups)</option>
+        <option value="true" <% if (config.showHome) { %>selected="selected"<% } %> >Followed Pads (good for larger groups)</option>
+      </select>
+    </td>
+  </tr>
+
+  <% if (config.supportMW)  { %>
+  <tr>
+  <th valign="top">MediaWiki root url (for image and file links):</th>
+  <td valign="top">
+    <input type="text" style="width:300px" name="mwRoot" id="mwRoot" value="<%=
+    config.mwRoot %>"/>
+  </td>
+  </tr>
+  <% } %>
+
+  <!--tr>
+    <th valign="top">Default pad text:</th>
+    <td valign="top">
+      <textarea name="defaultPadText" id="defaultPadText"><%=
+      config.defaultPadText %></textarea>
+    </td>
+  </tr-->
+</table>
+
+<div style="margin-top: 20px;">
+<%- template.use('button', null, { buttonType: 'submit', label: 'Update Configuration' }); %>
+</div>
+
+</form>
+

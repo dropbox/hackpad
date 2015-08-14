@@ -1,0 +1,62 @@
+<div class="segment-outer-wrapper <%= p.isPinned ? "pinned" : "" %>" data-padid="<%=localPadId%>" data-subdomain='<%= onOtherDomain ? domain.subDomain : "" %>'>
+  <div class="segment-last-edited-date"><%=lastEditedDate ? " " + timeAgo(lastEditedDate) : "" %></div>
+  <div class='segment' data-padid='<%=localPadId%>'>
+    <div class='segment-info' style='float:right; text-align: right; margin: 1em; position: relative; z-index: 1'>
+      <% if (opts.showTaskCount) { %>
+        <div class="taskCount"> <%-columnMeta["taskCount"].render(p)%> </div>
+      <% } %>
+    </div>
+    <%- columnMeta["actions"].render(p) %>
+    <div class='segment-pic'>
+      <a href='<%=picLinkUrl%>'>
+      <% if (picUrl) { %>
+        <img class="<% if (isMultipleAuthors) { %>multiple-facepile<% } %>" src='<%=picUrl%>'/>
+      <% } else { %>
+        <img class="<% if (isMultipleAuthors) { %>multiple-facepile<% } %>" src='/static/img/nophoto.png'/>
+      <% } %>
+      </a>
+    </div>
+    <div class='segment-wrapper'>
+      <% if (p.isPinned) { %>
+        <i class="icon-pin" title="Pinned" alt="Pinned pad"></i>
+      <% } %>
+      <i class="icon-grippy"></i>
+      <div class='title'>
+        <a href='<%= onOtherDomain ? absolutePadUrl(localPadId, {}, domain.subDomain, urlTitle) : relativePadUrl(localPadId, urlTitle)%>'>
+          <%- columnMeta["title"].render(p) %>
+        </a>
+      </div>
+      <% if (onOtherDomain) { %>
+      <div class='site-label with-ribbon'><a href="<%= absoluteUrl('/', {}, domain.subDomain) %>"><%= domain.orgName %></a></div>
+      <% } %>
+      <div class='segment-info'>
+        <span class="segment-group-wrapper">
+        <% if (p.groupInfos.length ) { %>
+          <span class="segment-group-old">In</span>
+          <% for (var i=0;i<p.groupInfos.length; i++) { %><a class="segment-group-link" href="<%= relativeCollectionUrl(p.groupInfos[i].encryptedId) %>"><%= p.groupInfos[i].name %></a><% if (i<p.groupInfos.length-1) {%><span class="segment-group-old">,</span> <% } %><% } %><span class="segment-group-old">.&nbsp;</span>
+        <% } else { %>
+          <span class="segment-group-link-unfiled">Unfiled</span><span class="segment-group-old">.</span>
+        <% } %>
+        </span>
+        <span class="segment-edited-by">
+          <span> <%= authorsHTML ? "Edited by" : "Edited" %> </span>
+          <span class='authors' style=''> <%-authorsHTML%> </span>
+          <span class='lastEditedDate'> <%=lastEditedDate ? " " + timeAgo(lastEditedDate) : "" %></span>
+        </span>
+      </div>
+      <div class='segment-content'>
+        <%- diffHTML %>
+        <div class='segment-controls'>
+        <% if (isGlobal) { %>
+          <a class='segmentReadMore' href='<%= onOtherDomain ? absolutePadUrl(localPadId, {}, domain.subDomain, urlTitle) : relativePadUrl(localPadId, urlTitle)%>'>Read more</a>
+        <% } else { %>
+          <a class='segmentSeeWhole' padId='<%=localPadId%>' href='#'>Show full change</a>
+          <a class='segmentSeeLess' padId='<%=localPadId%>' href='#'>Show only preview</a>
+        <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style='clear:both'></div>
+

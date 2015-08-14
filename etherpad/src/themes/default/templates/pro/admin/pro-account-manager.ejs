@@ -1,0 +1,173 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+
+<%
+  template.inherit("ui.ejs");
+  helpers.includeJs("jquery.tinysort.js");
+%>
+
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+$(document).ready(function() {
+  $("th").click(function() {
+    var sortField = $(this).data('sort');
+    if (sortField) {
+      $(this).data('order', $(this).data('order') == "asc" ? "desc" : "asc");
+      $("#accountlist tr[uid]").tsort({attr: sortField, order: $(this).data('order')});
+    }
+  });
+
+  $("table#accountlist tr[uid]").click(function() {
+    var uid = $(this).attr("uid");
+    var fullName = $(this).attr("fullName");
+    $("#edit-account-form").attr("action", "/ep/admin/account-manager/account/" + uid);
+    $("#edit-account-form input[name=newFullName]").val(fullName);
+    $("#edit-account-form input[name=newEmail]").val($(this).attr("email"));
+    $("#edit-account-form option[value=" + $(this).attr("role") + "]").attr("selected", "selected");
+    $("#delete-account-form")
+      .attr("action", "/ep/admin/account-manager/delete-account/" + uid)
+      .unbind("submit").submit(function() {
+        if (!confirm("Are you sure you want to delete the account \""+fullName+"\"?")) {
+          return false;
+        }
+        return true;
+      });
+    modals.showModal("#edit-account");
+  });
+
+  $("#delete-site-form").unbind("submit").submit(function() {
+    if (!confirm("Are you sure you want to delete this site?")) {
+      return false;
+    }
+    return true;
+  });
+
+  padutils.tooltip("tr [data-tooltip]");
+
+});
+</script>
+
+
+<div class="modaldialog" id="create-account" style="width: 400px; margin-left: -200px; font-size: 0.8em;">
+  <h1>Create New Account</h1>
+<div class="modaldialog-inner">
+  <form action="/ep/admin/account-manager/new" method="post" id="create-account-form" style="margin-top: 20px;" data-noajax="true">
+    <%- helpers.xsrfTokenElement() %>
+    <input name='fullName' placeholder="Full Name" class="required" style="padding-left:5px; font-size:14px; width: 80%; line-height:25px;"/><br/><br/>
+    <input name='email' placeholder="Email" class="email required" style="padding-left:5px; font-size:14px; width: 80%; line-height:25px;"/><br/><br/>
+    Role:
+    <select name='role'>
+      <option value="guest">Guest (Can see and edit the pads they're invited to)</option>
+      <option value="member" selected="selected">Member (Can see and edit the entire site)</option>
+      <option value="admin">Admin (Can create/delete any account, pad or collection)</option>
+    </select>
+    <br/><br/>
+    <div class="dialog-buttons">
+      <input type="hidden" name="tempPass" value="<%= tempPass %>" />
+      <a href="#" data-click="hidemodal">Cancel</a>
+      <%- template.use('button', null, { buttonType: 'submit', label: 'Create' }); %>
+    </div>
+    <div style="clear: both;"></div>
+  </form>
+</div>
+</div>
+
+
+<div class="modaldialog" id="edit-account" style="width: 400px; margin-left: -200px; font-size: 0.8em;">
+<h1>Edit Account</h1>
+<div class="modaldialog-inner">
+  <form action="" method="post" id="edit-account-form" style="margin-top: 20px;">
+    <%- helpers.xsrfTokenElement() %>
+    <input name='newFullName' placeholder="Full Name" class="required" style="width: 100%;"/><br/><br/>
+    <input name='newEmail' placeholder="Email" disabled="disabled" class="email required" style="width: 100%;"/><br/><br/>
+    Account role:
+    <select name='newRole'>
+      <option value="guest">Guest (Can see and edit the pads they're invited to)</option>
+      <option value="member">Member (Can see and edit the entire site)</option>
+      <option value="admin">Admin (Can create/delete any account, pad or collection)</option>
+    </select>
+
+    <br></br>
+
+    <div class="dialog-buttons">
+      <a href="#" data-click="hidemodal">Cancel</a>
+      <%- template.use('button', null, { buttonType: 'submit', label: 'Update' }); %>
+    </div>
+  </form>
+
+  <div style="float: left;">
+    <form action="" method="post" id="delete-account-form">
+      <%- helpers.xsrfTokenElement() %>
+      <input type="submit" name="delete" value="Delete Account" style="margin-left: 0px; border: 0; font-size: 10px; background: none; cursor: pointer"></input>
+    </form>
+  </div>
+
+  <div style="clear: both;"></div>
+
+</div>
+</div>
+
+
+<div class="manage-accounts">
+
+  <%- messageDiv() %>
+  <%- warningDiv() %>
+  <%- errorDiv() %>
+
+
+
+  <%- template.use('button', null, { id: 'add-collaborator', label: 'Add collaborator', 'data-click': "showmodal", 'data-modal': '#create-account' }); %>
+
+  <% function renderAccountRow(u) {
+     var name = u.fullName;
+     var isDomainGuest = u.flags & IS_DOMAIN_GUEST;
+     var padTitles = accessiblePads[u.id].map(function(p){return p.title}).join(', ');
+     var padCount = accessiblePads[u.id].length;
+     return TR({ uid: u.id, fullName: name, email: u.email, role: u.isAdmin ? 'admin' : (isDomainGuest ? 'guest' : 'member'), lastLoginDate: (+new Date) - u.lastLoginDate },
+               TD({style:"text-overflow:hidden"}, name),
+               TD(u.email.substring(0, 25)),
+               TD({'data-tooltip':padTitles}, u.isAdmin ? 'Admin' : (isDomainGuest ? ('Guest (' + padCount + ' pads'+')') : '')),
+               TD(u.lastLoginDate ? helpers.prettyDate(u.lastLoginDate) : "Never"))
+    }
+  %>
+
+  <table id="accountlist" style="WORD-BREAK:BREAK-ALL; clear: both;" cellspacing="0" width="100%">
+    <thead>
+      <th width="120" data-sort="fullName">Name</th>
+      <th width="120" data-sort="email">Email</th>
+      <th data-sort="role">Role</th>
+      <th data-sort="lastLoginDate">Last Signed In</th>
+    </thead>
+
+    <% accountList.forEach(function(u) { %>
+      <%- renderAccountRow(u) %>
+    <% }); %>
+
+  </table>
+
+  <p class="account-tally" style="margin-top:10px;"><%= count %> account<%= count == 1 ? "" : "s" %>.</p>
+
+</div>
+
+
+<div class="delete-site">
+<h2>
+<form id="delete-site-form" method="post" action="/ep/admin/delete-site" style="margin-top:50px">
+  <%- helpers.xsrfTokenElement() %>
+  <input style="float:right; border: 0; font-size: 10px; background: none; cursor: pointer" type="submit" value="Delete this Hackpad Workspace">
+</form>
+</div>
+
+

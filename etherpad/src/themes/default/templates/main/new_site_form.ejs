@@ -1,0 +1,105 @@
+<% /*
+    Form for creating a new site (and part of the onboarding process).
+    Date: 08/15/13
+ */ %>
+
+<%
+  template.inherit('header3.ejs');
+  helpers.includeJQuery();
+
+  helpers.includeJs('jquery.placeholder.js');
+  helpers.includeJs("jquery.validate.js");
+  helpers.includeJs("jquery-ui-1.10.3.shake.min.js");
+
+  helpers.includeJs("lib/jquery.transition.js");
+  helpers.includeJs('modals.js');
+  helpers.includeJs('lib/ribbon_messages.js');
+  helpers.includeJs('lib/ZeroClipboard.min.js');
+
+  helpers.includeJs('onboarding_configuration.js');
+  helpers.includeJs('multiStepFlowLibrary.js');
+  helpers.includeJs('new_site.js');
+  helpers.includeJs('new_site_invite_form.js');
+  helpers.includeJs("jquery.autocomplete.js");
+  helpers.includeJs("invite.js");
+
+
+  helpers.includeCss("pro/new-site.less");
+  helpers.includeCss("animate/fadeInLeft.css");
+  helpers.includeCss("animate/fadeInRight.css");
+  helpers.includeCss("animate/fadeOut.css");
+  helpers.includeCss("jquery.autocomplete.less");
+%>
+
+<!--[if IE 8]>
+  <script type="text/javascript" nonce="<%= helpers.cspNonce() %>" src="/static/js/lib/selectivizr-min.js"></script>
+  <link href="/static/css/pro/new-site-ie8.css" rel="stylesheet" type="text/css" onerror="this.loadError=true;">
+<![endif]-->
+
+
+  <%- template.use('topbar'); %>
+<div class="logo"></div>
+
+
+<% template.define('new_site_form', function() { var ejs_data=''; %>
+
+  <div id="new_site" class="step" data-class="newSite">
+    <div id='pricing_modal' class='modaldialog modaldialog-2' style="width: 770px; margin-left: -385px;">
+      <div class="spinner">Loading</div>
+    </div>
+    <div class="wrapper">
+      <form id="new_site_form" name="site" method="post">
+        <%- helpers.xsrfTokenElement() %>
+          <div class="form_bounds">
+              <h1>Create your new space</h1>
+                <div class="form_body">
+                  <input type="text" id="company_field" name="name" placeholder="Company, Group, Org or Team Name" minlength="3" value="<%= newSiteData.name %>" required />
+                  <input type="text" id="shortname" name="shortname" value="<%= newSiteData.shortName %>" class="subdomain" placeholder="spacename" minlength="3" required /> <span class="domain">.hackpad.com</span>
+
+                  <div class="space_selection">
+                      <input type="radio" name="permission" value="private" id="private_radio" <% if (!newSiteData.type || newSiteData.type == "private") { %>checked<% } %>>
+                      <label for="private_radio" class="radio">Private</label>
+                    <div class="radio_info">
+                      <p>You choose who can join and edit this space.</p>
+                      <p><span class="price">Free for unlimited users</span></p>
+                    </div>
+
+                      <input type="radio" name="permission" value="public" id="public_radio" <% if (newSiteData && newSiteData.type == "public") { %>checked <% } %>>
+                      <label for="public_radio" class="radio">Public</label>
+                    <div class="radio_info radio_info-last">
+                      <p>Anyone can join and edit this space.</p>
+                      <p><span class="price">Free for unlimited users</span></p>
+                    </div>
+                  </div>
+                </div>
+        </div>
+
+        <div class="form_buttons">
+          <button type="button" name="cancel" class="muted-button"></button>
+          <button type="submit" class="primary-button" name="next"></button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+<% helpers.addClientVars({ newSiteData: newSiteData }) %>
+<% return ejs_data; }); %>
+
+<div class="page">
+  <div class="progress wrapper">
+    <ul id="progress_indicator">
+      <li class="active">Create space</li>
+      <li>Invite collaborators</li>
+    </ul>
+  </div>
+
+  <div id="viewport">
+    <ul id="ajax_wrapper" class="clearfix">
+      <li id="step-1" class="step">
+        <%- template.use('new_site_form'); %>
+      </li>
+    </ul>
+  </div>
+</div>
+

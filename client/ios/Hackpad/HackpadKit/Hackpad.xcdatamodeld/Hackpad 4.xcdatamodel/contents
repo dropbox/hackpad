@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="HPCollection" representedClassName="HPCollection" syncable="YES">
+        <attribute name="collectionID" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="followed" optional="YES" attributeType="Boolean" indexed="YES" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="pads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HPPad" inverseName="collections" inverseEntity="HPPad" syncable="YES"/>
+        <relationship name="sharingOptions" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPSharingOptions" inverseName="collection" inverseEntity="HPSharingOptions" syncable="YES"/>
+        <relationship name="space" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPSpace" inverseName="collections" inverseEntity="HPSpace" syncable="YES"/>
+    </entity>
+    <entity name="HPPad" representedClassName="HPPad" syncable="YES">
+        <attribute name="cachedLastEditedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="expandedSnippetHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="followed" optional="YES" attributeType="Boolean" indexed="YES" syncable="YES"/>
+        <attribute name="lastEditedDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="padID" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="snippetHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="snippetHTML" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="snippetUserPics" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="cachedText" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="HPPadText" inverseName="pad" inverseEntity="HPPadText" syncable="YES"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HPCollection" inverseName="pads" inverseEntity="HPCollection" syncable="YES"/>
+        <relationship name="sharingOptions" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="HPSharingOptions" inverseName="pad" inverseEntity="HPSharingOptions" syncable="YES"/>
+        <relationship name="space" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPSpace" inverseName="pads" inverseEntity="HPSpace" syncable="YES"/>
+    </entity>
+    <entity name="HPPadText" representedClassName="HPPadText" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" indexed="YES" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="lastEditedDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <relationship name="pad" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPPad" inverseName="cachedText" inverseEntity="HPPad" syncable="YES"/>
+    </entity>
+    <entity name="HPSharingOptions" representedClassName="HPSharingOptions" syncable="YES">
+        <attribute name="allowedSharingTypes" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="moderated" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="sharingType" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="collection" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPCollection" inverseName="sharingOptions" inverseEntity="HPCollection" syncable="YES"/>
+        <relationship name="pad" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPPad" inverseName="sharingOptions" inverseEntity="HPPad" syncable="YES"/>
+    </entity>
+    <entity name="HPSpace" representedClassName="HPSpace" syncable="YES">
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="public" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="signInMethods" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="subdomain" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HPCollection" inverseName="space" inverseEntity="HPCollection" syncable="YES"/>
+        <relationship name="pads" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HPPad" inverseName="space" inverseEntity="HPPad" syncable="YES"/>
+        <fetchedProperty name="followedPads" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="HPPad" predicateString="(isFollowed == YES) AND (space == $FETCH_SOURCE)"/>
+        </fetchedProperty>
+    </entity>
+    <elements>
+        <element name="HPCollection" positionX="-171" positionY="9" width="128" height="135"/>
+        <element name="HPPad" positionX="-279" positionY="153" width="128" height="240"/>
+        <element name="HPPadText" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="HPSharingOptions" positionX="70" positionY="189" width="128" height="120"/>
+        <element name="HPSpace" positionX="151" positionY="18" width="128" height="194"/>
+    </elements>
+</model>

@@ -1,0 +1,18 @@
+<%   template.inherit('email/_base.ejs'); %>
+
+
+<% template.define('content', function() { var ejs_data=''; %>
+
+<div>
+	<div>Come hack with me on '<a href="<%= editLink %>"><%= title %></a>'</div>
+
+	<% if (padContent) { %>
+	<div style="border: 1px solid #ccc;border-top: 1px solid #eee;border-bottom:none;padding: 28px 39px 0px;margin-top: 10px;background-color: white;color:#333;overflow:hidden;">
+		<div style="font-size:140%;font-weight:bold;padding-bottom:3px;"><a href="<%= editLink %>"><%= title %></a></div>
+		<%- padContent.replace(/<img /g, '<img style="max-width:100%"') %>
+	</div>
+	<div style="border-left: 1px solid #ccc;border-right: 1px solid #ccc;height:30px;background: linear-gradient(to top,rgba(255,255,255,0) 0,#fff 100%);"></div>
+	<%- template.use('email-button', null, "Read more", editLink) %>
+	<% } %>
+</div>
+<% return ejs_data; }); %>

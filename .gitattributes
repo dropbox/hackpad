@@ -1,0 +1,8 @@
+.gitattributes export-ignore
+.gitignore export-ignore
+client export-ignore
+rhino1_7R1 export-ignore
+phantom export-ignore
+etherpad/etc/Hackpad-APNS-beta.p12 export-ignore
+etherpad/etc/Hackpad-APNS.p12 export-ignore
+etherpad/etc/Hackpad-APNS-debug.p12 export-ignore

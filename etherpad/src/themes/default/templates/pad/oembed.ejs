@@ -1,0 +1,10 @@
+<oembed>
+  <type>rich</type>
+  <version>1.0</version>
+  <provider_url><%= protocol %><%= host %></provider_url>
+  <title><%= title %></title>
+  <html><![CDATA[
+    <script src="<%= protocol %><%= host %>/<%= encodeURIComponent(padId) %>.js"></script><noscript><div>View <a href="<%= protocol %><%= host %>/<%= encodeURIComponent(padId) %>"><%= title %></a> on Hackpad.</div></noscript>
+  ]]></html>
+  <provider_name>hackpad</provider_name>
+</oembed>

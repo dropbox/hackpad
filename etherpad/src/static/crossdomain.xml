@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cross-domain-policy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://www.adobe.com/xml/schemas/PolicyFile.xsd">
+<site-control permitted-cross-domain-policies="all"/>
+<allow-http-request-headers-from domain="*" headers="*"/>
+<allow-access-from domain="*.hackpad.com" to-ports="*"/>
+<allow-access-from domain="hackpad.com" to-ports="*"/>
+</cross-domain-policy>

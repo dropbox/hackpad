@@ -1,0 +1,59 @@
+<%
+  template.inherit('header3.ejs');
+  template.inherit('feedback_modal.ejs');
+  template.inherit('footer.ejs');
+  template.inherit('pro/account/_signed_out_modal.ejs');
+  template.inherit('ui.ejs');
+
+  helpers.addBodyClass(bodyClass);
+  helpers.includeCss("feedback.less");
+  helpers.includeCss("page3.less");
+
+  helpers.includeJQuery();
+  helpers.includeJs("etherpad.js");
+  helpers.includeJs("jquery.placeholder.js");
+  helpers.includeJs("json2.js");
+  helpers.includeJs('modals.js');
+  helpers.includeJs("pad_modals.js");
+
+  helpers.addToHead("<meta content='hackpad.com' name='title' />");
+  helpers.addToHead("<meta content='Real-time collaborative wiki' " +
+      "name='description' />");
+  helpers.addToHead("<link href='/static/img/hackpad-logo.png' " +
+      "rel='image_src' />");
+%>
+
+<% template.define('body', function() { var ejs_data=''; %>
+  <%- template.use('topbar'); %>
+
+  <div id="padpage">
+    <div id="padeditor">
+      <%- template.use('contentArea'); %>
+    </div>
+    <%- template.use('padSidebar'); %>
+  </div>
+  <%- template.use('modals'); %>
+
+  <%- template.use('padBottom'); %>
+<% return ejs_data; }); %>
+
+
+<% template.define('padSidebar', function() { var ejs_data=''; %>
+  <aside id="padsidebar">
+    <%- template.use('sideBar'); %>
+    <div class="clear"></div>
+  </aside>
+<% return ejs_data; }); %>
+
+
+<% template.define('padBottom', function() { var ejs_data=''; %>
+  <%- template.use('footer'); %>
+  <%- template.use('signedOutDialog'); %>
+  <%- template.use('button', null, {
+    id: 'feedbackbutton',
+    type: 'action',
+    className: 'iphonehide ipadhide',
+    label: N_('feedback')
+  }); %>
+  <%- template.use('feedbackModal'); %>
+<% return ejs_data; }); %>

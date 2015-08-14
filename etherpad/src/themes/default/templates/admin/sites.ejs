@@ -1,0 +1,35 @@
+
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>" src="/static/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+$(document).ready(function()
+    {
+        $("#sitestable").tablesorter();
+    }
+);
+</script>
+
+<table id="sitestable">
+<thead>
+<tr>
+<th>Site</th>
+<th>Type</th>
+<th>Accounts</th>
+<th>Guests</th>
+<th>Pads</th>
+<th>Last Edited</th>
+</tr>
+</thead>
+
+<% for (i=0; i<sites.length; i++) { %>
+  <tr>
+    <td><a href="<%= "https://" + sites[i].subDomain +  "." + canonicalDomain %>"><%= sites[i].subDomain %></a></td>
+    <td><%= sites[i].isPublic  ? "public" : "private" %></td>
+    <td><%= sites[i].accountCount %></td>
+    <td><%= sites[i].guestCount %></td>
+    <td><%= sites[i].padCount || 0 %></td>
+    <td><%= sites[i].lastEditedDate || "" %></td>
+  </tr>
+<% } %>
+
+</table>

@@ -1,0 +1,16 @@
+<%partial welcomeEmail(newSiteData) %>
+  <form name="welcome_email">
+    <%- helpers.xsrfTokenElement() %>
+    <h1>Welcome Email<span class="modal_close"></span></h1>
+    <div class="modaldialog-inner">
+    <p>The following email will be sent to your chosen mailing list:</p>
+    <input name="subject" type="text" value="<%= newSiteData.welcomeEmailSubject ? newSiteData.welcomeEmailSubject : newSiteData.defaultWelcomeEmailSubject %>" />
+    <textarea><%= newSiteData.welcomeEmailBody ? newSiteData.welcomeEmailBody : newSiteData.defaultWelcomeEmailBody %></textarea>
+
+    </div>
+    <div class="form_buttons">
+      <button type="button" name="reset" class="destructive-button"></button>
+      <button type="submit" class="primary-button" name="save"></button>
+    </div>
+  </form>
+<%endpartial %>

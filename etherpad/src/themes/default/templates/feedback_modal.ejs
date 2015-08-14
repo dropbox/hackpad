@@ -1,0 +1,51 @@
+<% template.define('feedbackModal', function() { var ejs_data=''; %>
+
+<div id="feedbackbox" class="modaldialog">
+  <h1 class="with-content">Contact Support</h1>
+
+  <%- template.use('button', null, {
+    type: 'custom',
+    fontIcon: 'icon-x',
+    className: 'dialog-cancel-x',
+    'data-click':'hidemodal',
+  }); %>
+
+  <div class="modaldialog-inner">
+
+    <form id="feedback-form">
+      <%- helpers.xsrfTokenElement() %>
+
+
+      <% if (typeof(account) == "undefined" || !account) { %>
+        <input type="text" name="feedbackbox-email" id="feedbackbox-email" class="modalfield" placeholder="Your email">
+        <br/>
+      <% } %>
+
+      <select name="feedbackbox-topic" id="feedbackbox-topic" class="modalfield">
+        <option value="">Please select a topic</option>
+        <option value="howto">General usage / How does this work?</option>
+        <option value="feature">Feature request</option>
+        <option value="login">Login / account issue</option>
+        <option value="broken">Broken / can't load hackpad</option>
+        <option value="mobile">Mobile / iOS issue</option>
+        <option value="other">Other issue</option>
+        <option value="love">Send your love! &#9829;</option>
+      </select><br>
+
+      <div id="feedbackbox-faq">Please check out our <a href="https://hackpad.com/How-to-use-Hackpad-mlZvEsJykI5" target="_blank">How-to Guide</a> and <a href="https://hackpad.com/Hackpad-FAQ-tq56fI63mz3" target="_blank">FAQ</a> first to see if your question is already answered! :)<br><br></div>
+      <div id="feedbackbox-feature-request">If you have a feature request, please add it to <a href="https://hackpad.com/mwN5" target="_blank">this pad</a>.  Thanks!<br><br></div>
+
+      <input type="text" name="feedbackbox-subject" id="feedbackbox-subject" class="modalfield" placeholder="Summary"><br>
+      <textarea id="feedbackbox-message" rows="6" cols="40" class="modalfield" placeholder="Give as much detail as possible."></textarea>
+      <div style="text-align:right">
+        <div id="feedbackbox-response"><!-- --></div>
+        <%- template.use('button', null, { id:"feedbackbox-send", buttonType: 'button', className: 'default', label: 'Send' }); %>
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+
+<% return ejs_data; }); %>

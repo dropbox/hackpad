@@ -1,0 +1,64 @@
+<%
+  helpers.includeJQuery();
+  helpers.includeJs("modals.js");
+  helpers.includeJs('jquery.validate.js');
+  helpers.includeJs('jquery.placeholder.js');
+
+  helpers.includeCss("base.less");
+  helpers.includeCss("home.less");
+
+  helpers.addToHead("<meta content='hackpad.com' name='title' />");
+  helpers.addToHead("<meta content='Real-time collaborative wiki' name='description' />");
+%>
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+$(document).ready(function(){
+  modals.showModal("#confirmation-dialog", 0);
+  $("#modaloverlay").hide();
+
+
+$('#submit').click(function(e) {
+  var opts = [$('#love').attr('checked') ? "love" : "",
+      $('#usecase').attr('checked') ? "usecase" : "",
+      $('#reliable').attr('checked') ? "reliable" : "",
+      $('#email').attr('checked') ? "email" : ""].join(",");
+  $("#hiddenfeedback").val("\n" + opts);
+});
+
+});
+
+</script>
+<style type="text/css">
+  input[type=checkbox] {
+    font-size:20px;
+    line-height: 40px;
+  }
+  label:hover {
+    background: #fafafa;
+  }
+  label {
+    width: 450px;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1.3em;
+    padding-left:10px;
+    position: relative;
+    top:-1px;
+    margin-bottom: 1em;
+  }
+</style>
+
+<div id="confirmation-dialog" class="modaldialog" style="margin-left:-300px; width:600px;">
+  <h1>Unsubscribe From Product Updates</h1>
+  <div class="modaldialog-inner" style="padding-left:40px; padding-right:40px; font-size:16px;">
+    <p>You have been unsubscribed from all future product updates. <br/>You can <a href="<%=resubscribeUrl%>">re-subscribe  here</a>. </p>
+    <br/>
+    <p><b>We're sorry to see you go! </b></p>
+    <br/>
+
+    <br/><br/>
+    <a href="/"> Take me to the homepage! </a>
+
+  </div>
+</div>
+
+

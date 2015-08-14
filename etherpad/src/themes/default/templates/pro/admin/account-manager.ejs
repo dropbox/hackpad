@@ -1,0 +1,63 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+<% function fmtdate(d) {
+  if (!d) {
+    return "Never";
+  } else if ((new Date()).getTime() - d.getTime() < 1000 * 60 * 60 * 24 * 14) {
+    return SPAN({style: "color:green;"}, d.toString().split(' ').slice(0,5).join(' '));
+  } else {
+    return SPAN({style: "color:red;"}, d.toString().split(' ').slice(0,5).join(' '));
+  }
+} %>
+
+<h3 class="top">Accounts</h3>
+
+<div class="manage-accounts">
+
+  <%- messageDiv() %>
+  <%- warningDiv() %>
+
+  <p><a href="<%= request.path %>new">Create new account</a></p>
+
+  <% function renderAccountRow(u) {
+     var name = u.fullName;
+     return TR(TD({style:"text-overflow:hidden"}, name),
+               TD(u.email.substring(0, 25)),
+               TD(u.isAdmin ? 'Admin' : ''),
+               TD(fmtdate(u.lastLoginDate)),
+               TD(A({href: request.path + "account/"+u.id}, "Manage")))
+    }
+  %>
+
+  <table id="accountlist" style="table-layout: fixed;WORD-BREAK:BREAK-ALL; ">
+    <tr>
+      <th width="120">Name</th>
+      <th width="120">Email</th>
+      <th>FB</th>
+      <th width="30">G</th>
+      <th>Role</th>
+      <th>Last Signed In</th>
+      <th width="60">&nbsp;</th>
+    </tr>
+
+    <% accountList.forEach(function(u) { %>
+      <%- renderAccountRow(u) %>
+    <% }); %>
+
+  </table>
+
+  <p class="account-tally"><%= count %> account<%= count == 1 ? "" : "s" %>.</p>
+
+</div>
+

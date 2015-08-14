@@ -1,0 +1,52 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %><% helpers.includeCss("pro/account.less") %>
+<% helpers.includeJQuery() %>
+<% helpers.includeJs("pro/signin-client.js") %>
+<% helpers.setHtmlTitle("EtherPad: Sign In") %>
+
+<div class="fpcontent">
+  <div class="account-container">
+
+    <form id="guest-signin-form"
+          action="<%= request.path + '?' + request.query %>" method="post"
+          style="border: 1px solid #5a5; background: #efe; padding: 1em;">
+      <%- helpers.xsrfTokenElement() %>
+      <div style="font-weight: bold;">Guest Sign In:</div>
+
+      <% if (errorMessage) { %>
+        <div style="margin: 1em 0; padding: 1em; border: 1px solid red; background: #fee;">
+          <%= errorMessage %>
+        </div>
+      <% } %>
+
+      <p>Enter your name to be displayed to other users:</p>
+      <input id="guestDisplayName" type="text" name="guestDisplayName" value="<%= guestName
+      %>" />
+      <input type="hidden" name="localPadId" value="<%= localPadId %>" />
+
+      <input type="submit" value="Request Access" />
+
+    </form>
+
+    <form id="account-signin-choice"
+          method="get"
+          action="/ep/account/sign-in">
+      <%- helpers.xsrfTokenElement() %>
+      <input type="hidden" name="guest" value="1" />
+      <input type="hidden" name="padId" value="<%= localPadId %>" />
+      Account holders: <button>Sign in</button>
+    </form>
+  </div>
+</div>
+

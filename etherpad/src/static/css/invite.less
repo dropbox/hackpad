@@ -1,0 +1,61 @@
+@import "colors.less";
+
+#friend-picker-div {
+  height: 25px;
+  padding: 5px;
+  padding-left: 0px;
+  margin-top: 4px;
+  clear: both;
+  position: relative;
+  margin-bottom: 25px;
+}
+
+#invite-form {
+  position: relative;
+}
+
+#friend-picker-wrapper {
+  position: relative;
+  transition: all 100ms ease-in;
+  margin-top: 10px;
+}
+
+#friend-picker-wrapper .icon-invite {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-size: 23px;
+  color: @color_border;
+}
+
+.collection-page #friend-picker-wrapper .icon-invite {
+  display: none; /* temporary on collections page. */
+}
+
+#friend-picker {
+  background-color: transparent;
+  margin-top: -1px;
+  font-family: @base_font_new;
+  font-weight: 100;
+  font-size: 15px;
+  padding: 8px 0px 8px 29px;
+  border-radius: 2px;
+  transition-property: width, background-color, border;
+  transition-duration: 100ms;
+  transition-timing-function: ease-in;
+  border: 0;
+  width: 0;
+}
+
+#friend-picker-wrapper:hover #friend-picker,
+#friend-picker {
+  background-color: #fff;
+  color: @color_actionable;
+  box-shadow: inset 1px 1px 2px -1px #aaa;
+  border: 1px solid #ccc;
+  width: 150px;
+}
+
+#friend-picker ~ .icon-invite {
+  z-index: 1;
+}

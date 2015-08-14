@@ -1,0 +1,269 @@
+.account-container {
+  width: 434px;
+  margin: 0 auto;
+}
+
+#account-error {
+  margin-bottom: 1em;
+  padding: 1em;
+  background: #fee;
+  border: 1px solid #f66;
+  font-size:14px;
+
+/*  font-weight: bold;*/
+}
+
+#account-message {
+  margin: 1em 0;
+  padding: 1em;
+  background: #efe;
+  border: 1px solid #ccc;
+/*  font-weight: bold;*/
+}
+
+#signin-notice {
+  margin-bottom: 3em;
+  padding: 1em;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+/*---- blue box (general) ----*/
+/* TODO: move to different file, bluebox.css? */
+
+div.bb {
+  background: #f7f7f7;
+}
+
+div.bb div.bb-top {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: url(/static/img/pro/box/blue-boxtop.gif) repeat-x 0 -30px;
+}
+
+div.bb div.bb-topleft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 9px;
+  background: url(/static/img/pro/box/blue-boxtop.gif) no-repeat 0 0;
+}
+
+div.bb div.bb-topright {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 30px;
+  width: 9px;
+  background: url(/static/img/pro/box/blue-boxtop.gif) no-repeat -9px 0;
+}
+
+div.bb div.bb-title {
+  color: #fff;
+  font-weight: bold;
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+div.bb div.bb-in {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+button.bluebutton {
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  overflow: visible;
+  padding: 0;
+  background: #70a4ec;
+  border: 1px solid #3773c6;
+  padding: 4px 6px;
+}
+
+button.bluebutton120 {
+  background: url(/static/img/pro/buttons/bluebutton120.gif) no-repeat;
+  width: 120px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+}
+
+
+/*---- sign-in box ----*/
+
+div.bb-signin div.bb-in {
+  padding: 10px 12px 20px 12px;
+}
+
+div.bb-signin label#email-label,
+div.bb-signin label#password-label {
+  display: block;
+  float: left;
+  width: 92px;
+  margin-top: 10px;
+  font-size: 1.1em;
+  color: #333;
+  padding-top: 5px;
+}
+
+div.bb-signin input.textin,
+div.bb-signin input.passin {
+  border: 1px solid #c2c2c2;
+  background: #ffffff;
+  margin-top: 10px;
+  width: 300px;
+  font-size: 1.1em;
+  float: right;
+}
+
+div.bb-signin input#rememberMe,
+div.bb-signin label#rememberMe-label {
+  float: left;
+}
+div.bb-signin input#rememberMe {
+  margin-top: 32px;
+}
+div.bb-signin label#rememberMe-label {
+  margin-left: 10px;
+  margin-top: 32px;
+  color: #555;
+  font-size: .9em;
+  display: block;
+}
+
+div.bb-signin button.bluebutton {
+  float: right;
+  margin-top: 24px;
+}
+
+
+div.account-container div#bottom-text {
+  padding-top: 20px;
+  padding-left: 4px;
+  font-size: .9em;
+}
+div.account-container div#bottom-text a {
+  text-decoration: none;
+}
+
+#guest-signin-choice {
+  display: block;
+  border: 1px solid green;
+  background: #efe;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+#account-signin-choice {
+  display: block;
+  border: 1px solid blue;
+  background: #eef;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+div#guest-knock-box {
+/*  width: 500px;
+  margin: 0 auto;
+  border: 1px solid green;
+  background: #efe;
+  font-weight: bold;
+  padding: 1em;
+  font-size: 1.5em;*/
+}
+
+div#guest-knock-denied {
+  border: 1px solid red;
+  background: #fee;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 1em;
+  margin: 0 auto;
+  width: 500px;
+  display: none;
+}
+
+/*---- recover lost password ----*/
+.account-container.forgotpass-container {
+  margin-top:200px;
+}
+
+div.bb-forgotpass div.bb-in {
+  padding: 10px 12px 12px 12px;
+}
+
+div.bb-forgotpass div#instructions {
+  font-size: .8em;
+  color: #222;
+}
+
+div.bb-forgotpass label {
+  float: left;
+  width: 20%;
+  margin-top: 14px;
+  font-size: 1.1em;
+  color: #333;
+  padding-top: 5px;
+}
+
+div.bb-forgotpass input.textin {
+  border: 1px solid #c2c2c2;
+  background: #fff;
+  margin-top: 14px;
+  width: 75%;
+  float: right;
+  padding:4px;
+  line-height:18px;
+  font-size:15px;
+}
+
+div.bb-forgotpass button {
+  float: right;
+  margin-top: 16px;
+}
+
+
+/*---- my account ----*/
+/* TODO: re-style this and move to different file */
+
+div.my-account {
+  width: 600px;
+  margin: 0 auto;
+}
+
+div.my-account h2 {
+  font-size: 1.2em;
+  border-bottom: 1px solid #444;
+  color: #444;
+  margin: 1em 0;
+}
+
+div.my-account table {
+  width: 500px;
+}
+
+div.my-account table .ti input[type=text],
+div.my-account table .ti input[type=password] {
+  width: 100%;
+}
+
+div.my-account table th {
+  width: 160px;
+}
+
+div.my-account table th,
+div.my-account table td {
+  padding: 4px 8px;
+}
+
+
+
+div.my-account input {
+  line-height:20px;
+}
+

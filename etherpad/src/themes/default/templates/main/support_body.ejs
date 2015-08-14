@@ -1,0 +1,35 @@
+<% helpers.includeJs("modals.js") %>
+<% template.inherit("ui.ejs"); %>
+
+<% helpers.includeJs('jquery.placeholder.js'); %>
+<% helpers.includeCss("pro/account.less") %>
+<% helpers.includeCss("base.less") %>
+
+<div class="modaldialog" id="send-support-mail" style="">
+  <h1>Sorry you're having trouble</h1>
+  <div class="modaldialog-inner">
+    <p>What happened? </p>
+    <br/>
+    <form action="/ep/pad/feedback?confirm=1" method="POST">
+      <%- helpers.xsrfTokenElement() %>
+      <textarea id="feedback" name="feedback" rows="6" cols="40" class="boxsizingBorder" style="background:white; width:100%; padding:5px;font-size:14px; padding-top:5px; margin-bottom:20px;"></textarea>
+      <br/>
+      <div class="dialog-buttons">
+        <%- template.use('button', null, { buttonType: 'submit', className: 'default', label: 'Send' }); %>
+      </div>
+    </form>
+    <div style="clear:both"></div>
+  </div>
+</div>
+
+<div style="height:500px">
+</div>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  $(document).ready(function(){
+    modals.showModal("#send-support-mail", 0);
+    $("#modaloverlay").hide();
+    $("textarea").focus();
+  });
+
+</script>

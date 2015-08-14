@@ -1,0 +1,23 @@
+<%
+  template.inherit('ui.ejs');
+  helpers.includeCss("follow.less");
+%>
+
+<%partial followButton (padId, following, opt_noLabel) %>
+  <div id="follow-container" src="/ep/pad/pad-follow-button?padId=<%=encodeURIComponent(padId)%>">
+    <%- template.use('button', null, {
+      type: 'secondary',
+      className: 'padfollow ' + (!following ? '' : 'hidden'),
+      fontIcon: 'icon-follow',
+      label: opt_noLabel ? '' : N_('Follow'),
+      tooltip: N_('Follow')
+    }); %>
+    <%- template.use('button', null, {
+      type: 'secondary',
+      className: 'padunfollow ' + (!following ? 'hidden' : ''),
+      fontIcon: 'icon-follow',
+      label: opt_noLabel ? '' : N_('Unfollow'),
+      tooltip: N_('Following')
+    }); %>
+  </div>
+<%endpartial %>

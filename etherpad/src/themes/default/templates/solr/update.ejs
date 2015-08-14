@@ -1,0 +1,38 @@
+
+<add>
+  <doc>
+    <field name="id"><%- id %></field>
+    <field name="domainId"><%- domainId %></field>
+    <field name="lastedit"><%- lastedit %></field>
+    <field name="tlastedit"><%- tlastedit %></field>
+    <field name="revision"><%- revision %></field>
+    <field name="contents"><![CDATA[<%- contents.replace(']]>', '', 'g') %>]]></field>
+    <field name="title"><![CDATA[<%- title.replace(']]>', '', 'g') %>]]></field>
+    <field name="caption"><%- caption %></field>
+    <% for (var i = 0; i < chat.length; i++) { %>
+      <field name="chat"><%- chat[i] %></field>
+    <% } %>
+    <% for (var i = 0; i < authorId.length; i++) { %>
+      <field name="authorId"><%- authorId[i] %></field>
+    <% } %>
+    <% for (var i = 0; i < invitedId.length; i++) { %>
+      <field name="invitedId"><%- invitedId[i] %></field>
+    <% } %>
+    <% for (var i = 0; i < invitedGroupId.length; i++) { %>
+      <field name="invitedGroupId"><%- invitedGroupId[i] %></field>
+    <% } %>
+    <% for (var i = 0; i < url.length; i++) { %>
+      <field name="url"><![CDATA[<%- url[i].replace(']]>', '', 'g') %>]]></field>
+    <% } %>
+    <field name="guestpolicy"><%- guestpolicy %></field>
+    <field name="lastEditorId"><%- lastEditorId %></field>
+    <field name="creatorId"><%- creatorId %></field>
+    <% for (var i = 0; i < editorId.length; i++) { %>
+      <field name="editorId"><%- editorId[i] %></field>
+    <% } %>
+    <field name="visibility"><%- visibility %></field>
+    <field name="viewsTotal"><%- viewsTotal %></field>
+    <field name="viewsRecent"><%- viewsRecent %></field>
+    <field name="collectionCount"><%- collectionCount %></field>
+  </doc>
+</add>

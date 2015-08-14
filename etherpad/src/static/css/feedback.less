@@ -1,0 +1,104 @@
+@import 'globals.less';
+@import 'mixins.less';
+
+/*----------------------------------------------------------------*/
+/* feedback */
+/*----------------------------------------------------------------*/
+
+#feedbackbutton {
+  position: fixed;
+  left:-39px;
+  bottom: 200px;
+  width: 100px;
+  z-index: @zindex_major;
+
+  .transform(rotate(90deg));
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+
+  display:none;
+}
+
+#feedbackbutton:hover {
+  opacity: 0.95;
+}
+
+@feedbackbox_width: 400px;
+@feedbackbox_height: 270px;
+@feedback_input_width: 342px;
+#feedbackbox {
+  position: fixed; display: none;
+  left:50%;
+  top: 50px;
+  margin-left: -200px;
+  margin-right:auto;
+  /*top: 50px;*/
+  z-index: 501; zoom: 1;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: white;
+  width: 390px;
+
+}
+
+#feedbackbox-topic {
+  width: 352px;
+}
+
+.insetTextboxBoxShadow {
+  -moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);
+  -webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);
+  box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);
+}
+
+#feedbackbox-subject {
+  width: @feedback_input_width;
+  .insetTextboxBoxShadow;
+}
+
+#feedbackbox .error {
+  font-size:13px;
+}
+#feedbackbox-hide { width: 22px; height: 22px; right: 9px; top: 7px;
+  background-position: -569px -6px;
+}
+#feedbackbox-back { width: @feedbackbox_width - 16px;
+  height: @feedbackbox_height - 16px; left: 8px; top: 8px;
+  background-position: -8px -8px;
+  background-color: white; }
+#feedbackbox-contents { width: @feedbackbox_width - 16px;
+  height: @feedbackbox_height - 16px; left: 8px; top: 8px;
+  position: absolute; font-size: 1.4em; color: #444; }
+#feedbackbox-contentsinner { padding: 10px; }
+#feedbackbox-send {
+
+}
+#feedbackbox-email {
+  width: @feedback_input_width;
+  height:26px;
+  .insetTextboxBoxShadow;
+}
+#feedbackbox-message {
+  left: 90px; top: 84px; width: 352px; height: 130px;
+  font-size:15px;
+  background:white;
+ .insetTextboxBoxShadow;
+  padding:5px;
+}
+
+#feedbackbox-faq,
+#feedbackbox-feature-request {
+  display: none;
+}
+
+#feedbackbox-response { float:left;
+   font-size: 13px; display: none; }
+#feedbackbox .goodresponse { font-weight: bold; color: green; }
+#feedbackbox .badresponse { font-weight: bold; color: red; }
+#feedbackbox p { margin-bottom: 1em; }
+#feedbackbox ul { margin: 1em 0 1em 2em }
+#feedbackbox li { padding: 0.3em 0; }
+#feedbackbox li a { display: block; font-weight: bold; }
+#feedbackbox li a:hover { background: #ffe; }
+#feedbackbox a, #feedbackbox li a:visited { color: #47b; }
+#feedbackbox tt { font-size: 110%; }

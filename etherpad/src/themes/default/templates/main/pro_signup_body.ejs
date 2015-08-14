@@ -1,0 +1,140 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<%
+  helpers.includeJQuery();
+  helpers.includeCss("base.less");
+  helpers.includeCss("home.less");
+  helpers.includeCss('pro-signup.less')
+  helpers.includeJs('jquery.placeholder.js');
+%>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  $(function () {
+    $('input[placeholder]').placeholder();
+  });
+
+  function maybeCheckUseDomain() {
+    if ($("#allowDomain").val() == "") {
+      $("#useDomain").removeAttr("checked");
+    } else {
+      $("#useDomain").attr("checked", "checked");
+    }
+  }
+</script>
+
+<div id="home">
+
+<div id="top">
+  <div id="top-center" style="position: relative;">
+
+    <div id="logo-bar"></div>
+    <span id="title" style="color:white"><a style="color:white; text-decoration: none;" href="https://hackpad.com">hackpad</a> <div style="float: right; padding-right: 30px;">Private Site</div></span>
+
+  </div>
+</div>
+
+  <div id="page" style="padding-top:40px">
+
+    <% if (subdomain) { %>
+      <div id="banner">
+        <p style="margin-bottom: 35px; margin-top: 20px; color:#333; font-size:50px; text-align: center"> This Site Available </p>
+      </div>
+      <div class="iphonehide" style="width:800px; padding-bottom: 20px;">
+        <p style="margin-bottom: 35px; margin-top: -30px; line-height:25px; color:#333; font-size:18px; text-align: center">Company knowledgebase.  Classroom collaboration.  Event planning.  Personal notes.</p>
+        <hr style="margin-bottom:25px;">
+      </div>
+    <% } %>
+
+
+    <div class="pro-signup">
+
+<div style="width: 350px; float: left;">
+
+<h1 style="color: #333; font-size: 40px; font-weight: normal; margin-top: 0px;">Simple Signup and Pricing</h1>
+<h3 style="color: #555; font-size: 20px;"">
+<ul style="list-style: inherit;">
+    <li><strong>Free</strong> for unlimited users</li>
+    <li>30 day <strong>risk-free</strong> trial</li>
+    <li>No credit card required</li>
+    <li>No long-term contracts</li>
+</ul>
+</h3>
+
+<br/>
+<br/>
+
+</div>
+
+
+      <form id="pro-act-form"
+            method="post" action="/ep/pro-signup/" style="float: right;">
+        <%- helpers.xsrfTokenElement() %>
+        <div class="inputdiv">
+
+          <h2 style="margin-top: 0px; color: #555;">Start your 30-day free trial</h2>
+
+          <%- errorDiv() %>
+
+          <div>
+            <input type="text" name="fullName" placeholder="Your Name" style="margin-bottom: 10px;"/>
+            <input type="text" name="email" placeholder="Work Email" style="margin-bottom: 10px;"/>
+            <!--input type="password" name="password" placeholder="Password"/-->
+          </div>
+
+          <div>
+            <input type="text" name="orgName" placeholder="Company Name" style="margin-bottom: 10px;"/>
+            <div style="position: relative;">
+              <span style="width:13px; height: 13px;  position:absolute; opacity:0.8; left:6px; top:14px; z-index:10;">https://</span>
+              <input type="text" id="subdomain" name="subdomain" placeholder="sitename" value="<%=subdomain%>" />
+              <span style="width:122px; height: 13px;  position:absolute; opacity:0.8; right:0px; top:14px; z-index:10;">.hackpad.com</span>
+            </div>
+          </div>
+
+          <!--
+          <div>
+            <h3>Automatic accounts (optional)</h3>
+            <div style="font-size: smaller; margin-bottom: 6px;">
+              <div style="padding: 6px; float: left;"><input type="checkbox" id="useDomain" name="useDomain"/></div> Allow sign-ins by anyone with an email address at this domain:
+            </div>
+
+            <div style="position: relative;">
+              <span style="width:13px; height: 13px;  position:absolute; opacity:0.8; left:6px; top:14px; z-index:10;">@</span>
+              <input type="text" id="allowDomain" name="allowDomain" placeholder="your-organization.com" data-keyup="maybecheckusedomain"/>
+            </div>
+          </div>
+          -->
+          <%- helpers.clearFloats() %>
+
+          <div style="margin-bottom: 1em;"><button type="submit" class="blue-button" style="width: 100%; line-height:27px">Sign Up</button></div>
+        </div>
+
+
+      </form>
+
+      <div style="clear:both"></div>
+
+    </div>
+  </div>
+
+
+
+<div style="clear:both"></div>
+
+<div style="height: 80px; background-color: white;">
+  <div id="footer">
+  </div>
+</div>
+
+</div>

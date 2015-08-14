@@ -1,0 +1,137 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<% template.inherit('pro/_domain_members.ejs'); %>
+<% template.inherit('pro/_pro_navpage.ejs'); %>
+
+<% helpers.includeJs("cookies.js"); %>
+<% helpers.includeJs("hints.js"); %>
+
+<%- template.define('homeleft', function() { var ejs_data=''; %>
+  <h1 class="sidebarheading" style="font-size: 1.4em; font-weight: normal;"><span class="num-search-results"><%=numFound%></span> results for <strong><%= query %></strong>
+
+  <% if (filterGroupInfo) { %>
+    in collection <a href="/ep/group/<%=filterGroupInfo.encryptedId%>"><%=filterGroupInfo.name%></a>
+  <% } %>
+  <% if (filterAuthorInfo) { %>
+    edited by <a href="<%=filterAuthorInfo.userLink%>"><%=filterAuthorInfo.name%></a>
+  <% } %>
+  <% if (filterLastEdit) { %>
+    edited in the last <%=filterLastEdit%> days
+  <% } %>
+  </h1>
+
+  <div class="searchpage-section selected">
+    <div id="listwrap-search">
+      <%- padListHtml %>
+    </div>
+  </div>
+
+  <% if (isDogfood()) { %>
+    <script nonce="<%= helpers.cspNonce() %>">
+      function printSolrScoreInfo() {
+        var solrDebug = clientVars.solrDebugInfo;
+        for (var padId in solrDebug.explain) {
+          window.console.log(padId+": \n"+solrDebug.explain[padId]);
+        }
+      }
+      function printSolrTimingInfo() {
+        var solrDebug = clientVars.solrDebugInfo;
+        var timingInfo = "timing: " + solrDebug.timing.time;
+        var propsString = ['prepare','process'].map(function(t){
+          var o = solrDebug.timing[t];
+          var vals = ['query', 'facet', 'highlight', 'debug', 'stats'].map(function(key){
+            return key+": "+o[key].time;
+          }).join("\n\t\t");
+          return t + ": " + o.time + "\n\t\t" + vals;
+        }).join("\n\t");
+
+        var timingInfo = "timing: " + solrDebug.timing.time + "\n\t" + propsString;
+        window.console.log(timingInfo);
+      }
+    </script>
+  <% } %>
+  <form action="/ep/padlist/toggle-archive" method="post" id="toggle-archive-pad" style="display: none;">
+    <%- helpers.xsrfTokenElement() %>
+    <input type="hidden" name="returnPath" value="<%= request.url %>" />
+    <input id="padIdToToggleArchive" name="padIdToToggleArchive" type="hidden" value="-" />
+  </form>
+
+  <div>
+  <% if (start> 0) { %>
+    <a style="display:block; float:left;" href='/ep/search/?q=<%=query + "&start=" + Math.max((start - pageSize),0) + "&limit=" + pageSize %>'>Previous Page </a>
+  <% } %>
+
+  <% if (numFound > (start + limit)) { %>
+    <a style="display:block; float:right;" href='/ep/search/?q=<%=query + "&start=" + (start + pageSize) + "&limit=" + pageSize %>'>Next Page </a>
+  <% } %>
+  </div>
+<% return ejs_data; }); %>
+
+
+<%- template.define('homeright', function() { var ejs_data=''; %>
+
+  <div style="margin-top: 35px;"></div>
+
+  <% if (numFound) { %>
+    <div style="margin-top: 30px;"></div>
+    <div id="filter-date-list" style="font-size:13px; line-height:23px;">
+      <div class="filter-date <%if (!filterLastEdit) {%>selected<%}%>" data-date="">
+        All Time
+      </div>
+      <div class="filter-date <%if (filterLastEdit == 7) {%>selected<%}%>" data-date="7">
+        Last Week
+      </div>
+      <div class="filter-date <%if (filterLastEdit == 30) {%>selected<%}%>" data-date="30">
+        Last Month
+      </div>
+      <div class="filter-date <%if (filterLastEdit == 365) {%>selected<%}%>" data-date="365">
+        Last Year
+      </div>
+    </div>
+  <% } %>
+
+  <% if (authorInfos.length) { %>
+    <div style="margin-top: 30px;"></div>
+    <div id="filter-profile-list" style="font-size:13px; line-height:23px;">
+      <div class="filter-profile <%if (!filterAuthorInfo) {%>selected<%}%>" data-profileid="">
+        All Contributors
+      </div>
+      <% for (var i in authorInfos) { %>
+      <div class="filter-profile <%if((filterAuthorInfo||{}).encryptedId == authorInfos[i].encryptedId) {%>selected<%}%>" data-profileid="<%= authorInfos[i].encryptedId %>">
+        <%= authorInfos[i].name %>
+      </div>
+      <% } %>
+    </div>
+  <% } %>
+
+  <% if (groupInfos.length) { %>
+    <div style="margin-top: 30px;"></div>
+    <div id="filter-group-list" style="font-size:13px; line-height:23px;">
+      <div class="filter-group <%if (!filterGroupInfo) {%>selected<%}%>" data-groupid="">
+        All Collections
+      </div>
+      <% for (var i in groupInfos) { %>
+      <div class="filter-group <%if((filterGroupInfo||{}).encryptedId == groupInfos[i].encryptedId) {%>selected<%}%>" data-groupid="<%= groupInfos[i].encryptedId%>">
+        <%= groupInfos[i].name %>
+      </div>
+      <% } %>
+    </div>
+  <% } %>
+
+
+<% return ejs_data; }); %>
+
+
+

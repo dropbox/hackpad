@@ -1,0 +1,186 @@
+<%
+  template.inherit('pad/editor_base.ejs');
+  template.inherit('_invite_control.ejs');
+  template.inherit('pad/_follow.ejs');
+  template.inherit('pad/toolbar.ejs');
+  template.inherit("ui.ejs");
+
+  helpers.addSmartAppBanner();
+
+  helpers.addBodyClass("sitebar");
+  helpers.addBodyClass("hasSitebar");
+
+  helpers.includeJs("pad_chat.js");
+  helpers.includeJs("pad_invitelog.js");
+
+  if (false && isDogfood()) {
+    if (!request.userAgent.isMobile()) {
+      helpers.addBodyClass("hasBanner");
+    }
+  }
+%>
+
+
+<% template.define('editorExtras', function() { var ejs_data=''; %>
+  <div id="collections-div" class="sidebar-div">
+    <div id="collection-list-div">
+      <%- template.use('button', null, {
+        id: 'add-to-collection',
+        type: 'custom',
+        label: 'add to collection',
+        menu: [
+          { id: 'collection-invite-list-item',
+            html: '<form id="collection-invite-form">' +
+                helpers.xsrfTokenElement() +
+                '<input type="hidden" name="padId" value="' +
+                encodeURIComponent(localPadId) + '" />' +
+                '<i class="icon-addcollection"></i>' +
+                '<input type="text" id="collection-picker" ' +
+                'placeholder="New or existing collection"/>' +
+                '</form>'
+          }
+        ]
+      }); %>
+    </div>
+    <div id="collections-recent-list-wrapper">
+      <div id="collections-recent-label" class="sidebartext">
+        or choose a recent collection:
+      </div>
+      <ul id="collections-recent-list"></ul>
+    </div>
+    <div id="collection-list-overflow"></div>
+  </div>
+
+  <div id="shared-with-settings">
+    <div id="shared-with-settings-inner">
+    <%
+      var padaccessMenu = [{ id: 'padaccess-deny',
+          html: '<i class="icon-lock"></i>' + N_('invitees only'), }];
+      if (guestPolicies.indexOf('friends') != -1) {
+        padaccessMenu.push({ id: 'padaccess-friends',
+            html: '<i class="icon-privacy-inspace"></i>' +
+            N_('hackpad friends'), });
+      }
+
+      if (guestPolicies.indexOf('link') != -1) {
+        if (isSubDomain) {
+          padaccessMenu.push({ id: 'padaccess-link',
+              html: '<i class="icon-privacy-inspace"></i>' +
+              N_('workspace members w/link'), });
+        } else {
+          padaccessMenu.push({ id: 'padaccess-link',
+              html: '<i class="icon-privacy-link"></i>' +
+              N_('anyone with link'), });
+        }
+      }
+
+      if (guestPolicies.indexOf('domain') != -1) {
+        padaccessMenu.push({ id: 'padaccess-domain',
+            html: '<i class="icon-privacy-inspace"></i>' +
+            N_('all workspace members'), });
+      }
+
+      if (!isSubDomain || isPublicDomain) {
+        padaccessMenu.push({ id: 'padaccess-allow',
+            html: '<i class="icon-privacy-public"></i>' +
+            N_('everyone (public)'), });
+      } else {
+        padaccessMenu.push({ id: 'padaccess-allow',
+            html: '<i class="icon-privacy-public"></i>' +
+            N_('everyone (external)'), });
+      }
+    %>
+    <%- template.use('button', null, {
+      id: 'padaccess-menu',
+      type: 'custom',
+      label: '',
+      disabled: true,
+      menu: padaccessMenu
+    }); %>
+    </div>
+  </div>
+
+  <% if (helpers.isChatEnabled()) { %>
+    <%- template.use('chat'); %>
+  <% } %>
+<% return ejs_data; }); %>
+
+
+<% template.define('bottomBar', function() { var ejs_data=''; %>
+  <div>
+    <a id="editor-last-changed" href="/ep/pad/summary/<%= localPadId %>">
+      Latest change
+      <span id="last-saved-timestamp" title="<%=lastSaveTimestamp%>"></span>
+    </a>
+  </div>
+
+  <script id="template-user-create-entry" type="text/html">
+    <div class="create">
+      <img />
+      <a class="host"></a> created this <span class="timestamp"></span>.
+    </div>
+  </script>
+
+  <script id="template-invite-user-entry" type="text/html">
+    <div class="invite">
+      <img />
+      <a class="host"></a> invited
+      <a class="user"></a>.
+      <span class="lastAccessed">Seen
+      <span class="lastAccessedTimestamp"></span>.</span>
+      <span class="timestamp"></span>
+    </div>
+  </script>
+
+  <script id="template-invite-group-entry" type="text/html">
+    <div class="invite">
+      <img />
+      <a class="host"></a> added this to collection
+      <a class="collection"></a>. <span class="timestamp"></span>
+    </div>
+  </script>
+
+  <div id="inviteLog-wrapper"><div id="inviteLog"></div></div>
+<% return ejs_data; }); %>
+
+
+<% template.define('editorMoreModals', function() { var ejs_data=''; %>
+  <%- template.use('editorModalsCommon'); %>
+
+  <div id="embedpaddialog" class="modaldialog">
+   <h1>Embed This Pad</h1>
+   <div class="modaldialog-inner">
+    <label for="embedpad-code">
+      Paste the following into your web page or blog:
+    </label>
+    <textarea id="embedpad-code" rows="6" readonly></textarea>
+    <br />
+    <div class="clear"></div>
+    Embed as
+    <select id="embedpad-type" onchange="pad.updateEmbedCode()">
+      <option value="">Editable Hackpad</option>
+      <option value="html">Plain HTML</option>
+      <option value="html-notitle">Plain HTML without title</option>
+    </select>
+    <div class="dialog-buttons">
+      <a class="button" href="#" data-click="hidemodal">Close</a>
+    </div>
+  </div>
+<% return ejs_data; }); %>
+
+
+<% template.define('sideBar', function() { var ejs_data=''; %>
+  <%- template.use('editorSidebarCommon'); %>
+
+  <div id="related-pads-div" class="sidebar-div">
+    <div class="sidebarheading">
+      <%- template.use('button', null, {
+        id: 'related-pads-menu',
+        type: 'custom',
+        label: 'Related Pads',
+        className: 'hp-ui-button-menu-reverse',
+        menu: [{}]
+      }); %>
+    </div>
+  </div>
+<% return ejs_data; }); %>

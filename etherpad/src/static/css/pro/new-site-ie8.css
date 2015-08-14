@@ -1,0 +1,12 @@
+#new_site div.wrapper form input[type="radio"] + label:before {
+  display: none;
+}
+#new_site div.wrapper form #subdomain-check span {
+  color: white !important;
+}
+#new_site div.wrapper form #subdomain-check.available {
+  background-color: #499d25;
+}
+#new_site div.wrapper form #subdomain-check.unavailable {
+  background-color: #ff0000;
+}

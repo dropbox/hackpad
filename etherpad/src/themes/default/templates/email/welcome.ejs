@@ -1,0 +1,28 @@
+<%   template.inherit('email/_base.ejs'); %>
+
+
+<% template.define('content', function() { var ejs_data=''; %>
+
+
+<div>
+Welcome to Hackpad! Almost :)
+</div>
+
+<div>
+
+The only thing left to do before getting started is to verify this email, which you can do by clicking below:
+</div>
+
+<%- template.use('email-button', null, "Verify your account", validationUrl) %>
+
+Alternatively, click the following link: <a href="<%=validationUrl%>"><%=validationUrl%></a>
+
+<div style="margin-bottom:20px; margin-top:10px">
+-- Your friends at Hackpad
+</div>
+
+
+If you didn't sign up for Hackpad, please ignore this email.
+
+
+<% return ejs_data; }); %>

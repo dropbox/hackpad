@@ -1,0 +1,21 @@
+<% template.inherit('_invite_control.ejs'); %>
+
+<%partial domainMembersList (domainMemberCount,domainMembers,allowInvites) %>
+  <div id="domain-members" class="sidebarsection" src="/ep/domain-members-list">
+    <div class="sidebarheading" >Members (<%=domainMemberCount%>)</div>
+
+    <div id="domain-members-list">
+      <% for (var i in domainMembers) { %>
+      <span class="user-item" data-userid="<%= domainMembers[i].encryptedId%>">
+      <a href="<%=domainMembers[i].userLink %>" title="<%=domainMembers[i].name%>"><img src="<%=domainMembers[i].userPic%>" alt="<%=domainMembers[i].name%>" /></a></span>
+      <% } %>
+    </div>
+
+    <% if (allowInvites) { %>
+      <%- template.use('inviteControl',null ,"invite-to-site", "invite people to contribute"); %>
+    <% } %>
+
+  </div>
+
+<%endpartial %>
+

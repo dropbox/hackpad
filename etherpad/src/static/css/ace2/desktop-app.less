@@ -1,0 +1,286 @@
+
+
+@import "/static/css/colors.less";
+@import "/static/css/globals.less";
+
+body.desktop-app {
+  @header_padding: 10px;
+  width: 100%;
+  background-color: #fff;
+  font-family: @base_font;
+
+  & > header {
+    padding: 14px @header_padding;
+    box-shadow: inherit;
+    border-bottom: 1px solid @color_border_desktop;
+    background-color: #fff;
+    min-width: 0;
+    max-width: none;
+    width: calc(~"100% - 50px");
+    left: 15px;
+    right: 15px;
+    height: 22px;
+  }
+
+  #topbarBrand {
+    display: inline-block;
+    float: left;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    opacity: 1;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-family: nova, arial, sans-serif;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+    position: relative;
+    left: 0px;
+    top: 0;
+  }
+
+  #toolbar {
+    float: left;
+    display: inline-block;
+    opacity: 1;
+    top: 4px;
+    right: 45px;
+  }
+
+  #settingsbutton,
+  #follow-container {
+    display: none;
+  }
+
+  #padpage {
+    padding-top: 0;
+    min-height: 0;
+    margin-top: 0px;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  @padeditor_padding: 40px;
+  #padeditor {
+    width: ~"calc(100% - @padeditor_padding * 2) !important";
+    margin: 10px @padeditor_padding 0 @padeditor_padding;
+    max-width: none;
+    padding-bottom: 0;
+  }
+
+  #editor .emptyGutter,
+  div.ace-line {
+    border-left-width: @desktop_border_width;
+    padding-left: @new_left_padding;
+    padding-right: @new_right_padding;
+  }
+
+  #editor {
+    padding-top: 20px;
+    padding-bottom: 30px;
+    box-shadow: none;
+  }
+
+  #editorbottombox {
+    margin: 0;
+  }
+
+  #editor .gutter-noauthor {
+    padding-left: @new_left_padding;
+  }
+
+  #editbutton {
+    right: 10px;
+  }
+
+  #strikebutton,
+  #codebutton,
+  #toolbar-attach-group {
+    display: none !important;
+  }
+
+  #toolbar .hp-ui-button-group {
+    border: 0;
+  }
+
+  &.edit-mode #toolbar .hp-ui-button-group {
+    background-color: #fff;
+    border: 0;
+    border-right: 1px solid @color_border_desktop;
+  }
+
+  #editbutton .icon-edit::before
+  #editbutton:hover .icon-edit::before,
+  #editbutton .hp-ui-button-content,
+  #editbutton:hover .hp-ui-button-content,
+  &.edit-mode #editbutton .icon-edit::before,
+  #toolbar .hp-ui-button .hp-ui-button-content,
+  #toolbar .hp-ui-button:hover .hp-ui-button-content {
+    color: @color_border_desktop !important;
+  }
+
+  &.edit-mode #toolbar #toolbar-indent-group {
+    border-right: 1px solid @color_border_desktop;
+  }
+
+  &.edit-mode #toolbar #toolbar-arrow {
+    opacity: 0.3;
+  }
+
+  #namesdiv {
+    left: 0;
+    width: 120px;
+  }
+
+  #namesdivinner a,
+  #namesdivinner a:hover {
+    text-decoration: none !important;
+    cursor: default;
+  }
+
+  #namesdivinner div {
+    width: 20px;
+    background-color: #fff;
+    line-height: 16px;
+    margin-top: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  #namesdivinner div {
+    margin-left: -11px;
+  }
+
+  #namesdivinner div.is-comment {
+    margin-left: -120px;
+  }
+
+  & .line-list-type-comment ul.listtype-comment li::before {
+    margin-left: -61px;
+  }
+
+  & ul.listtype-comment li {
+    margin-left: 40px;
+  }
+
+  #sidediv {
+    left: 45px;
+  }
+
+  .user-caret {
+    left: 0px;
+  }
+
+  .user-caret img {
+    border-color: #fff !important;
+    box-shadow: none;
+  }
+
+  .user-caret .user-caret-initials {
+    opacity: 1 !important;
+  }
+
+  .user-caret .user-caret-lbl {
+    display: none;
+  }
+
+  #editor > div:first-child span {
+    font-family: @base_font;
+    font-weight: 200;
+    font-size: 30px;
+    line-height: 35px;
+  }
+
+  #editor ul.listtype-hone li span,
+  #editor ul.listtype-hone li span b,
+  #editor .toc-entry span b,
+  #editor ul.listtype-hthree li span {
+    font-weight: 400;
+  }
+
+  #editor {
+    ul.listtype-hone li:hover {
+      background-position: 9px 12px;
+    }
+  }
+
+  ul.listtype-taskdone::before {
+    margin-left: -1.52em;
+  }
+
+  #toc-div {
+    display: none;
+  }
+
+  #sharingsettings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 500px;
+  }
+
+  #sharesummarywrapper,
+  #otherusers-facepile-wrapper,
+  #otheruserstable figcaption,
+  #otheruserstable.open figcaption {
+    display: none !important;
+  }
+
+  #otherusers {
+    display: inline-block;
+    float: left;
+  }
+
+  #friend-picker-div {
+    float: right;
+  }
+
+  #otheruserstable {
+    width: 100%;
+  }
+
+  #otheruserstable,
+  #otheruserstable.open {
+    display: inline-block !important;
+    position: static;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  #otheruserstable img {
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+  }
+
+  #otheruserstable li,
+  #otheruserstable.open li {
+    display: inline-block;
+    background-color: transparent;
+    margin-right: 5px;
+  }
+
+  #otheruserstable .connected {
+    bottom: -9px;
+    left: 0;
+  }
+
+  #friend-picker-div {
+    padding: 0;
+    margin: 0;
+  }
+
+  #friend-picker-wrapper {
+    margin-top: 7px;
+  }
+
+  #friend-picker,
+  #friend-picker-wrapper:hover #friend-picker {
+    box-shadow: none;
+    border: 0;
+  }
+}

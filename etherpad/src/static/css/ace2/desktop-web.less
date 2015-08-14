@@ -1,0 +1,78 @@
+@import "globals.less";
+@import "mixins.less";
+
+body #padbar,
+body #padeditor {
+  margin-left: @site_left_margin;
+}
+
+#editor {
+  padding-top: @new_padding_top;
+}
+
+@media all and (max-width: @new_narrow_window) {
+  body.desktop-web {
+    #padbar,
+    #padeditor {
+      margin-left: @narrow_site_left_margin;
+    }
+
+    #padeditor {
+      width: @narrow_site_editor_width;
+    }
+
+    #padsidebar {
+      position: static !important;
+      margin-left: @narrow_site_left_margin;
+      width: 180px;
+    }
+
+    #related-pads-div {
+      left: @narrow_site_left_margin;
+      bottom: -30px;
+    }
+
+    #padbar {
+      width: ~"calc(@{narrow_site_editor_width} - @{mainbar_padding} - @{mainbar_padding})";
+    }
+
+    #toc-div {
+      display: none;
+    }
+
+    #homeleft {
+      width: @narrow_site_editor_width; /*@new_real_pad_width;*/
+      margin-left: @narrow_site_left_margin;
+    }
+
+    #homeright {
+      margin-left: @narrow_site_left_margin;
+      width: 30%;
+    }
+
+    .hp-pro-admin-fpcontent {
+      width: ~"calc(@{narrow_site_editor_width} - @{mainbar_padding} - @{mainbar_padding})";
+      margin-left: @narrow_site_left_margin;
+    }
+  }
+
+  body.hasBanner #site-banner {
+    width: @narrow_site_editor_width;
+    margin-left: @narrow_site_left_margin;
+  }
+}
+
+@media all and (max-width: 1050px) {
+  body.desktop-web {
+    #toolbar {
+      top: 39px;
+      right: 0;
+    }
+
+    #toolbar-arrow {
+      right: 105px;
+      top: -2px;
+      .transform(~"rotate(-90deg)");
+    }
+  }
+}

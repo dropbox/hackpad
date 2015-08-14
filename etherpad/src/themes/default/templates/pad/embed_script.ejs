@@ -1,0 +1,24 @@
+
+<% if (padHtml) { %>
+
+document.write("<%- padHtml.replace(/\n/g, '').replace(/\"/g, '\\"') %>");
+
+<% } else { %>
+
+document.write('<iframe id="hackpad-<%= encodeURIComponent(padId) %>" src="<%= protocol %><%= host %>/ep/api/embed-pad?padId=<%= encodeURIComponent(padId) %>" style="border:0px;width:100%;height:420px;"></iframe>');
+
+window.addEventListener("message", function(event) {
+	if (event.origin == "<%= protocol %><%= host %>") {
+		var args = event.data.split(":");
+		if (args.length < 3 || args[0] != "hackpad-<%= encodeURIComponent(padId) %>" || args[1] != "height") {
+			return;
+		}
+		var height = Number(args[2]) + 60; // 60 is non-ace elements offset
+		var hp = document.getElementById("hackpad-<%= encodeURIComponent(padId) %>");
+		if (hp && height > 420) {
+			hp.style.height = height + "px";
+		}
+	}
+}, false);
+
+<% } %>

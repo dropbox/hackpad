@@ -1,0 +1,14 @@
+
+<%= account.fullName %>,
+
+<%= email %> has requested to join <%=orgName%>.
+To grant <%=email %> full access to <%= orgName %>, accept the request:
+
+<%= allowLink %>
+
+If you don't wan't to give them access, you can just ignore this email.
+
+The Hackpad Team
+
+--
+If this message was sent in error, please mail <%= helpers.supportEmailAddress() %>.

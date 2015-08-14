@@ -1,0 +1,11 @@
+//
+// Prefix header for all source files of the 'HackpadTestingKit' target in the 'HackpadTestingKit' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import <HackpadAdditions/HackpadAdditions.h>
+    #import <HackpadKit/HackpadKit.h>
+    #import "HPLog.h"
+#endif

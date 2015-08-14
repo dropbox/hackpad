@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3400" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="HPCollection" representedClassName="HPCollection" syncable="YES">
+        <attribute name="collectionID" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="followed" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="pads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HPPad" inverseName="collections" inverseEntity="HPPad" syncable="YES"/>
+        <relationship name="sharingOptions" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPSharingOptions" inverseName="collection" inverseEntity="HPSharingOptions" syncable="YES"/>
+        <relationship name="space" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPSpace" inverseName="collections" inverseEntity="HPSpace" syncable="YES"/>
+    </entity>
+    <entity name="HPImageUpload" representedClassName="HPImageUpload" syncable="YES">
+        <attribute name="attachmentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="pad" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HPPad" inverseName="imageUploads" inverseEntity="HPPad" syncable="YES"/>
+    </entity>
+    <entity name="HPPad" representedClassName="HPPad" syncable="YES">
+        <attribute name="authorNames" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="expandedSnippetHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="followed" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="hasMissedChanges" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastEditedDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="padID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="snippetHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="snippetHTML" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="snippetUserPics" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HPCollection" inverseName="pads" inverseEntity="HPCollection" syncable="YES"/>
+        <relationship name="editor" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="HPPadEditor" inverseName="pad" inverseEntity="HPPadEditor" syncable="YES"/>
+        <relationship name="imageUploads" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HPImageUpload" inverseName="pad" inverseEntity="HPImageUpload" syncable="YES"/>
+        <relationship name="search" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="HPPadSearch" inverseName="pad" inverseEntity="HPPadSearch" syncable="YES"/>
+        <relationship name="sharingOptions" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="HPSharingOptions" inverseName="pad" inverseEntity="HPSharingOptions" syncable="YES"/>
+        <relationship name="space" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPSpace" inverseName="pads" inverseEntity="HPSpace" syncable="YES"/>
+    </entity>
+    <entity name="HPPadEditor" representedClassName="HPPadEditor" syncable="YES">
+        <attribute name="clientVars" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="clientVarsLastEditedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="pad" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HPPad" inverseName="editor" inverseEntity="HPPad" syncable="YES"/>
+    </entity>
+    <entity name="HPPadSearch" representedClassName="HPPadSearch" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" indexed="YES" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="lastEditedDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <relationship name="pad" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPPad" inverseName="search" inverseEntity="HPPad" syncable="YES"/>
+    </entity>
+    <entity name="HPSharingOptions" representedClassName="HPSharingOptions" syncable="YES">
+        <attribute name="allowedSharingTypes" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="moderated" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="sharingType" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="collection" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPCollection" inverseName="sharingOptions" inverseEntity="HPCollection" syncable="YES"/>
+        <relationship name="pad" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="HPPad" inverseName="sharingOptions" inverseEntity="HPPad" syncable="YES"/>
+    </entity>
+    <entity name="HPSpace" representedClassName="HPSpace" syncable="YES">
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="public" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="signInMethods" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="subdomain" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HPCollection" inverseName="space" inverseEntity="HPCollection" syncable="YES"/>
+        <relationship name="pads" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HPPad" inverseName="space" inverseEntity="HPPad" syncable="YES"/>
+        <fetchedProperty name="followedPads" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="HPPad" predicateString="(isFollowed == YES) AND (space == $FETCH_SOURCE)"/>
+        </fetchedProperty>
+    </entity>
+    <elements>
+        <element name="HPCollection" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="HPPad" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="HPPadEditor" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="HPPadSearch" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="HPSharingOptions" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="HPSpace" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="HPImageUpload" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

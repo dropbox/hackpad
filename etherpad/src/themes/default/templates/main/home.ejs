@@ -1,0 +1,161 @@
+<% /*
+Copyright 2009 Google Inc.
+Copyright 2010 Pita, Peter Martischka <petermartischka@googlemail.com>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<%
+  template.inherit("signin.ejs");
+  template.inherit("ui.ejs");
+
+  helpers.includeCss("home_ejs.less");
+  helpers.includeMobileCss();
+
+  helpers.includeJQuery();
+  helpers.includeJs('common.js');
+  helpers.includeJs('pad_facebook.js');
+  helpers.includeJs('modals.js');
+  helpers.includeJs('jquery.validate.js');
+  helpers.includeJs('jquery.placeholder.js');
+  helpers.disableOffline();
+
+  helpers.addToHead("<meta content='hackpad.com' name='title' />");
+  helpers.addToHead("<meta content='Real-time collaborative wiki' name='description' />");
+  helpers.addToHead("<link href='/static/img/hackpad-logo.png' rel='image_src' />");
+
+  helpers.facebookOpenGraphMetadata();
+
+  helpers.includeJs("ipad.js");
+  helpers.addToHead('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />');
+  helpers.addToHead('<meta name="apple-mobile-web-app-capable" content="yes" />');
+  helpers.addSmartAppBanner();
+
+%>
+
+<div id="home">
+  <div id="logo-bar"></div>
+  <span id="title" style="color:white">hackpad</span>
+
+  <div>
+    <%- template.use('button', null, {
+      id: 'top-right-signin-button',
+      className: 'signin-button iphonehide',
+      html: 'Sign up <em>or</em> Log in'
+    }); %>
+
+    <div style="clear:both"/>
+
+    <a id="app-store-badge" href="https://itunes.apple.com/us/app/hackpad-for-ios/id789857184?ls=1&amp;mt=8"> <span class="appstore-logo"></span></a>
+    <style>
+    </style>
+  </div>
+
+
+  <div id="top">
+    <img id="top-blur-image" class="iphonehide" src="<%=helpers.cdn()%>/static/img/pixel.gif">
+    <div id="top-center" style="position: relative;">
+    </div>
+  </div>
+
+  <div id="page-login-box" class="modaldialog">
+    <%- template.use('login-form'); %>
+  </div>
+
+  <%- template.use('connecting-to-facebook'); %>
+
+  <div id="collaborate">
+
+    <h1>Collaborate <em>instantly</em></h1>
+    <h2>Hackpad has been Open Sourced. <a href="https://github.com/hackpad/openpad" style="color:white; text-decoration:underline;">Learn more</a>.</h2>
+    <div class="signin-button-container">
+      <%- template.use('button', null, {
+        id: 'hero-signin-button',
+        className: 'signin-button',
+        html: 'Sign up <em>or</em> Log in'
+      }); %>
+    </div>
+  </div>
+  <div id="middle" class="iphonehide">
+    <div id="customerlogos">
+      <div id="used-by">Used &amp; loved by:</div>
+      <img src="<%=helpers.cdn()%>/static/img/marketing/logos/airbnb.png"/>
+      <img src="<%=helpers.cdn()%>/static/img/marketing/logos/stripe.png"/>
+      <img src="<%=helpers.cdn()%>/static/img/marketing/logos/upworthy.png"/>
+      <img src="<%=helpers.cdn()%>/static/img/marketing/logos/meteor.png"/>
+      <img src="<%=helpers.cdn()%>/static/img/marketing/logos/twitch.png"/>
+      <%- template.use('button', null, {
+        id: 'try-it',
+        className: 'iphonehide ipadhide',
+        onclick: "$('html,body').animate({scrollTop: $(this).offset().top - 50}, 1000);",
+        label: 'Take a test drive'
+      }); %>
+    </div>
+  </div>
+  <div id="blur" class="iphonehide"></div>
+
+  <div id="features" class="ipadhide iphonehide">
+    <div class="featurebox ipadhide" style="max-width: 1770px; margin-left: -75px;">
+    </div>
+
+    <div id="home-pricing">
+      Free for personal use.<br>
+      <%- template.use('button', null, {
+        id: 'features-signup-button',
+        className: 'signin-button',
+        label: 'Sign up'
+      }); %>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  $(function() {
+    var updatePageElements = function() {
+      if ($('body').hasClass('mobile-web')) {
+        return;
+      }
+      var scrollTop = $(window).scrollTop();
+      var scrollToHeightPercent = $(window).scrollTop() / $(window).height();
+      var blurValue = Math.min(scrollToHeightPercent * 3, 3);
+      var brightnessValue = Math.max(100 - scrollToHeightPercent * 50, 50);
+      $('#top, #middle').css({
+        '-webkit-filter': 'brightness(' + brightnessValue + '%)',
+        'filter': 'brightness(' + brightnessValue + '%)'
+      });
+      $('.signin-button-container').css('position', 'static');
+      var signinOffset = $('.signin-button-container').offset().top;
+      var signupOffset = $('.featurebox').offset().top;
+
+      var buttonMargin = 20;
+      if (scrollTop > signinOffset - buttonMargin) {
+        $('.signin-button-container').css('position', 'fixed');
+        $('#top-right-signin-button').hide();
+      } else {
+        $('.signin-button-container').css('position', 'static');
+        $('#top-right-signin-button').show();
+      }
+
+      if (scrollTop > signupOffset) {
+        $('.signin-button-container').hide();
+      } else {
+        $('.signin-button-container').show();
+      }
+
+    };
+    $(window).on('scroll', throttle(function() {
+      updatePageElements();
+    }, 33 * 2));
+    updatePageElements();
+  });
+</script>

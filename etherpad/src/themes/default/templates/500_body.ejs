@@ -1,0 +1,26 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %><% helpers.setHtmlTitle(appjet.config.customBrandingName + " Internal Server Error"); %>
+
+<% if (trace) { %>
+  <pre style="background: #fff; font-family: monospace; padding: 1em; border: 1px solid red;
+  margin: 1em; font-size: 1.25em;"><%= trace %></pre>
+<% } else { %>
+  <div id="errorpage" class="fpcontent">
+    <div class="error500">
+      <p>Oops!  A server error occured.  It's been logged.</p>
+      <p>Please email &lt;<%=helpers.supportEmailAddress()%>&gt; if this persists.</p>
+    </div>
+  </div>
+<% } %>
+

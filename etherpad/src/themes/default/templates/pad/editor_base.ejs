@@ -1,0 +1,351 @@
+<%
+  template.inherit('page3.ejs');
+  template.inherit('ace.ejs');
+  template.inherit('chat.ejs');
+  template.inherit('pad/pad_userlist.ejs');
+
+  helpers.setBodyId("padbody");
+  helpers.setHtmlTitle(pageTitle);
+
+  // tell googlebot to request ?_escaped_fragment_=
+  if (request.params['_escaped_fragment_'] != undefined) {
+    helpers.setNoJs(true);
+  } else {
+    helpers.addToHead('<meta name="fragment" content="!" />');
+  }
+
+  if (robotsNoindex) {
+    helpers.addToHead('<meta name="robots" content="noindex, noarchive" />');
+  }
+
+  if (initialTitle) {
+    helpers.addToHead('<link rel="alternate" type="text/xml+oembed" ' +
+        'href="/ep/oembed/' + encodeURIComponent(localPadId) + '" ' +
+        'title="' + helpers.escapeHtml(initialTitle) + '">');
+    helpers.addToHead('<link rel="canonical" href="/' +
+        initialTitle.replace(/[^\w\s-\.]/g, '').replace(/[\s-]+/g, '-') + '-' +
+        encodeURIComponent(localPadId) + '">');
+
+    helpers.facebookOpenGraphMetadata({title: initialTitle,
+        type: 'hackpad:pad', description: description});
+  }
+
+  helpers.includeCss("ace2/editor.less");
+  helpers.includeCss("ace2/syntax.less");
+  helpers.includeCss("ace2/inner.less");
+  helpers.includeCss("pad.less");
+
+  helpers.includeCometJs();
+  helpers.includeJs("collab_client.js");
+  helpers.includeJs("cookies.js");
+  helpers.includeJs("customSelect.jquery.js");
+  helpers.includeJs("dateutils.js");
+  helpers.includeJs("hints.js");
+  helpers.includeJs("invite.js");
+  helpers.includeJs("jquery.ajaxqueue.js");
+  helpers.includeJs("jquery.autocomplete.js");
+  helpers.includeJs("jquery.color.js");
+  helpers.includeJs("jquery.placeholder.js");
+  helpers.includeJs("jquery-ui-1.8.20.custom.min.js");
+  helpers.includeJs("jquery.ui.touch-punch.min.js");
+  helpers.includeJs("pad_autolink.js");
+  helpers.includeJs("pad_collections.js");
+  helpers.includeJs("pad_connectionstatus.js");
+  helpers.includeJs("pad_demo.js");
+  helpers.includeJs("pad_editbar.js");
+  helpers.includeJs("pad_editor.js");
+  helpers.includeJs("pad_facebook.js");
+  helpers.includeJs("pad_guestpolicy.js");
+  helpers.includeJs("pad_guestprompt.js");
+  helpers.includeJs("pad_notify.js");
+  helpers.includeJs("pad_related.js");
+  helpers.includeJs("pad_utils.js");
+  helpers.includeJs("pad2.js");
+  helpers.includeJs("pretty.js");
+
+  helpers.includeDropboxChooser();
+
+  helpers.includeCss("collections.less");
+  helpers.includeCss("jquery.autocomplete.less");
+  helpers.includeCss("lightbox.less");
+  helpers.includeCss("padaccess.less");
+%>
+
+
+<% template.define('contentArea', function() { var ejs_data=''; %>
+  <%- template.use('freakoutScript'); %>
+  <%- template.use('editor'); %>
+  <%- template.use('editorExtras'); %>
+  <div id="editorbottombox">
+    <%- template.use('bottomBar'); %>
+  </div>
+<% return ejs_data; }); %>
+
+
+<% template.define('editor', function() { var ejs_data=''; %>
+  <% if (isFork) { %>
+    <div class="editor-is-fork">
+      <%- template.use('button', null,
+          { id: 'submit-changes', className: 'default',
+            label: 'Submit Changes' }); %>
+    </div>
+    <script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+      $(document).ready(function() {
+        hints.showHint($("#submit-changes"), "Submit when done!");
+      });
+    </script>
+  <% } %>
+
+  <%- template.use('ace'); %>
+<% return ejs_data; }); %>
+
+
+<% template.define('editorSidebarCommon', function () { var ejs_data=''; %>
+  <div id="padusers" class="">
+    <div id="sharingsettings">
+      <%- template.use('inviteControl', null, "",
+          "invite people to this pad", "padId", localPadId) %>
+      <div id="sharesummarywrapper" style="display: none">
+        <span class="sharesummary-with">With </span>
+        <span id="sharesummary" data-tooltip="Show list"
+            data-altTooltip="Hide List"> </span>
+      </div>
+      <%- template.use('userlist') %>
+      <div id="guestprompts"><!-- --></div>
+    </div>
+  </div>
+
+  <div id="toc-div" class="sidebar-div">
+    <ul></ul>
+  </div>
+<% return ejs_data; }); %>
+
+
+<% template.define('freakoutScript', function () { var ejs_data=''; %>
+  <script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+    window.onerror = function(message, file, line, column, errorObj) {
+      etherpad.logError(message, file, line, column, errorObj);
+    };
+    window.onfreakout = function(msg) {
+      if ($('#freakout-dialog').is(':visible')) {
+        return;
+      }
+      trackEvent('freakout', null, null, {
+        url: location.href,
+        padId: clientVars.collab_client_vars.globalPadId,
+        userId: clientVars.userId,
+        error: (msg || "").split(":")[0],
+        errorDetail: msg
+      });
+      modals.showModal("#freakout-dialog", 0, true /* not cancellable */);
+    };
+  </script>
+<% return ejs_data; }); %>
+
+
+<% template.define('editorModalsCommon', function () { var ejs_data=''; %>
+  <div id="killuser" class="modaldialog">
+    <h1>Stop sharing with <span class="name"></span>?</h1>
+    <div class="modaldialog-inner">
+      <div id="killuser-access">
+        This pad is shared with "<span class="access"></span>", so
+        <span class="name"></span> will still be able to access it.
+      </div>
+      <form id="killuser-form" action="/ep/pad/removeuser"
+          data-submit="submitmodal">
+        <%- helpers.xsrfTokenElement() %>
+        <input type="hidden" id="padId" name="padId"
+            value="<%= encodeURIComponent(localPadId) %>" />
+        <input type="hidden" id="userId" name="userId" />
+        <div class="dialog-buttons">
+          <a href="#" data-click="hidemodal">Cancel</a>
+          <%- template.use('button', null,
+              { buttonType: 'submit', label: 'Stop Sharing' }); %>
+        </div>
+        <div class="clear"></div>
+      </form>
+    </div>
+  </div>
+<% return ejs_data; }); %>
+
+
+<% template.define('modals', function() { var ejs_data=''; %>
+  <div class="connection-status iphonehide"><h3>Reconnecting...</h3></div>
+
+  <div id="modaloverlay"><div id="modaloverlay-inner"><!-- --></div></div>
+
+  <div id="mainmodals">
+    <div id="connectionbox" class="modaldialog" >
+      <h1 class="h1_disconnect">Disconnected</h1>
+      <h1 class="h1_unauth">No Authorization</h1>
+      <%- template.use('button', null, {
+        type: 'custom',
+        fontIcon: 'icon-x',
+        className: 'dialog-cancel-x'
+      }); %>
+      <div id="connectionboxinner" class="modaldialog-inner">
+        <div class="connecting">
+          Connecting...
+        </div>
+        <div class="reconnecting">
+          Reestablishing connection...
+        </div>
+        <div class="disconnected">
+          <div id="disconnected_looping">
+            <p>
+              <b>We're having trouble talking to the Hackpad synchronization
+                server.</b>
+              You may be connecting through an incompatible firewall or proxy
+              server.
+            </p>
+          </div>
+          <div id="disconnected_initsocketfail">
+            <p>
+              <b>We were unable to connect to the Hackpad synchronization
+              server.</b>
+              This may be due to an incompatibility with your web
+              browser or internet connection.
+            </p>
+          </div>
+
+          <div id="disconnected_unknown">
+            <p>
+              <b>Lost connection with Hackpad.</b>
+              This may be due to a loss of network connectivity. If you close
+              this window you may lose up to 30 seconds of unsaved work.
+            </p>
+          </div>
+          <div id="disconnected_slowcommit">
+            <p>
+              <b>Server not responding.</b>
+              This may be due to network connectivity issues or high load on
+              the server.
+            </p>
+          </div>
+          <div id="disconnected_unauth">
+            <p>
+              You are no longer allowed to access this pad. Reconnect to
+              request access.
+            </p>
+          </div>
+          <div id="reconnect_form">
+            <%- template.use('button', null,
+                { id: 'forcereconnect', label: 'Reconnect Now' }); %>
+            <img class="loading-indicator"
+                src="/static/img/status-ball.gif"/>
+            <span class="failed-indicator">Failed to reconnect.</span>
+          </div>
+          <div id="reconnect_advise">
+            <p>
+              If this continues to happen, please <a target="_blank"
+                  href="/ep/support">let us know</a>
+              (opens in new window).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="freakout-dialog" class="modaldialog">
+      <h1>How embarrassing...</h1>
+      <div id="freakout-dialog-inner" class="modaldialog-inner">
+        <div class="disconnected">
+          <div>
+            <p>
+              <b>We experienced an error on the page that is causing problems
+              with saving your work.</b>
+              Continuing to edit on the page without refreshing your browser
+              would lead to some <b>loss of your work</b>.
+            </p>
+          </div>
+          <div id="freakout-options">
+            <%- template.use('button', null,
+                { 'data-click': 'pagereload',
+                  label: 'Refresh Now' }); %>
+            <%- template.use('button', null,
+                { id: 'freakout-copy-first',
+                  label: 'I want to copy my work first, please.' }); %>
+          </div>
+          <div id="freakout_advise">
+            <p>
+              If this continues to happen, please <a target="_blank"
+                  href="/ep/support">let us know</a>
+              (opens in new window).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="moderated-modal" class="modaldialog">
+      <h1>Heads Up!</h1>
+      <div id="moderated-modal-inner" class="modaldialog-inner">
+
+        <p id="moderated-modal-msg">
+          This pad is moderated.  Your changes will require owner approval.
+        </p>
+        <div class="dialog-buttons">
+          <%- template.use('button', null,
+              { 'data-click': 'hidemodal', label: 'Cancel' }); %>
+          <%- template.use('button', null,
+              { className: 'default', buttonType: 'submit',
+                label: 'Yes! I want to edit' }); %>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div id="sharebox" class="modaldialog">
+      <div id="sharebox-inner" class="modaldialog-inner">
+      </div>
+    </div>
+
+    <div id="insertimagedialog" class="modaldialog">
+     <h1>Insert an Image</h1>
+     <div class="modaldialog-inner">
+      <form name="insert-image-form" id="insert-image-form">
+        <%- helpers.xsrfTokenElement() %>
+        <br/>
+        <div id="insertimagedialog-upload">
+          <input multiple type="file" id="web-image-upload" name="photo[]"
+              accept="image/*">
+          <div id="web-image-upload-separator">or</div>
+          <input type="text" id="web-image-url" name="web-image-url"
+              placeholder="paste a url" />
+        </div>
+        <div id="insertimagedialog-drag">
+          Tip: you can simply <b>drag&amp;drop</b> images into the editor
+          from your desktop!
+        </div>
+        <br/>
+         <div class="dialog-buttons">
+           <a href="#" data-click="hidemodal">Cancel</a>
+           <%- template.use('button', null,
+              { buttonType: 'submit', className: 'default',
+                label: 'Insert' }); %>
+         </div>
+         <div class="clear"></div>
+       </form>
+     </div>
+    </div>
+
+    <%- template.use('editorMoreModals'); %>
+  </div>
+
+  <% if (request.params.djs) { %>
+    <div id="djs"><!-- --></div>
+  <% } %>
+
+  <form id="reconnectform"
+      method="post"
+      action="/ep/pad/reconnect"
+      accept-charset="UTF-8"
+      style="display: none;">
+    <%- helpers.xsrfTokenElement() %>
+    <input type="hidden" class="padId" name="padId" />
+    <input type="hidden" class="diagnosticInfo" name="diagnosticInfo" />
+    <input type="hidden" class="missedChanges" name="missedChanges" />
+  </form>
+  </div>
+
+<% return ejs_data; }); %>

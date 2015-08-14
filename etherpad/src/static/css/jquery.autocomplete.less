@@ -1,0 +1,165 @@
+@import "colors.less";
+@import "mixins.less";
+
+.ac_results {
+	padding: 0px;
+  background-color: @color_darker_bg_transparent;
+  box-shadow: @box_shadow;
+	overflow: hidden;
+	z-index: 99999;
+  border-top: 1px solid #555;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/*
+	if width will be 100% horizontal scrollbar will apear
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font-size: 13px;
+	/*
+	it is very important, if line-height not setted or setted
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+  color: @color_on_dark_text;
+  font-family: @base_font_new;
+  border-top: 1px dotted transparent;
+  border-bottom: 1px dotted transparent;
+}
+
+.ac_results li > div:not(.ac-search-result) {
+  padding: 5px;
+}
+
+/*
+.ac_odd {
+	background-color: #eee;
+}
+*/
+
+.ac_over {
+  background-color: rgba(10,10,10,0.95);
+  border-top: 1px dotted #666;
+  border-bottom: 1px dotted #666;
+	color: white;
+}
+
+.ac_results li strong {
+  color: #fff;
+  font-weight: 200;
+}
+
+.ac_odd .email, .ac_even .email, .ac_odd .snippet, .ac_even .snippet {
+  font-size: 13px;
+  color: @color_on_dark_text;
+}
+
+.ac_odd .snippet, .ac_even .snippet {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ac_over .email, .ac_over .snippet {
+  color: @color_on_dark_text;
+}
+
+.ac-results-extra {
+  font-style: italic;
+  line-height: 36px;
+}
+
+.ac-results-collections {
+  margin-left: -23px;
+}
+
+.ac-results-collections li {
+  font-size: 13px;
+  line-height: 12px;
+  padding: 8px 40px;
+}
+
+.ac-search-result {
+  font-size: 18px;
+  line-height: 20px;
+  padding: 8px 40px;
+}
+
+.ac_loading + .ac-loading-spinny:before {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  color: #000;
+  font-size: 17px;
+  .spinny;
+}
+
+#createpadentry.ac_loading + .ac-loading-spinny:before {
+  top: 0;
+}
+
+#createpadentry.ac_loading + .ac-loading-spinny:before {
+  color: #fff;
+}
+
+.ac-results-extra {
+  font-style: normal;
+  line-height: 16px;
+}
+
+.ac-results-see-all {
+  color: #fff;
+  font-weight: 200;
+}
+
+.ac-results-see-all-prepended,
+.ac-results-create-lbl {
+  margin-left: -20px;
+  font-size: 12px;
+  color: @color_actionable;
+  text-transform: uppercase;
+}
+
+.ac-results-create-val {
+  color: #fff;
+  font-style: normal;
+  margin-left: -5px;
+}
+
+.ac-search-result .icon-forward {
+  vertical-align: top;
+}
+
+.ac-results-create-val strong {
+  vertical-align: top;
+  line-height: 25px;
+}
+
+.ac-results-create-val-newpad {
+  color: @color_actionable;
+  font-size: 24px;
+}
+
+.ac-results-create-val-plus {
+  color: @color_actionable;
+  font-size: 14px;
+}
+
+.ac_results .emoji-glyph {
+  margin-top: -2px;
+  margin-right: 10px;
+}

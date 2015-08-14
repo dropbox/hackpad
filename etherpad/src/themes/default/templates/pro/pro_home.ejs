@@ -1,0 +1,280 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<% template.inherit('pro/_domain_members.ejs'); %>
+<% template.inherit('pro/_pro_navpage.ejs'); %>
+<% template.inherit('ui.ejs'); %>
+
+<% helpers.includeJs("cookies.js"); %>
+<% helpers.includeJs("hints.js"); %>
+<% helpers.includeJs("buttons.js"); %>
+<% helpers.addSmartAppBanner(); %>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+//<![CDATA[
+  $(document).ready(function() {
+    if (allCookies.hasItem("showNewPadTip")) {
+      allCookies.removeItem("showNewPadTip", '/');
+      hints.showHint($(".plus-button"), "Create a new hackpad!");
+    }
+  });
+//]]>
+</script>
+
+
+<%- template.define('homeleft', function() { var ejs_data=''; %>
+
+  <style>
+  .segment.compact {
+    margin-bottom: 1px;
+  }
+  .segment-wrapper.compact {
+    min-height: 0px;
+  }
+  .segment-info.compact {
+    margin-bottom: 0px;
+  }
+  </style>
+
+  <script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  function goToSection(section) {
+    var cookieSection = allCookies.getItem('padlistSection');
+    if (cookieSection != section) {
+      allCookies.setItem('padlistSection', section);
+      location.reload(true);
+    }
+  }
+  $(function() {
+    $("a.section").click(function() {
+      goToSection($(this).data("section"));
+      return false;
+    }).filter(function(i, s) {
+      return $(s).data("section") == clientVars.selectedSection;
+    }).addClass("selected");
+
+    trackEvent("show-padlist-" + clientVars.selectedSection);
+  });
+  </script>
+
+  <% if (isNewSite) { %>
+
+    <h2 style="text-align: center; color: #777; padding-top: 20px;">This Hackpad Space is brand new.</h2>
+    <% if (!account) { %>
+      <h2 style="text-align: center; color: #777;"><a href="#" data-click="showmodal" data-modal="#page-login-box">Sign In</a> to start collaborating.</h2>
+    <% } else { %>
+      <h2 style="text-align: center; color: #777;"><a href="/ep/pad/newpad">Create a new hackpad</a> to get started.</h2>
+    <% } %>
+
+  <% } else { %>
+    <div class="homepage-section selected">
+    <% if (pinnedPadListHtml) { %>
+      <div id="listwrap-pinned">
+        <%- pinnedPadListHtml %>
+      </div>
+      <hr style="border:0px; border-bottom: 1px dashed #c8cfcc; margin-bottom: 14px;"/>
+    <% } %>
+      <div id="listwrap">
+        <% if (padListHtml) { %>
+          <%- padListHtml %>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+
+  <form action="/ep/padlist/toggle-archive" method="post" id="toggle-archive-pad" style="display: none;">
+    <%- helpers.xsrfTokenElement() %>
+    <input type="hidden" name="returnPath" value="<%= request.url %>" />
+    <input id="padIdToToggleArchive" name="padIdToToggleArchive" type="hidden" value="-" />
+  </form>
+
+<% return ejs_data; }); %>
+
+<%- template.define('homeright', function() { var ejs_data=''; %>
+
+  <!-- domain members -->
+  <% if (isSubDomain) { %>
+    <% if (domainMembers) { %>
+      <%- template.use('domainMembersList', null, domainMemberCount, domainMembers, allowInvites); %>
+    <% } %>
+    <% if (linkToAdmin && domainGuests && domainGuests.length > 1) { %>
+      <div id="domain-guests" class="sidebarsection">
+        <div class="sidebarheading">Guests</div>
+        <div id="domain-guests-list">
+          <% for (var i in domainGuests) { %>
+          <span class="user-item" data-userid="<%= domainGuests[i].encryptedId%>">
+          <a href="<%= domainGuests[i].userLink %>" title="<%=domainGuests[i].name%>"><img src="<%=domainGuests[i].userPic%>" alt="<%=domainGuests[i].name%>" /></a></span>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+  <% } %>
+
+
+  <!-- recent domains (/public only) -->
+  <% if (isPublicHackpad) { %>
+    <div id="recent-domains" class="sidebarsection">
+      <div class="sidebarheading">Recent Public Spaces</div>
+      <ul id="public-sites-list">
+        <% for (var i in recentDomains) { %>
+        <li class="recent-domain">
+          <a class="rhs-menu-item" href="<%= absoluteURL('/',{r:i},recentDomains[i].subDomain) %>" title="<%= recentDomains[i].orgName %>"><%= recentDomains[i].orgName %></a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  <% } %>
+
+
+  <!-- user's collections -->
+  <% if (account) { %>
+    <div id="my-groups" class="sidebarsection">
+      <div class="sidebarheading" style="margin-bottom: 0px">
+        <% if (groups.length > 0) { %>
+        Collections
+        <% } else { %>
+        <a href="#" data-modal="#group_create" data-click="showmodal">Create a Collection</a>
+        <% } %>
+      </div>
+      <div id="my-group-list" class="group-list">
+        <% if (groups.length > 0) { %>
+          <% for (var i in groups) { %>
+          <div class="group-item" data-groupid="<%= groups[i].encryptedId%>">
+          <a class="rhs-menu-item <%= selectedIfSection('group'+groups[i].encryptedId) %>" title="<%= groups[i].name %>" href="/collection/<%= groups[i].encryptedId %>"><%= groups[i].name %></a></div>
+          <% } %>
+        <% } else { %>
+          <div class="small-sidebar-text">Add your hackpads to a collection to stay organized.</div>
+        <% } %>
+      </div>
+
+      <% if (groups.length > 0) { %>
+      <div><a href="#" data-modal="#group_create" data-click="showmodal" id="create-collection">+ new collection</a></div>
+      <% } %>
+    </div>
+  <% } %>
+
+  <!-- domain's collections -->
+  <% if (typeof(domainGroups) != "undefined" && domainGroups.length > 0) { %>
+    <div id="other-groups" class="sidebarsection">
+      <div class="sidebarheading">
+        <% if (account) { %>
+          Shared Collections
+        <% } else { %>
+          Collections
+        <% } %>
+      </div>
+      <div id="domain-group-list" class="group-list">
+        <% for (var i in domainGroups) { %>
+        <div class="group-item" data-groupid="<%= domainGroups[i].encryptedId%>">
+        <a class="rhs-menu-item <%= selectedIfSection('group'+domainGroups[i].encrypedId) %>" href="/ep/group/<%= domainGroups[i].encryptedId %>" title="<%= domainGroups[i].name %>"><%= domainGroups[i].name %></a></div>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+
+
+  <!-- trending hashtags -->
+  <% if (isDogfood() && isSubDomain && trendingHashtags.length > 0 ) { %>
+    <div id="trending-hashtags" class="sidebarsection">
+      <div class="sidebarheading">Trending Hashtags</div>
+      <ul id="trending-hashtags-list">
+        <% for (var i in trendingHashtags) { %>
+        <li class="hashtag-item">
+          <a class="rhs-menu-item" href="/ep/search/?q=<%= encodeURIComponent(trendingHashtags[i]) %>" title="<%= trendingHashtags[i] %>"><%= trendingHashtags[i] %></a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  <% } %>
+
+
+  <!-- promos (mainsite only) -->
+  <% if (!isSubDomain) { %>
+    <div id="promo-hiring" style="border-bottom:1px solid #ccc; margin-top:30px; border-top: 1px solid #ccc; padding-top:10px; padding-bottom:10px;" class="iphonehide ipadhide">
+
+      <a href="/ep/new-site" style="font-size:15px;">Create a private space for your team</a>
+
+
+      <!--div style="font-size:13px; font-weight:bold; color:#333; padding-bottom: 4px;">Like Hackpad?</div>
+
+      <a href="https://twitter.com/hackpad" class="twitter-follow-button" data-show-count="false"></a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+      <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2FHackpad&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=21&amp;appId=145393915506961" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:180px; height:21px; padding-top: 4px;" allowTransparency="true"></iframe-->
+    </div>
+
+    <!--div id="promo" style="margin-top:10px; border-top: 1px solid #ccc; padding-top:10px" class="iphonehide ipadhide">
+      <div style="font-size:13px; font-weight:bold; color:#333">Use a Mac?</div>
+      <div style="font-size: 11px; padding-top: 4px; line-height:13px; color: #888;">Try Hackpad for Mac!</div>
+      <a href="/static/app/HackPad-0.6.1.zip"><img src="<%=helpers.cdn()%>/static/img/osxclient.png" style="margin:5px 0px 5px 0px;"/></a>
+      <div><a style="font-size:13px; text-decoration:underline" href="/static/app/HackPad-0.6.1.zip">Download now</a></div>
+    </div-->
+  <% } %>
+
+  <div style="margin-top:30px;">
+    <a href="https://itunes.apple.com/us/app/hackpad-for-ios/id789857184?ls=1&mt=8"><img src="/static/img/appstore.svg"/></a>
+  </div>
+
+  <!-- admin interface -->
+  <% if (linkToAdmin) { %>
+  <div style="margin-top:30px; border-top: 1px solid #ccc; padding-top:10px">
+    <a href="/ep/admin" style="font-size:13px; font-weight: bold;">Manage this Workspace</a>
+  </div>
+  <% } %>
+
+  <!-- modals -->
+
+  <div id='group_create' class='modaldialog' style="width: 324px; margin-left: -162px;">
+    <h1>Create a New Collection</h1>
+    <div class="modaldialog-inner">
+      <form action="/ep/group/create" method="POST" data-submit="submitmodal">
+        <%- helpers.xsrfTokenElement() %>
+        <div>
+          <input type="text" name="name" placeholder="Collection Name" />
+        </div>
+        <div class="dialog-buttons">
+          <a href="#" data-click="hidemodal">Cancel</a>
+          <%- template.use('button', null, { buttonType: 'submit', label: 'Create' }); %>
+        </div>
+        <div style="clear:both"></div>
+      </form>
+    </div>
+  </div>
+
+  <div id='migrate_group' class='modaldialog' style="width: 424px; margin-left: -170px;">
+    <h1>Move <span id="migrateFromName">XXX</span> to <span id="migrateToName">XXX</span></h1>
+    <div class="modaldialog-inner">
+      <form action="XXX" method="POST" data-submit="submitmodal">
+        <%- helpers.xsrfTokenElement() %>
+        <input type="hidden" name="domainId" />
+        <input type="hidden" name="padId" />
+        <input type="hidden" name="moveUsers" value="true" />
+
+        <br/>
+        <span style="border-bottom: 1px dotted black; cursor: pointer;" id="migrateUsers">XXX</span> will be invited to the <span id="migratePadsCount">XXX</span> on <span id="migrateToHost">XXX</span>.
+        <br/><br/>
+
+        <div class="dialog-buttons">
+          <a href="#" data-click="hidemodal">Cancel</a>
+          <%- template.use('button', null, { buttonType: 'submit', label: 'Move' }); %>
+        </div>
+        <div style="clear:both"></div>
+      </form>
+    </div>
+  </div>
+
+<% return ejs_data; }); %>
+
+
+
+
+

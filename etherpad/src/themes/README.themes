@@ -1,0 +1,120 @@
+Themes are templates
+---------------------
+
+The theme infrastructure is really a templating library. It consists
+of an extended version of EJS (like ERB but for JavaScript).
+
+Many templating libraries (Smarty, Django templates) adds a special
+template script language that provides things like inheritance and
+blocks, but also general programming constructs like loops and
+conditionals.
+
+The EJS templating language uses JavaScript as templating scripting
+language, giving you the full power JavaScript in your templates. In
+addition, it provides a standard library for interacting with the
+template content.
+
+EJS tags
+---------
+
+An EJS template consist of verbatim HTML (or other text) and
+server-side JavaScripts mixed in one file. There are three syntaxes
+available to mix in JavaScript in the verbatim HTML:
+
+  <h1>some HTML</h1>
+  <% myVar = someJavaScript(); xyzzy = goesHere(); %>
+  <p>some more HTML</p>
+  <% if (myVar != '') { %>
+    myVar is not empty
+  <% } %>
+
+This will execute the javascript statements beteen <% and %>, but
+throw away any result values. To insert a value in the generated HTML,
+you use the <%= syntax:
+
+  <p>Result from previous code plus 47: <%= xyzzy + 47 %></p>
+
+This will convert the value in the expression to string and then
+include it. If the value already is a string, you can gain a little
+more expressive freedom by using the <%: syntax instead:
+
+  <p>Result from previous code: <%: myVar %></p>
+
+The advantage of the latter one is that it does not require the code
+between <%: and %> to be a full JavaScript expression, but can be a
+fragment of one. To understand how this is usefull, we have to examine
+another property of EJS: What happens to verbatim HTML.
+
+
+Verbatim text in EJS and the evaluation model
+----------------------------------------------
+
+During evaluation of an EJS template, verbatim HTML is appended to a
+variable called ejs_data, one part at a time. Consider the following code:
+
+  Some text
+  <% temp = ejs_data; ejs_data = ''; %>
+  some text to be encoded
+  <% data = base64encode(ejs_data); ejs_data = temp; %>
+  Base64 dump: <%= data %>
+
+This will encode the string "some text to be encoded" with the
+base64encode function and insert the result at the end of the output.
+The original, unencoded string is not inserted in the output.
+
+Since ejs_data is just a normal variable that can be hidden by a local
+variable in a function, this allows for creating functions that
+returns mostly text using the normal EJS templating syntax:
+
+  <% function header(n) { var ejs_data = ''; %>
+    Hello world <%= n %> times!
+  <% return ejs_data; } %>
+
+This is equivalent to
+
+  <%
+    function (n) {
+      return "Hello world " + n + " times!";
+    }
+  %>
+
+Of course this only starts to be usefull when the function should
+return a larger body of verbatim text.
+
+So, back to the usefullness of the <%: syntax:
+
+  Base64 dump:
+  <%: base64encode(function () { var ejs_data = ''; %>
+    some text to be encoded
+  <% return ejs_data; }); %>
+
+Here, the base64encode function call only ends inside the last <% %>
+block. This type of expression is extensively used for the template
+inheritance and block functions.
+
+Standard functions
+-------------------
+
+In addition to the ability to mix verbatim text and code, templates
+needs some additional functionality not found in a scripting language,
+or at least not in the same form. This include textual inheritance and
+blocks.
+
+In EJS this is provided by a standrad function library.
+
+template.inherit('page.ejs');
+  Declares that the template inherits from another template, page.ejs.
+  This should only be called once in a template, and at the top.
+
+<%: template.use('blockName'); %>
+<%: template.use('blockName', function() { var ejs_data=''; %>Default content<% return ejs_data; }); %>
+  Declares a block that can be overridden by an inheriting template.
+  If the first form of the call is used the block is empty unless
+  overridden.
+
+<% template.define('blockName', function() { var ejs_data=''; %>New block content<% return ejs_data; }); %>
+  Overrides the content of a block of an inherited template.
+
+Note: All templates should define (or inherit from a template that
+defines) a top-level block named "body". The content of this block,
+will be the final output of the template.

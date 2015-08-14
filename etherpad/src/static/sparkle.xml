@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <channel>
+      <title>Hackpad for Mac</title>
+      <link>https://hackpad.com/static/sparkle.xml</link>
+      <description>The Best Wiki Ever, direct from your desktop</description>
+      <language>en</language>
+
+         <item>
+           <title>Version 0.6.1</title>
+           <description>
+             <![CDATA[
+               <h2>Bugfix Release</h2>
+               <ul>
+                 <li> Show login action for unauthorized users. </li>
+               </ul>
+             ]]>
+           </description>
+           <pubDate>Sun, 26 Aug 2012 4:20:00 +0000</pubDate>
+           <enclosure url="https://hackpad.com/static/app/HackPad-0.6.1.zip" sparkle:version="0.6.1" length="549929" type="application/octet-stream" />
+         </item>
+
+         <item>
+           <title>Version 0.6 (Collections support)</title>
+           <description>
+             <![CDATA[
+               <h2>New Features</h2>
+               <ul>
+                 <li> List your Collections and open their pads </li>
+               </ul>
+             ]]>
+           </description>
+           <pubDate>Tue, 26 Jun 2012 14:37:08 +0000</pubDate>
+           <enclosure url="https://hackpad.com/static/app/HackPad-0.6.zip" sparkle:version="0.6" length="549705" type="application/octet-stream" />
+         </item>
+
+         <item>
+           <title>Version 0.5.1 (4 new features, many bugs fixed)</title>
+           <description>
+             <![CDATA[
+                           <h2>New Features</h2>
+                           <ul>
+                              <li> New global hotkey binding: Command-Escape </li>
+                              <li> Refocus pads already opened in Chrome & Safari </li>
+                              <li> Create new pads with a title </li>
+                              <li> New Icon </li>
+                           </ul>
+                   ]]>
+           </description>
+           <pubDate>Tue, 26 Jun 2012 14:37:08 +0000</pubDate>
+           <enclosure url="https://hackpad.com/static/app/HackPad-0.5.1.zip" sparkle:version="0.5.1" length="543327" type="application/octet-stream" />
+         </item>
+
+         <item>
+            <title>Version 0.4 (3 new features)</title>
+					<description>
+               <![CDATA[
+                       <h2>New Features</h2>
+                       <ul>
+                          <li> Auto-update </li>
+                          <li> Launch at boot </li>
+                          <li> Global hot-key binding </li>
+                        </ul>
+               ]]>
+               </description>
+            <pubDate>Wed, 21 Sep 2011 19:20:11 +0000</pubDate>
+            <enclosure url="https://hackpad.com/static/app/HackPad0.4.zip" sparkle:version="0.4" length="545914" type="application/octet-stream" />
+         </item>
+
+         <!--item>
+            <title>Version 1.5 (8 bugs fixed; 2 new features)</title>
+						<sparkle:releaseNotesLink>
+							http://you.com/app/1.5.html
+						</sparkle:releaseNotesLink>
+            <pubDate>Wed, 01 Jan 2006 12:20:11 +0000</pubDate>
+            <enclosure url="https://hackpad.com/static/Your Great App 1.5.zip" sparkle:version="1.5" length="1472893" type="application/octet-stream" sparkle:dsaSignature="234818feCa1JyW30nbkBwainOzrN6EQuAh" />
+         </item-->
+
+				<!-- Now here's an example of a version with a weird internal version number (like an SVN revision) but a human-readable external one. -->
+			<!--item>
+           <title>Version 1.4 (5 bugs fixed; 2 new features)</title>
+						<sparkle:releaseNotesLink>
+							http://you.com/app/1.4.html
+						</sparkle:releaseNotesLink>
+           <pubDate>Wed, 25 Dec 2005 12:20:11 +0000</pubDate>
+           <enclosure url="https://hackpad.com/static/Your Great App 1.4.zip" sparkle:version="241" sparkle:shortVersionString="1.4" sparkle:dsaSignature="MC0CFBfeCa1JyW30nbkBwainOzrN6EQuAh=" length="1472349" type="application/octet-stream" />
+        </item-->
+   </channel>
+</rss>

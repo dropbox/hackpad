@@ -1,0 +1,20 @@
+<%
+  helpers.includeJs('invite.js');
+  helpers.includeCss('invite.less');
+%>
+
+<%partial inviteControl (type, placeholder, idName, idValue) %>
+
+  <div id="friend-picker-div">
+    <form id="invite-form" method="get" action="">
+      <%- helpers.xsrfTokenElement() %>
+      <input type="hidden" name="<%=idName%>" value="<%=encodeURIComponent(idValue)%>" />
+      <div id="friend-picker-wrapper">
+        <input type="text" id="friend-picker" class="<%= type %>" placeholder="<%= placeholder ||  'invite people'%>"/>
+        <div class="ac-loading-spinny"></div>
+        <label for="friend-picker"><i class="icon-invite"></i></label>
+      </div>
+    </form>
+  </div>
+
+<%endpartial %>

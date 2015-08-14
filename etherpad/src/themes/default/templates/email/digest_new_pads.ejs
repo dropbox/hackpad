@@ -1,0 +1,26 @@
+<p><b> <%=fullName%>,</b></p>
+
+<% for (var i=0; i<accounts.length; i++) { %>
+
+<p> Here is what's new at <b><%= domainById[accounts[i].domainId].orgName %></b> over the last few days: <p>
+<ul style='list-style-type: none; margin-left:0px;'>
+  <% for (var j=0; j<padsByDomainId[accounts[i].domainId].length; j++) { %>
+    <% var pad = padsByDomainId[accounts[i].domainId][j]; %>
+    <% var subDomain = domainById[accounts[i].domainId].subDomain; %>
+    <li style="line-height:30px;">
+      <a href="<%=absoluteProfileURL(pad.creator.id, subDomain) + "?eid=" + trackingId %>"><%=pad.creator.fullName%></a> added
+    <a href="<%=absolutePadURL(pad.localPadId, {eid:trackingId}, subDomain) %>"><b><%= pad.title %></b></a>
+    <%= timeAgo(pad.createdDate) %> </li>
+  <% } %>
+</ul>
+<% } %>
+
+You are now up to date on all the latest.
+
+<p>The Hackpad Team</p>
+
+<p>--</p>
+
+<span style="font-size:11px">
+If you'd like to stop receiving the new pads digest, <a href="<%= unsubURL %>">unsubscribe</a> here.
+</span>

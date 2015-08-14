@@ -1,0 +1,134 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %><% helpers.setHtmlTitle("EtherPad PNE License Manager"); %>
+<% helpers.includeJQuery() %>
+<% helpers.includeJs("etherpad.js") %>
+
+<div id="lm">
+
+  <% if (isExpired) { %>
+
+    <div class="lm-error-msg">
+      <p>Your evaluation license has expired!</p>
+      <p>Please contact <%- helpers.oemail("sales") %> or visit the <a
+      href="http://etherpad.com/ep/about/pricing-eepnet">pricing page on etherpad.com</a>
+      to purchase a license key.</p>
+    </div>
+
+  <% } %>
+
+  <% if (isTooOld) { %>
+
+    <div class="lm-notice-msg">
+      <p>The version of EtherPad you are running (<%= runningVersionString %>) is too old.
+      Please update to version <%= licenseVersionString %> or newer by <a
+      href="http://etherpad.com/ep/store/eepnet-download">downloading the latest version on
+      etherpad.com</a>.</p>
+    </div>
+
+  <% } %>
+
+  <% if (errorMessage) { %>
+    <div class="lm-error-msg">
+      <p><%= errorMessage %></p>
+    </div>
+  <% } %>
+
+  <% if (licenseInfo && !edit) { %>
+  
+    <h3 class="top">License Info:</h3>
+
+    <div id="lm-status">
+      <table>
+        <tr>
+          <td width="1%" align="right">Licensed To: </td>
+          <td width="99%"><b><%= licenseInfo.personName %></b></td>
+        </tr>
+
+        <tr>
+          <td align="right">Organization: </td>
+          <td><b><%= licenseInfo.organizationName %></b></td>
+        </tr>
+
+        <tr>
+          <td align="right">Software Edition: </td>
+          <td><b><%= licenseInfo.editionName %></b></td>
+        </tr>
+
+        <tr>
+          <td align="right">Maximum Users: </td>
+          <td><b><%= licenseInfo.userQuota %></b></td>
+        </tr>
+<!--
+        <tr>
+          <td align="right">Licensed PNE Version: </td>
+          <td><b><%= licenseVersionString %>+</b></td>
+        </tr>
+-->
+        <tr>
+          <td align="right">Expires: </td>
+          <td><b><%= licenseInfo.expiresDate ? licenseInfo.expiresDate.toString() : "never" %></b></td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div id="lm-edit-button-wrap">
+      <form action="<%= request.path %>edit" method="get">
+        <%- helpers.xsrfTokenElement() %>
+        <input type="submit" name="btn" value="Edit License Info" />
+      </form>
+    </div>
+
+  <% } %>
+
+  <% if (isExpired || !licenseInfo || edit) { %>
+
+    <h3 class="top">Enter New License Info:</h3>
+
+    <% if (isUnlicensed) { %>
+      <p>Before you can use this copy of EtherPad Private Network Edition, you must first
+        enter a valid license.  Free trial licenses can be obtained <a
+        target="_blank"
+        href="https://etherpad.com/ep/store/eepnet-eval-signup">obtained here</a>.
+      </p>
+    <% } %>
+
+    <form action="<%= request.path %>" method="post">
+      <%- helpers.xsrfTokenElement() %>
+      <div id="lm-edit">
+
+        <p><b>Name:</b></p>
+        <input style="width: 100%;" type="text" name="personName" 
+                value="<%= oldData.personName || "" %>" />
+
+        <p><b>Organization:</b></p>
+        <input style="width: 100%;" type="text" name="orgName" 
+               value="<%= oldData.orgName || "" %>" />
+
+        <p><b>License Key:</b></p>
+        <textarea style="width: 100%; height: 60px;" 
+                  name="licenseString"><%= oldData.licenseString || "" %></textarea>
+
+      </div>
+
+      <div id="lm-edit-submit-wrap">
+        <input type="submit" name="submit" value="Submit" />
+        <input type="submit" name="cancel" value="Cancel" />
+      </div>
+    </form>
+  
+  <% } %>
+
+</div><!-- /lm -->
+

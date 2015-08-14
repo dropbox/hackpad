@@ -1,0 +1,195 @@
+XXX This is a scratch file I used for notes; information may be out of date or random -- dgreenspan
+
+- rename ace2.js to ace.js
+
+
+Editor goals:
+- Highlight JavaScript accurately (including regular expression, etc.)
+- On large documents (say 2000 lines), be responsive to new input and rehighlight the screen quickly
+- Highlight "as you type", not when you're done with the current line
+- Propagate multi-line comment highlighting efficiently
+- Look and feel as "clean" and "native" as possible to the user
+- Support unlimited "undo" with arbitrary undo model
+- Allow features such as auto-indentation and parenthesis-flashing to be added easily
+- Work in IE 6, FF 2, Safari 3, Camino
+- Support native copy and paste, within the buffer and with other programs
+- Not display any flickering, blurring, or any kind of artifact
+- Support incremental syntax-highlighting of other languages too
+- Be extensible -- multiple views of whole document, lines, tokens, characters
+- Support native selection behavior, international input, assistive devices (potentially)
+- Resizable text
+- Unlimited editors per page
+
+
+compatibility, speed, power, generality, 
+
+
+
+
+- enhancement ideas
+ - show mismatched brackets
+ - undo history limit
+
+ace2 changelog for week of 5/9:
+- full "undo" support!  control-Z (Windows) or command-Z (Mac)
+- flashing parentheses are back, and better than before!
+- appjet:css sections are syntax-highlighted
+- optimizations for slower machines
+- fixed various quirks
+- lines too long for browser are hard-wrapped on entry
+
+
+== path to calls that change rep
+- doLineSplice
+ - incorporateUserChanges
+  - idleWorkTimer
+  - handleKeyEvent
+ - performDocumentLineSplice
+  - setCodeText
+   - importCode
+   - setup
+  - handleReturnIndentation
+   - handleKeyEvent
+  - performDocumentReplaceRange
+   - handleKeyEvent
+   - performDocumentReplaceSelection
+    - handleKeyEvent
+- repSelectionChange
+ - incorporateUserChanges
+  - idleWorkTimer
+  - handleKeyEvent
+ - performSelectionChange
+  - setCodeText
+   - importCode
+   - setup
+  - handleReturnIndentation
+  - handleKeyEvent
+  - performDocumentReplaceRange
+  - doLineSplice
+
+
+make ace2_common local?
+
+
+next steps:
+- safari scroll jump
+- FF 1.6 support
+- weird "delete" bug
+- speed on slow machines
+- paren flashing
+- undo
+
+
+- investigate errors with special "delete" handling turned off
+- track down FF quirk (delete at begging of line starting with one space)
+- (done for now: look for IE memory leaks)
+
+
+Outstanding issues:
++ Bugs:
++ Quirks:
+  - FF: delete at beginning of line where line starts with 1 space (space briefly disappears)
+  - IE: clicking below document body clears selection (instead of moving caret)
+  - IE: horizontal scroll-bar sometimes unnecessary
++ Speed:
+  - skip-list is slow for insert/delete lines on highlighting
+  - return at bottom of 3000-line file takes too long to normalize in Firefox (probably worse in IE)
++ feature parity
+  - regular expression highlighting not smart in lexically ambiguous cases (should use previous token)
+  - paren flashing
++ additional features
+ - less zealous IDE document-dirty marking (e.g. arrow-key marks dirty)
+ - undo
++ fancy todo
+  - bring back rich shell editor
+  - use same highlighting for view-source, highlight on server
+  - highlight CSS and stuff
+
++ done
+  - multi-line strings
+  - does tab do the right thing?
+  - indent on return
+  - quirk: return key doesn't scroll caret into view
+  - line numbers  
+  - highlight appjet directives
+  - IE Support
+  - slightly smarter indentation
+  - tab deletes until a stop
+  - interface: import/export
+  - interface: rich/plain
+  - bugfix: IE: return, delete, etc. doesn't mark document dirty!
+  - bugfix: IE: can't copy/paste within document
+  - caret not always in view after an edit
+
+====================
+  
+Highlighting strategy:
+- allow incremental dirty-region highlighting, based on time and char to pass
+- first lex the viewport, based on information extending a little before it
+- then highlight the viewport
+- then highlight around the viewport?
+- lex the whole document from the top
+- highlight lines outside the viewport
+
+
+
+
+
+- deal with key events in relation to when they are responded to (doLater after all?)
+- use Pygment!
+
+- handle international characters (fragile DOM state)
+- normalize only when idle (make sure that works)
+- better detection, e.g. paste in Safari
+- selectionchange event?
+
+- can eventually allow discarding user changes!
+
+DONE:
+- editing when lines consist of spans
+- all browsers: scroll to full left on return, etc
+- why does IE let you type without firing events?
+- slow in IE?
+
+tests:
+- type some stuff, return, type more stuff, return
+- return repeatedly starting at end of line, delete repeatedly
+- return repeatedly starting at beginning of line, delete repeatedly
+- return repeatedly starting in middle of line, delete repeatedly
+- return/delete starting between blank lines
+- try to move past end of document, then try to type, then try to move
+- from collapsed selection, shift-left repeatedly, across lines, shift-right repeatedly
+- from collapsed selection, shift-right repeatedly, across lines, shift-left repeatedly
+- shift-up, shift-down; shift-down, shift-up
+- cut-and-paste span of characters into middle of line
+- cut-and-paste span of characters into blank line (FF)
+- cut-and-paste span of characters at end of line (FF)
+- cut-and-paste selection with blank lines in it, make sure lines still blank
+- cut-and-paste selection starting and ending with blank lines (IE, FF)
+- doc with blank lines, select-all, cut, paste
+- doc starting and ending in blank lines, select-all, cut, paste (IE, Firefox)
+  - IE currently loses one blank line at end if > 0
+  - Safari loses one blank line at end if > 1
+- non-empty doc, select-all, delete, select-all, delete (IE crash, Safari hidden cursor)
+- non-empty doc select-all, return, return, return (IE)
+- on last line of document: type stuff, return, type stuff. down arrow goes down = bad (IE)
+- on last line of document: type stuff, return, return. should be no extra lines (IE)
+- go to start of next-to-last line, shift-down, cut (IE)
+- cursor at start of line, shift-down, cut, paste (IE cursor jump)
+- cursor at start of one empty line, shift-down, cut, paste (IE)
+- cursor at start of two empty lines, shift-down, cut, paste (IE, FF)
+  - on IE, no new line is pasted; default behavior is worse, so I'll take it
+  - on FF, the equivalent of two returns; good enough
+- cursor at start of two empty lines, shift-down, cut, paste in middle of line (IE, FF)
+  - in IE, FF, Safari, the equivalent of two returns
+- type letter on blank line, delete it (IE)
+- type space on blank line, delete it (IE)
+- type space before non-blank line, delete it
+- delete blank line, then delete again quickly
+- delete blank line from caret at start of line starting with one space (FF)
+- type over selection from middle of one line to middle of next
+
+- in middle of a word (span), quickly delete, then type a character, then delete (IE)
+- paste text with blank lines from an external source
+- meta-delete
+- up arrow from beginning of line (WebKit)

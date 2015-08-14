@@ -1,0 +1,335 @@
+@import "colors.less";
+@import "globals.less";
+@import "mixins.less";
+
+
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body.ipad {
+  #padbar,
+  #padeditor {
+    margin-left: @site_left_margin;
+  }
+
+  .domain-item-overflow {
+    margin-top: -3px;
+  }
+
+  .domain-item-overflow .hp-ui-button {
+    font-size: 13px;
+  }
+
+  .streamtable .segment,
+  .streamtable .segment-wrapper {
+    width: auto;
+  }
+
+  #feedbackbutton {
+    top: auto;
+    left: auto;
+    bottom: 100px;
+    right: -40px;
+  }
+
+  #padpage {
+    min-height: 0;
+  }
+
+  .user-caret .user-caret-lbl {
+    line-height: 13px;
+  }
+
+  .user-caret .user-caret-initials {
+    line-height: 10px;
+  }
+
+  .user-caret img {
+    top: 3px;
+    right: 16px;
+    border: 0;
+  }
+
+  /* work around what appears to be an ios contenteditable bug */
+  #padpage {
+    overflow: hidden;
+  }
+
+  #padtable td {
+    padding-left: 0px;
+  }
+
+  #padtable td.title .title-link,
+  #padtable td.titleConnected .title-link {
+    color: #444;
+    font-weight: bold;
+  }
+
+  .ipadshow {
+    display: block;
+  }
+
+  #padtable td a {
+    padding: 0px 8px;
+    width: 320px;
+    height: 22px;
+  }
+
+  #padtable td.title,
+  #padtable td.titleConnected {
+    padding-top: 4px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 0px;
+  }
+
+  &,
+  & > header {
+    margin-left: auto;
+  }
+
+  #padtable td.titleConnected .connectedCount {
+    display: inline-block;
+  }
+
+  #padtable td.last {
+    text-align: left;
+    margin-top: -3px;
+  }
+
+  #padtable td.lastEditedDate {
+    text-align: left;
+    width: 300px;
+    display: block;
+    border: 0px;
+  }
+
+  #padtable td.actions,
+  #padtable td.taskCount {
+    display: none;
+  }
+
+  #homeright {
+    margin-left: 12px;
+  }
+
+  #account-dropdown {
+    margin-top: 10px;
+  }
+
+  #createpadentry {
+    width: calc(~"100% - 25px") !important;
+    font-size: 12px;
+  }
+
+  &.pro-body #createpadentry {
+    width: 485px !important;
+  }
+
+  #createpadlink .hp-ui-button-content {
+    -webkit-font-smoothing: auto;
+  }
+
+  #faccountnav {
+    margin-top: -7px;
+  }
+
+  .ipadhide {
+    display: none !important;
+  }
+
+  @ipad_pad_width: 540px;
+  @ipad_left_column_offset: -30px;
+
+  #toolbar {
+    top: 39px;
+    right: 0;
+  }
+
+  #toolbar-arrow {
+    right: 105px;
+    top: -2px;
+    .transform(~"rotate(-90deg)");
+  }
+
+  #toolbar button .hp-ui-button-content {
+    font-size: 15px;
+  }
+
+  #topbarBrandFullName2 {
+    display: block !important;
+  }
+
+  #topbarBrand2 .ipadshow,
+  #topbarBrand3 .ipadshow {
+    display: none !important;
+  }
+
+  &.pro-body #padpage {
+    position: static;
+  }
+
+  &.pro-body #homeright {
+    width: 120px;
+  }
+
+  @ipad_page_width: 100%;
+
+  & > header {
+    min-width: @ipad_page_width;
+    position: absolute;
+  }
+
+  #padpage,
+  #pad-page-footer {
+    width: @ipad_page_width;
+  }
+
+  #friend-picker-div input {
+    width: 100% !important;
+    display: block;
+  }
+
+  #friend-picker-div input {
+    width: 80% !important;
+  }
+
+  #topbarBrand {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: white;
+  }
+
+  #home #page-login-box {
+    right: 100px;
+  }
+
+  #padsidebar {
+    top: 44px;
+  }
+
+  div.ace-line {
+    font-size: 20px;
+    line-height: 37px;
+  }
+
+  #editor {
+    padding-top: @new_padding_top;
+  }
+
+  div.ace-line:before {
+    content: attr(data-author-name);
+  }
+
+  @media only screen and (orientation:portrait) {
+    #friend-picker-div input {
+      width: 95px !important;
+    }
+
+    #padsidebar {
+      width: 145px;
+      overflow: hidden;
+      padding-left: 15px;
+      right: 10px;
+    }
+
+    .fpcontent {
+      left: 93px;
+    }
+
+    /* logged out homepage */
+    #top-center {
+      width: auto;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    #presslogos {
+      width: auto;
+    }
+
+    #features {
+      width: auto;
+    }
+
+    #footer {
+      width: auto;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    #page {
+      width: auto;
+    }
+    /* end logged out homepage */
+  }
+
+  ul.listtype-task li:before,
+  ul.listtype-taskdone li:before {
+    padding-left: 0;
+    font-size: 24px;
+  }
+
+  ul.listtype-taskdone:before {
+    font-size: 23.4px;
+  }
+
+  &.mobile-app {
+    .user-caret {
+      left: 0 !important;
+      z-index: 0;
+    }
+
+    .user-caret .user-caret-initials {
+      opacity: 1 !important;
+    }
+
+    .user-caret .user-caret-lbl {
+      display: none;
+    }
+
+    #padbar,
+    #padeditor {
+      width: 100% !important;
+      left: 0px;
+    }
+
+    #padpage {
+      margin-top: 0px;
+    }
+
+    #padpage {
+      margin-top: 0px;
+    }
+
+    ul.listtype-comment li {
+      line-height: 20px;
+      margin-left: 30px;
+    }
+
+    .line-list-type-comment ul.listtype-comment li:before {
+      margin-left: -53px;
+    }
+  }
+
+  &.mobile-web {
+    ul.listtype-comment li:before,
+    ul.listtype-commentcollapsed li:before {
+      margin-top: 3px;
+    }
+  }
+
+  @media only screen and (orientation:landscape) {
+    #padsidebar {
+      right: 30px;
+    }
+  }
+
+  @media only screen and (min-device-width: @mobileMaxDeviceWidth) {
+    .desktophide {
+      display: block;
+    }
+  }
+}

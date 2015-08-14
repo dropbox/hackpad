@@ -1,0 +1,139 @@
+.user-select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.transform(@arguments) {
+  -webkit-transform: @arguments;
+  -moz-transform: @arguments;
+  -o-transform: @arguments;
+  -ms-transform: @arguments;
+  transform: @arguments;
+}
+
+.animation(@arguments) {
+  -webkit-animation: @arguments;
+  -moz-animation: @arguments;
+  -o-animation: @arguments;
+  -ms-animation: @arguments;
+  animation: @arguments;
+}
+
+.transition(@arguments) {
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  -o-transition: @arguments;
+  -ms-transition: @arguments;
+  transition: @arguments;
+}
+
+.filter(@arguments) {
+  -webkit-filter: @arguments;
+  -moz-filter: @arguments;
+  -o-filter: @arguments;
+  -ms-filter: @arguments;
+  filter: @arguments;
+}
+
+.gradient(@arguments) {
+  background: -webkit-linear-gradient(@arguments);
+  background: -moz-linear-gradient(@arguments);
+  background: -o-linear-gradient(@arguments);
+  background: -ms-linear-gradient(@arguments);
+  background: linear-gradient(@arguments);
+}
+
+.icon-mixin {
+  font-family: "hackpad";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  color: #666;
+  font-size: 14px;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-top: 4px;
+  margin-right: 5px;
+  float: left;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  cursor: pointer;
+     
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: -1.5em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg);
+  }
+
+  100% {
+    -ms-transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+.spinny {
+  .icon-mixin;
+  content: '\e630';
+  .animation(spin 1s infinite linear);
+}

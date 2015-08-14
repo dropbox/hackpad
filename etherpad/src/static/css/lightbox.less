@@ -1,0 +1,84 @@
+/* lightbox */
+.lightbox-container {
+  position:fixed;
+  width:100%;
+  height:100%;
+  top: 0px;
+
+  background: transparent;
+  background: rgba(0,0,0,0.75);
+  overflow-y: auto;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#75000000',endColorstr='#75000000');
+  zoom: 1;
+}
+
+.lightbox-inner.center-content {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left:10px;
+  padding-right:20px;
+
+}
+.lightbox-container .dialog-cancel-x {
+  position: fixed;
+  top:20px;
+  right: 20px;
+}
+.lightbox-inner img {
+  max-width: 100%;
+
+  display:block;
+  border-radius:2px;
+  cursor: pointer;
+  margin:auto;
+}
+
+.center-wrap
+{
+    display: table;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+#lightbox-next,
+#lightbox-prev {
+  color:white;
+  border-radius:3px;
+  text-align: center;
+  cursor:pointer;
+  top:50%;
+  margin-top:-100px;
+  height:200px;
+  width:100px;
+  right: 20px;
+  position:fixed;
+  background-color: transparent;
+  border: 0;
+}
+
+#lightbox-next img, #lightbox-prev img{
+  padding-top: 5px;
+}
+
+#lightbox-prev {
+  left: 20px;
+}
+
+#lightbox-next.hover, #lightbox-prev.hover,
+#lightbox-next:hover, #lightbox-prev:hover {
+  background-color: #000;
+  box-shadow: 0px 0px 3px white;
+}
+
+.arrow-clicked{
+    -webkit-animation-name: pulsate;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes pulsate {
+    50% { -webkit-transform: scale(1.2) translate(0px, -10px);}
+}
+
+
+

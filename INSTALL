@@ -1,0 +1,27 @@
+INSTALLATION INSTRUCTIONS
+
+INSTALLING ON POSIX COMPATIBLE SYSTEMS
+
+* Install the dependencies: Scala 2.7, Sun Java JDK 7, libmysql-java, mysql
+
+* Edit the file bin/exports.sh (and optionally
+  etherpad/bin/etherpad.default) and change the paths to
+  match your system.
+
+* Run bin/build.sh
+
+* Run contrib/scripts/setup-mysql-db.sh
+
+* Copy etherpad/etc/etherpad.localdev-default.properties to etherpad/etc/etherpad.local.properties
+* Edit etherpad/etc/etherpad.local.properties and set
+   etherpad.superUserEmailAddresses
+       Example: etherpad.superUserEmailAddresses = name1@example.com,name2@example.com
+   topdomains
+       Example: topdomains = yourhostname.com,localhost
+
+* You can now run etherpad via bin/run.sh
+
+* If you want emoji support go to https://github.com/github/gemoji/tree/master/images/emoji/unicode
+  and copy the images into etherpad/src/static/img/emoji/unicode/
+
+

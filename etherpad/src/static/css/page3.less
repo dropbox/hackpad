@@ -1,0 +1,135 @@
+@import "colors.less";
+@import "globals.less";
+@import "mixins.less";
+
+.clear { clear: both; }
+
+#padeditor {
+  width: @site_editor_width;
+  max-width: @site_max_width;
+  padding-bottom: 30px;
+  margin: 0 auto;
+  transition: all 200ms @site_fancy_transition;
+}
+
+.hidesidebar #padeditor { right: 0; }
+
+#padeditor {
+  background: transparent;
+  zoom: 1;
+  z-index: @zindex_padeditor;
+}
+
+.static-html {
+  position: relative;
+  z-index: 100;
+}
+
+.loaded .static-html {
+  display: none;
+}
+
+#padmain {
+  position: relative;
+}
+
+@sidebar_width: 180px;
+@sidebar_right_offset: 13px;
+#padsidebar {
+  position: absolute;
+  top: 0;
+  right: (@wide_page_width - @new_real_pad_width) / 2 - @sidebar_width - @sidebar_right_offset;
+  vertical-align: top;
+  width: 18%;
+  z-index: 11 - 1;
+  margin-bottom: 20px;
+  opacity: 0; /* prevent showing jumping of sidebar. */
+}
+
+#padsidebar.fixed {
+  opacity: 1;
+  bottom: 0;
+}
+
+.hidesidebar #padsidebar { width: 0; overflow: hidden; }
+
+#padsidebar.fixed {
+  position: fixed;
+}
+
+.hide {
+  display:none;
+}
+
+.menu,
+.menu ul {
+  font-size: 10pt;
+  list-style-type: none;
+}
+
+.menu ul {
+  padding-left: 20px;
+}
+
+.menu a {
+  font-size: 10px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #444;
+  font-weight: bold;
+}
+
+@media print {
+  header,
+  #add-to-collection,
+  #feedbackbutton,
+  #site-toggle,
+  #shared-with-settings,
+  #editorbottombox,
+  #pad-page-footer,
+  #padsidebar,
+  #topbar {
+    display: none !important;
+    visibility: hidden;
+  }
+
+  * {
+    /* Our custom font crashes some printers :-/ */
+    font-family: @base_font !important;
+  }
+
+  #padpage {
+    position: static;
+    margin-left:0px;
+    margin-top: 0px !important;
+
+    #padeditor {
+      width: inherit;
+      max-width: inherit;
+      margin-left: 0px;
+      padding-bottom: 0px;
+
+      #editor {
+        box-shadow: none;
+
+        div.ace-line.line-list-type-comment:before {
+          left: 0;
+          content: attr(data-author-name) !important;
+        }
+
+        .ace-line {
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+
+        .ace-line:first-child {
+          margin-top: 0px;
+        }
+      }
+
+      .user-caret {
+        display: none !important;
+      }
+    }
+  }
+}

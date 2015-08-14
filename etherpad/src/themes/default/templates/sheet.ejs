@@ -1,0 +1,119 @@
+<%
+  helpers.suppressGA();
+  helpers.includeJQuery();
+  helpers.includeJs("jquery.handsontable.js");
+  helpers.includeCss("jquery.handsontable.css");
+
+  helpers.includeJs("jquery.contextMenu.js");
+  helpers.includeJs("jquery.ui.position.js");
+  helpers.includeJs("jquery.autoresize.js");
+%>
+
+<style>
+body {
+  padding: 0;
+  margin: 0;
+  max-width: 578px;
+}
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  body{
+    max-width: 430px;
+  }
+}
+</style>
+
+<div id="grid" class="dataTable"></div>
+
+<%- helpers.documentDomain() %>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+
+$(document).ready(function() {
+
+    $("#grid").handsontable({
+      rows: 2,
+      cols: 3,
+      minSpareCols: 1, //always keep at least 1 spare row at the right
+      minSpareRows: 1, //always keep at least 1 spare row at the bottom
+      undo: true,
+      onChange: handleOnChange,
+      onDeleteTable: handleDeleteTable,
+      contextMenuContainer: window.parent.document.getElementById("overlaysdiv"),
+      contextMenuOffsetFunc: getContextMenuOffset,
+      contextMenu: true
+    });
+
+    var data = [
+      ["", ""],
+      ["", ""]
+      ];
+
+    /* Callbacks for handsontable */
+    function getContextMenuOffset(w, offset, menuWidth, menuHeight) {
+      var frameOffset = $(w.frameElement).position();
+
+      offset.left += (frameOffset.left) ; // offset from editor
+      offset.top += (frameOffset.top);
+      var maxOffsetLeft = $(w).width() + 30 /*editor padding*/;
+      var maxOffsetTop = $(window.parent.document.getElementById("padeditor")).height() - menuHeight- 10/*padding*/;
+      if (offset.left > maxOffsetLeft) {
+        offset.left = Math.min(maxOffsetLeft + 60 - menuWidth, offset.left - menuWidth);
+      }
+      offset.top = Math.min(offset.top, maxOffsetTop);
+      return offset;
+    }
+
+    function handleDeleteTable() {
+      $(window.parent.document.getElementById("overlaysdiv")).children().hide();
+      window.parent.deleteTable(window.frameElement);
+    }
+
+
+    function handleOnChange(changes) {
+      //console.log("handleOnChange");
+      var outerWindow = window.parent;
+      if (changes) {
+        outerWindow.handleTableChange(window.frameElement, changes);
+      }
+    }
+
+    $(window).on('blur', function() {
+      $("#grid").handsontable("deselectCell");
+    });
+
+    /* External API */
+    window.frameElement.setDataAtCell = function (row, col, value) {
+      // (will ship this optimization separately)
+      if (parseInt(row) >= 0 && parseInt(col) >= 0) {
+        $("#grid").handsontable("setDataAtCell", parseInt(row), parseInt(col), value);
+      }
+    }
+
+    window.frameElement.setAttribAtCell = function (row, col, value) {
+      // (will ship this optimization separately)
+      if (parseInt(row) >= 0 && parseInt(col) >= 0) {
+        $("#grid").handsontable("setAttribAtCell", parseInt(row), parseInt(col), value);
+      }
+    }
+
+    window.frameElement.triggerAttrToggle = function (attr) {
+      $("#grid").handsontable("triggerAttrToggle", attr);
+    }
+
+    // this is called after a bunch of calls to setDataAtCell
+    // either in response to a fillTable request, or as other users
+    // make edits to the table or even our own edits (via applyDomChanges)
+    window.frameElement.onAfterEdit = function() {
+      //console.log("onAfterEdit");
+      $("#grid").handsontable("keepEmptyRows");
+      window.frameElement.height = $("#grid").handsontable("height") + 3;
+
+      return  $("table")[0];
+    }
+
+    var outerWindow = window.parent;
+    outerWindow.fillTable(window.frameElement);
+
+});
+
+</script>

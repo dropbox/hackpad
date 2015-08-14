@@ -1,0 +1,147 @@
+<%
+  template.inherit('ui.ejs');
+  template.inherit('pad/_follow.ejs');
+%>
+
+<% template.define('toolbar', function() { var ejs_data=''; %>
+  <%- template.use('toolbarEditbar') %>
+  <%
+    var menu = [
+      { href: '/ep/pad/summary/' + encodeURIComponent(localPadId), label: N_('View History'), },
+      { 'data-click': 'showembeddialog', label: N_('Embed'), },
+      { href: '/ep/pad/static/' + encodeURIComponent(localPadId), label: N_('Print'), }
+    ];
+    if (isCreator || isAdmin) {
+      menu.push({href: '#', id: 'toggle-readonly-link',
+          label: N_('Moderate') });
+      menu.push({'data-click': 'deletepad', label: N_('Delete') });
+    } else {
+      menu.push({href: '#', id: 'pad-moderator-link', label: 'Moderated By'});
+    }
+  %>
+  <%- template.use('button', null, {
+    id: 'settingsbutton',
+    fontIcon: 'icon-gear-hollow',
+    type: 'toolbar',
+    menu: menu,
+    tooltip: N_('Pad Settings')
+  }); %>
+  <%- template.use('followButton', null, localPadId, following,
+      true /* no label */) %>
+<% return ejs_data; }); %>
+
+
+<% template.define('toolbarEditbar', function() { var ejs_data=''; %>
+  <span id="toolbar" class="iphonehide">
+    <%# Whitespace important here. %>
+
+    <%- template.use('button', null, {
+      id: 'textformatbutton',
+      type: 'toolbar',
+      className: 'toolbar-main',
+      fontIcon: 'icon-textformat',
+      attrs: 'data-type="format"',
+      tooltip: N_('Formatting Options')
+    }); %><span class="hp-ui-button-group" data-type="format">
+      <%- template.use('button', null, {
+        id: 'boldbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-bold',
+        tooltip: isMac ? N_('Bold (Command-B)') : N_('Bold (Ctrl+B)')
+      }); %><%- template.use('button', null, {
+        id: 'italicsbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-italic',
+        tooltip: isMac ? N_('Italics (Command-I)') : N_('Italics (Ctrl+I)')
+      }); %><%- template.use('button', null, {
+        id: 'underlinebutton',
+        type: 'toolbar',
+        fontIcon: 'icon-underline',
+        tooltip: isMac ? N_('Underline (Command-U)') : N_('Underline (Ctrl+U)')
+      }); %><%- template.use('button', null, {
+        id: 'strikebutton',
+        type: 'toolbar',
+        fontIcon: 'icon-strikethrough',
+        tooltip: N_('Strikethrough')
+      }); %>
+    </span><%- template.use('button', null, {
+      id: 'paragraphbutton',
+      type: 'toolbar',
+      className: 'toolbar-main',
+      fontIcon: 'icon-paragraph',
+      attrs: 'data-type="paragraph"',
+      tooltip: N_('Paragraph Options')
+    }); %><span class="hp-ui-button-group" data-type="paragraph">
+      <%- template.use('button', null, {
+        id: 'commentbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-comment',
+        tooltip: N_('Comment (// at the beginning of a line)')
+      }); %><%- template.use('button', null, {
+        id: 'taskbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-check',
+        tooltip: isMac ? N_('Task List (type [ ] at the beginning of a line, or Command-\\)') : N_('Task List (type [ ] at the beginning of a line, or Ctrl+\\)')
+      }); %><%- template.use('button', null, {
+        id: 'listbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-bullet',
+        tooltip: N_('Bulleted List (- or * at the beginning of a line)')
+      }); %><%- template.use('button', null, {
+        id: 'numberedlistbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-number',
+        tooltip: N_('Numbered List (1.  at the beginning of a line)')
+      }); %><%- template.use('button', null, {
+        id: 'codebutton',
+        fontIcon: 'icon-code',
+        type: 'toolbar',
+        tooltip: N_('Code (4 spaces at the beginning of a line)')
+      }); %>
+    </span><span id="toolbar-indent-group" class="hp-ui-button-group"
+        data-type="paragraph">
+      <%- template.use('button', null, {
+        id: 'indentbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-indent',
+        tooltip: N_('Indent (press Tab)')
+      }); %><%- template.use('button', null, {
+        id: 'outdentbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-outdent',
+        tooltip: N_('Unindent (press Shift-Tab)')
+      }); %>
+    </span><span id="toolbar-attach-group" class="hp-ui-button-group"
+        data-type="attach">
+      <%- template.use('button', null, {
+        id: 'insertimage',
+        type: 'toolbar',
+        fontIcon: 'icon-photo',
+        tooltip: N_('Image')
+      }); %><%- template.use('button', null, {
+        id: 'inserttable',
+        type: 'toolbar',
+        fontIcon: 'icon-table',
+        tooltip: N_('Table')
+      }); %><%- template.use('button', null, {
+        id: 'insertdropbox',
+        type: 'toolbar',
+        fontIcon: 'icon-dropbox',
+        tooltip: N_('Dropbox File')
+      }); %><%- template.use('button', null, {
+        id: 'attachbutton',
+        type: 'toolbar',
+        fontIcon: 'icon-insert',
+        tooltip: N_('Insert')
+      }); %>
+    </span>
+    <img id="toolbar-arrow"
+        src="<%=helpers.cdn()%>/static/img/editBarTriangle@2x.png">
+  </span>
+  <%- template.use('button', null, {
+    id: 'editbutton',
+    fontIcon: 'icon-edit',
+    type: 'toolbar',
+    tooltip: N_('Edit')
+  }); %>
+<% return ejs_data; }); %>

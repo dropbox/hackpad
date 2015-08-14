@@ -1,0 +1,26 @@
+// IE8 only styles for compatibility
+
+@error_color: #FF0000;
+@success_color: #499D25;
+
+#new_site {
+	div.wrapper {
+		form {
+			input[type="radio"] + label:before {
+				display: none;
+			}
+			#subdomain-check {
+				span {
+					color: white !important;
+				}
+
+				&.available {
+					background-color: @success_color;
+				}
+				&.unavailable {
+					background-color: @error_color;
+				}
+			}
+		}
+	}
+}

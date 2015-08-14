@@ -1,0 +1,54 @@
+@import "colors.less";
+
+#mainbar .padfollow,
+#mainbar .padunfollow,
+#follow-container .groupfollow,
+#follow-container .groupunfollow {
+  font-family: @base_font_new;
+  font-weight: 200;
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 12px;
+  color: #fff !important;
+  text-transform: uppercase;
+  border-radius: 1px;
+  padding: 13px 16px;
+  box-shadow: none !important;
+}
+
+#mainbar .padfollow,
+#mainbar .padunfollow {
+  font-size: 16px;
+  padding: 9px;
+  background-color: @color_actionable;
+  transition: background-color .2s ease-in;
+}
+
+#mainbar .padfollow:hover {
+  background-color: @color_actionable_hover;
+}
+
+#mainbar .padunfollow {
+  background-color: #4a4e4f !important;
+}
+
+#mainbar .padunfollow .hp-ui-button-content:before {
+  color: #000;
+}
+
+#mainbar .padfollow,
+#follow-container .groupfollow {
+  background: @color_actionable;
+  border: 0;
+  border-radius: 2px;
+}
+
+#mainbar .padunfollow,
+#follow-container .groupunfollow {
+  border: 0;
+  border-radius: 2px;
+}
+
+#follow-container .groupunfollow {
+  background-color: @color_button !important;
+}

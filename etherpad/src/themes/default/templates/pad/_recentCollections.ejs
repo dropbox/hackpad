@@ -1,0 +1,6 @@
+<%partial recentCollections (collections) %><%
+  for (var i=0; i<collections.length; i++) {
+    var c = collections[i];
+    %><li class="add-group" groupId="<%=c.groupId%>"><%=c.name%></li><%
+  }
+%><%endpartial %>

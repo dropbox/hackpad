@@ -1,0 +1,75 @@
+<%  template.inherit('ui.ejs'); %>
+<%  helpers.includeJs("download_pads.js"); %>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  $(document).ready(function() {
+    $('button.coming-soon').click(function() {
+      alert("This feature is coming soon!");
+      return false;
+    })
+  });
+</script>
+
+
+<h3>Import MediaWiki Backup</h3>
+
+<br/>
+<form action="" method="get">
+<%- helpers.xsrfTokenElement() %>
+<input type="file"></input>
+<br/><br/>
+<span style="font-size:14px"> You can generate an XML backup of your MediaWiki by following <a href="http://www.mediawiki.org/wiki/Manual:DumpBackup.php">these directions</a>.</span>
+<br/>
+  <%- template.use('button', null, { buttonType: 'submit', label: 'Begin Import' }); %>
+</form>
+
+<br/>
+<hr>
+<br/>
+
+<h3>Import Google Sites Wiki</h3>
+<br/>
+<form action="/ep/import/googlesite" method="get">
+<%- helpers.xsrfTokenElement() %>
+
+<input name="address" placeholder="http://sites.google.com/site/<%= helpers.siteName() %>" style="line-height:25px; width: 100%"></input>
+<br/>
+<br/>
+
+  <%- template.use('button', null, { buttonType: 'submit', label: 'Begin Import' }); %>
+</form>
+<% if (recentImports.length) { %>
+<br/>
+<style>
+li {font-size: 14px; list-style: none;}
+h3 {margin-bottom: 5px;}
+
+</style>
+<h5> Sites Imported <a href="/ep/admin/import-export"> refresh </a> </h5>
+<ul>
+<% for (var i=0; i<recentImports.length; i++) { %>
+  <li><%= recentImports[i].siteName %>,
+  <%= recentImports[i].pagesProcessed %> pages imported.
+  <%= recentImports[i].state == "done" ? "Completed." : "In progress." %></li>
+<% } %>
+<% } %>
+</ul>
+<br/>
+<hr>
+
+<br/>
+
+<h3>Export</h3>
+<br/>
+<%- template.use('button', null, {
+      id: 'hp-download-pads',
+      type: 'large-popup',
+      'data-click': 'downloadpads',
+      label: N_('Download Pads'),
+      attrs: "data-url='/ep/padlist/all_pads.zip'",
+      menu: [
+        {label: 'as HTML', id: "download-pads-html"},
+        {label: 'as Markdown', id: "download-pads-md"},
+        {label: 'as Plaintext', id: "download-pads-txt"},
+      ]
+}); %>

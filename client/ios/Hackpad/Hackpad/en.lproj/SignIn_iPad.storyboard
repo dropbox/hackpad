@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="uZe-Dd-JDb">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--Gray Navigation Controller-->
+        <scene sceneID="57h-VZ-nCg">
+            <objects>
+                <navigationController storyboardIdentifier="SignInNavigationViewController" definesPresentationContext="YES" modalPresentationStyle="formSheet" id="uZe-Dd-JDb" customClass="HPGrayNavigationController" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j6Y-cD-3cX">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.43529411759999997" green="0.56862745100000001" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="d5L-fn-SNU" kind="relationship" relationship="rootViewController" id="cD6-k2-k5b"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9nS-hi-jls" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2041" y="-3270"/>
+        </scene>
+        <!--Google Sign In View Controller - Sign In-->
+        <scene sceneID="0lt-dw-HYd">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="UT8-so-SHz" customClass="HPGoogleSignInViewController" sceneMemberID="viewController">
+                    <webView key="view" contentMode="scaleToFill" id="APB-N8-7Ko">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <outlet property="delegate" destination="UT8-so-SHz" id="coY-D9-qkW"/>
+                        </connections>
+                    </webView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Sign In" id="dWW-0w-bUl"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="webView" destination="APB-N8-7Ko" id="n5U-Cz-q9p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JTr-1p-yOX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-589" y="-3278"/>
+        </scene>
+        <!--Sign In View Controller-->
+        <scene sceneID="KXE-xB-eMA">
+            <objects>
+                <viewController id="d5L-fn-SNU" customClass="HPSignInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7xM-EY-tZI"/>
+                        <viewControllerLayoutGuide type="bottom" id="CP1-TO-UTR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="skv-rH-zqn">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="irj-3a-T4w" userLabel="Google">
+                                <rect key="frame" x="20" y="72" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.29411764709999999" green="0.53725490200000003" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Sign in with Google">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="UT8-so-SHz" kind="push" identifier="GoogleSignIn" id="hrG-cH-AYI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Lw-TG-3Tu" userLabel="Facebook">
+                                <rect key="frame" x="20" y="124" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.23137254900000001" green="0.34901960780000002" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Sign in with Facebook">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInToFacebook:" destination="d5L-fn-SNU" eventType="touchUpInside" id="Sod-M1-eam"/>
+                                </connections>
+                            </button>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Jane Appleseed" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hdB-BO-nEr" userLabel="name">
+                                <rect key="frame" x="20" y="273" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="textColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="namePhonePad" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="updateCheckbox:" destination="d5L-fn-SNU" eventType="editingChanged" id="fZV-bL-x6M"/>
+                                    <action selector="updateSignUpItem:" destination="d5L-fn-SNU" eventType="editingChanged" id="bKL-ZS-1eR"/>
+                                    <outlet property="delegate" destination="d5L-fn-SNU" id="Atf-mh-oiF"/>
+                                </connections>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zD5-b4-8HQ">
+                                <rect key="frame" x="20" y="176" width="280" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7j-Lr-EMn" userLabel="leftDots">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RAe-fp-eBm" userLabel="- OR -">
+                                        <rect key="frame" x="128" y="8" width="25" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.76470589639999997" green="0.80000001190000003" blue="0.78823530669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="odk-if-tr1" userLabel="rightDots">
+                                        <rect key="frame" x="161" y="0.0" width="119" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="odk-if-tr1" secondAttribute="centerY" id="85O-21-gYc"/>
+                                    <constraint firstItem="h7j-Lr-EMn" firstAttribute="leading" secondItem="zD5-b4-8HQ" secondAttribute="leading" id="8Gc-ru-un5"/>
+                                    <constraint firstAttribute="height" constant="37" placeholder="YES" id="EBK-ni-eF0"/>
+                                    <constraint firstAttribute="centerY" secondItem="h7j-Lr-EMn" secondAttribute="centerY" id="HFO-cw-eZ9"/>
+                                    <constraint firstItem="odk-if-tr1" firstAttribute="leading" secondItem="RAe-fp-eBm" secondAttribute="trailing" constant="8" id="HjB-Lk-Teg"/>
+                                    <constraint firstAttribute="width" constant="280" placeholder="YES" id="NFU-O2-1Ds"/>
+                                    <constraint firstAttribute="centerX" secondItem="RAe-fp-eBm" secondAttribute="centerX" id="NdW-Os-5zE"/>
+                                    <constraint firstItem="RAe-fp-eBm" firstAttribute="leading" secondItem="h7j-Lr-EMn" secondAttribute="trailing" constant="8" id="UE9-uh-myP"/>
+                                    <constraint firstAttribute="centerY" secondItem="RAe-fp-eBm" secondAttribute="centerY" id="bZX-i6-YIj"/>
+                                    <constraint firstAttribute="height" secondItem="odk-if-tr1" secondAttribute="height" id="dID-le-RVr"/>
+                                    <constraint firstItem="h7j-Lr-EMn" firstAttribute="height" secondItem="zD5-b4-8HQ" secondAttribute="height" id="k9M-SC-Xka"/>
+                                    <constraint firstAttribute="trailing" secondItem="odk-if-tr1" secondAttribute="trailing" id="rg6-5l-v9K"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="user@example.com" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhh-Ce-y2U" userLabel="email">
+                                <rect key="frame" x="20" y="325" width="153" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.29411764709999999" green="0.53725490200000003" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="updateCheckbox:" destination="d5L-fn-SNU" eventType="editingChanged" id="tLz-ao-0fX"/>
+                                    <action selector="updateSignInItem:" destination="d5L-fn-SNU" eventType="editingChanged" id="Y4r-ht-bwf"/>
+                                    <action selector="updateSignUpItem:" destination="d5L-fn-SNU" eventType="editingChanged" id="dCt-CZ-Hb6"/>
+                                    <outlet property="delegate" destination="d5L-fn-SNU" id="9Yv-3R-TKO"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iib-JS-zse" userLabel="Sign In">
+                                <rect key="frame" x="20" y="221" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.29411764709999999" green="0.53725490200000003" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Sign in with email">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showSignIn:" destination="d5L-fn-SNU" eventType="touchUpInside" id="6ZV-XN-g5W"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s0Q-k5-zTb" userLabel="password">
+                                <rect key="frame" x="20" y="377" width="153" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="textColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="updateCheckbox:" destination="d5L-fn-SNU" eventType="editingChanged" id="Opy-60-l4p"/>
+                                    <action selector="updateSignInItem:" destination="d5L-fn-SNU" eventType="editingChanged" id="vSf-Gv-duo"/>
+                                    <action selector="updateSignUpItem:" destination="d5L-fn-SNU" eventType="editingChanged" id="Y4x-lo-0BR"/>
+                                    <outlet property="delegate" destination="d5L-fn-SNU" id="Rvs-3r-oAI"/>
+                                </connections>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="verify password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="haP-Yo-UT0" userLabel="verify">
+                                <rect key="frame" x="20" y="419" width="155" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="textColor" red="0.22352942819999999" green="0.56078433989999998" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="updateCheckbox:" destination="d5L-fn-SNU" eventType="editingChanged" id="I5r-9c-nPp"/>
+                                    <action selector="updateSignUpItem:" destination="d5L-fn-SNU" eventType="editingChanged" id="rdG-JZ-SVl"/>
+                                    <outlet property="delegate" destination="d5L-fn-SNU" id="F5G-Rk-onl"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPe-yF-FmB" userLabel="forgot">
+                                <rect key="frame" x="168" y="377" width="152" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Forgot Password?">
+                                    <color key="titleColor" red="0.29411764709999999" green="0.53725490200000003" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showForgottenPassword:" destination="d5L-fn-SNU" eventType="touchUpInside" id="AOS-KM-X57"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2U-km-XoV" userLabel="Sign Up">
+                                <rect key="frame" x="104" y="417" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Create Account">
+                                    <color key="titleColor" red="0.29411764709999999" green="0.53725490200000003" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showSignUp:" destination="d5L-fn-SNU" eventType="touchUpInside" id="zEg-br-5cB"/>
+                                </connections>
+                            </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencilLove.png" translatesAutoresizingMaskIntoConstraints="NO" id="tQz-tH-VpU">
+                                <rect key="frame" x="183" y="480" width="174" height="174"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="174" id="Ukl-Uk-JZs"/>
+                                    <constraint firstAttribute="height" constant="174" id="uAN-55-mnP"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.8862745098" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="zD5-b4-8HQ" firstAttribute="top" secondItem="7xM-EY-tZI" secondAttribute="bottom" constant="112" placeholder="YES" id="TSC-dv-2yp"/>
+                            <constraint firstItem="zD5-b4-8HQ" firstAttribute="leading" secondItem="skv-rH-zqn" secondAttribute="leading" constant="20" placeholder="YES" id="dPk-IU-bKE"/>
+                            <constraint firstItem="CP1-TO-UTR" firstAttribute="top" secondItem="tQz-tH-VpU" secondAttribute="bottom" priority="750" constant="-74" id="eIW-Lc-qlT"/>
+                            <constraint firstAttribute="bottom" secondItem="tQz-tH-VpU" secondAttribute="top" constant="140" id="kay-kG-RdP"/>
+                            <constraint firstAttribute="centerX" secondItem="tQz-tH-VpU" secondAttribute="centerX" id="kjD-rp-t3Q"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ORa-zk-20d"/>
+                    <connections>
+                        <outlet property="backItem" destination="Xw4-xo-Hsx" id="XgI-WC-VM8"/>
+                        <outlet property="cancelItem" destination="OzS-2K-fvV" id="voq-rp-mbS"/>
+                        <outlet property="emailButton" destination="iib-JS-zse" id="oI5-V2-huO"/>
+                        <outlet property="emailField" destination="dhh-Ce-y2U" id="g6g-2G-KQG"/>
+                        <outlet property="facebookButton" destination="5Lw-TG-3Tu" id="PLf-xp-vCt"/>
+                        <outlet property="forgotPasswordButton" destination="KPe-yF-FmB" id="kwf-Jp-WmP"/>
+                        <outlet property="googleButton" destination="irj-3a-T4w" id="Db3-48-JtM"/>
+                        <outlet property="leftDots" destination="h7j-Lr-EMn" id="6f2-Am-m2E"/>
+                        <outlet property="nameField" destination="hdB-BO-nEr" id="NNP-nD-wH3"/>
+                        <outlet property="orLabel" destination="RAe-fp-eBm" id="d8w-ch-lVg"/>
+                        <outlet property="orView" destination="zD5-b4-8HQ" id="2fH-7H-TBJ"/>
+                        <outlet property="passwordField" destination="s0Q-k5-zTb" id="ZvU-y7-nTe"/>
+                        <outlet property="rightDots" destination="odk-if-tr1" id="Mcl-Bw-ZSo"/>
+                        <outlet property="showSignUpButton" destination="n2U-km-XoV" id="uKa-BI-IGe"/>
+                        <outlet property="signInItem" destination="XdT-6c-vrz" id="iPo-0P-mWA"/>
+                        <outlet property="signUpItem" destination="pPa-oG-MBP" id="DTw-9E-s3i"/>
+                        <outlet property="verifyField" destination="haP-Yo-UT0" id="fR8-7l-6ef"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="En9-Xd-OVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="Cancel" id="OzS-2K-fvV">
+                    <connections>
+                        <action selector="cancelSignIn:" destination="d5L-fn-SNU" id="nqm-18-FW0"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Sign In" style="done" id="XdT-6c-vrz">
+                    <connections>
+                        <action selector="signIn:" destination="d5L-fn-SNU" id="v2Q-Ox-1Rf"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Sign Up" style="done" id="pPa-oG-MBP">
+                    <connections>
+                        <action selector="signUp:" destination="d5L-fn-SNU" id="mEA-HK-gbC"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="back.png" id="Xw4-xo-Hsx" userLabel="Bar Button Item - Back">
+                    <connections>
+                        <action selector="showButtons:" destination="d5L-fn-SNU" id="Ee6-uD-04W"/>
+                    </connections>
+                </barButtonItem>
+            </objects>
+            <point key="canvasLocation" x="-1323" y="-3185"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="back.png" width="25" height="25"/>
+        <image name="pencilLove.png" width="174" height="174"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

@@ -1,0 +1,22 @@
+<html>
+<html>
+<head>
+	<title>Hackpad JS API Test Page</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="/static/hackpad.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			var clientId = "XXXXXXX";
+			var padId = "XXXXXXXXXXX";
+			var timestamp = 0;
+			var signature = "";
+			hackpad.render($('#embed'), padId);
+		});
+	</script>
+</head>
+<body>
+	<div id="embed" style="width:900px; height:100%"> </div>
+</body>
+</html>

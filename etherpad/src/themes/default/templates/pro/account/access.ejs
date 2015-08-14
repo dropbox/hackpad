@@ -1,0 +1,54 @@
+<%
+  template.inherit("signin.ejs");
+
+  helpers.includeJs("cookies.js")
+
+  helpers.includeCss("access.less");
+  helpers.includeCss("pro/account.less");
+  helpers.includeCss("phone.less");
+  helpers.includeCss("tablet.less");
+
+  helpers.addDefaultMetadata();
+
+  helpers.disableOffline();
+  helpers.setRobotsPolicy({index: false});
+  helpers.facebookOpenGraphMetadata({title: "Private Hackpad"});
+
+  helpers.addToHead('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />');
+%>
+
+<!-- Stand-alone sign-in page:  Wraps login-form (from signin.ejs) -->
+
+<% template.define('body', function() { var ejs_data=''; %>
+
+
+<div class="accessbox" style="">
+
+  <div class="accessboxinner">
+
+    <script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+      $(function() {
+        if (document.location.hash) {
+          $("#invite-title").html($("<span/>").text(document.location.hash.slice(1).replace(/-/g, ' ')));
+        } else {
+          $("#invite-title").html($("<span/>").text("a private notepad."));
+        }
+
+        trackEvent('loginRoadBlock', "fullPage", { cont: "<%= cont %>" });
+
+      });
+    </script>
+
+    <div style="display: block;" id="access-login-form"></div>
+    <script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+      $(function() {
+        modals.showModal('#page-login-box', 0, true /* undismissable */);
+        $('#faccountnav').hide();
+      });
+    </script>
+
+    <div style="clear:both"></div>
+  </div>
+</div>
+
+<% return ejs_data; }); %>

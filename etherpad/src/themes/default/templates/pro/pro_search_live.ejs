@@ -1,0 +1,19 @@
+
+<% template.inherit("pro/pro_search.ejs") %>
+
+<%- template.define('body', function() { var ejs_data=''; %>
+
+	<% if (isDogfood()) { %>
+    <%- helpers.clientVarsScript() %>
+    <% } %>
+
+    <div id="homeleft">
+    <%- template.use('homeleft'); %>
+    </div>
+
+    <div id="homeright">
+    <%- template.use('homeright'); %>
+    </div>
+
+    <%- helpers.profileTicks() %>
+<% return ejs_data; }); %>

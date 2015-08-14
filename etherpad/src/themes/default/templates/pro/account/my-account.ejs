@@ -1,0 +1,182 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<% helpers.includeCss("pro/account.less") %>
+<% helpers.setHtmlTitle(appjet.config.customBrandingName +": My Account") %>
+
+<%
+  template.inherit('ui.ejs');
+
+  helpers.includeJs("pad_modals.js");
+  helpers.includeJs('modals.js');
+  helpers.includeJs('jquery.validate.js');
+  helpers.includeJs('jquery.placeholder.js');
+
+%>
+
+
+<div class="fpcontent">
+<div class="my-account">
+  <%- messageDiv() %>
+  <%- errorDiv() %>
+
+<% if (!changePass) { %>
+  <h2>Account Info</h2>
+
+  <form method="post" action="/ep/account/settings/update-info">
+
+  <%- helpers.xsrfTokenElement() %>
+
+  <table>
+    <tr>
+      <th>Full Name:</th>
+      <td class="ti"><div style="margin-right:8px"><%- INPUT({type: 'text', name: 'fullName',
+      value: account.fullName}) %></div></td>
+    </tr>
+    <tr>
+      <th>Email:</th>
+      <td class="ti"><div style="margin-right:8px"><%- INPUT({type: 'text', name: 'email', value:
+      account.email}) %></div></td>
+    </tr>
+    <tr>
+      <th></th>
+      <% var opts = { type: 'checkbox', name: 'followemail', value: 'true' };
+         if (wantsFollowEmail) { opts.checked = "checked"; } %>
+      <td class="ti"><label><%- INPUT(opts) %> Email me updates about pads I follow</label></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: right;">
+
+
+      <%- template.use('button', null, {
+        buttonType: 'submit',
+        id: 'passwordSubmit',
+        label: N_('Update Info')
+      }); %>
+
+      </td>
+    </tr>
+  </table>
+  </form>
+<% } %>
+<style>
+  th {
+    text-align:right;
+  }
+  input {
+    padding:2px;
+  }
+</style>
+<h2>Password</h2>
+
+<form method="post" action="/ep/account/settings/update-password<%= changePass ? '?cont=/' : '' %>">
+
+<%- helpers.xsrfTokenElement() %>
+
+<table>
+  <% if (hasCurrentPassword && !changePass) { %>
+    <tr>
+      <th>Current Password:</th>
+      <td class="ti"><div style="margin-right:8px"><%- INPUT({type: 'password', name: 'passwordCurrent', value: '', }) %></div></td>
+    </tr>
+  <% } %>
+  <tr>
+    <th>New Password:</th>
+    <td class="ti"><div style="margin-right:8px"><%- INPUT({type: 'password', name: 'password', value: '', }) %></div></td>
+  </tr>
+  <tr>
+    <th>Confirm Password:</th>
+    <td class="ti"><div style="margin-right:8px"><%- INPUT({type: 'password', name: 'passwordConfirm', value: '',}) %></div></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: right;">
+
+    <%- template.use('button', null, {
+      buttonType: 'submit',
+      id: 'passwordSubmit',
+      label: N_('Update Password')
+    }); %>
+
+    </td>
+  </tr>
+</table>
+</form>
+
+<h2>API Key</h2>
+
+  <table>
+    <tr>
+      <th>Client ID:</th>
+      <td class="ti" data-click="highlight-input"><%- INPUT({type: 'text', readonly:'', name: '',  value: clientId}) %></td>
+    </tr>
+    <tr>
+      <th>Secret:</th>
+      <td class="ti" data-click="highlight-input"><%- INPUT({type: 'text', readonly:'', name: '', value: apiToken}) %></td>
+    </tr>
+
+  </table>
+
+<h2>Dropbox Sync</h2>
+
+      <div style="font-size:13px; text-align:right; padding-top:0px;">
+        <table style="text-align:left; "><tr><th></th><td>
+        <% if (!dropboxConnected) { %>
+          If you connect your Dropbox account, all your pads will be synced to Dropbox and available for offline reading there. <br/><br/>
+
+          <%- template.use('button', null, {
+            className: 'connect-dropbox-button',
+            'data-click': 'connect-dropbox',
+            buttonType: 'submit',
+            label: N_('Connect to Dropbox')
+          }); %>
+          <br><br>
+          <span style="font-size:11px;">(Please allow 35 minutes after sync for the Hackpad folder to appear.)</span>
+
+        <% } else { %>
+          Your Dropbox account is connected and pads are being synced to Dropbox for offline reading. <br/><br/>
+
+          <%- template.use('button', null, {
+            'data-click': 'disconnect-dropbox',
+            className: 'disconnect-dropbox-button',
+            buttonType: 'submit',
+            label: N_('Disconnect Dropbox')
+          }); %>
+
+
+        <% } %>
+        </td></tr></table>
+      </div>
+
+
+
+<h2>Site membership</h2>
+
+  <form method="post" action="/ep/account/settings/delete" onsubmit="return confirm('Are you sure you want to leave?')">
+    <%- helpers.xsrfTokenElement() %>
+
+    <center>
+
+    <%- template.use('button', null, {
+      className: 'leavesitebutton',
+      buttonType: 'submit',
+      label: N_('Leave ' + orgName)
+    }); %>
+
+    </center>
+  </form>
+
+
+</div>
+</div>
+

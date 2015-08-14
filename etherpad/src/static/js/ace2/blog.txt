@@ -1,0 +1,390 @@
+ACE.js: In-Browser Code Editing Finally Solved
+
+You may have seen them around -- "in-browser code editors" are text
+editors that run on the web in your browser, supporting editing,
+syntax highlighting, indentation, and other features familiar from a
+desktop editor/IDE like Emacs, Eclipse, or TextMate.  Compared to
+desktop editors, the in-browser knock-offs I've seen leave me quite
+dissatisfied.  I can deal with the lack of power-user features, but
+just in terms of basic usability, these web-based editors are
+sputtering at the starting line.  On the whole, they feel unresponsive
+on small files, they slow to a crawl on large files, and they tend to
+have unaddressed quirks, artifacts, and differences from native
+appearance and behavior.  Anyway, that's enough negativity; I have a
+lot of respect for the authors and their hard work, and in writing ACE
+I'm standing on their shoulders.  But I was curious to see if I could
+take AppJet's editor to the next level and approach the speed and
+robustness of a desktop editor.  After a few months of work, I'm proud
+to declare success.
+
+Here's a walk-through of ACE.js, our new in-browser code editor.
+ACE.js is a self-contained, cross-browser JavaScript file that allows
+a web page to embed scrolling panes of editable code.  Typing text is
+snappy and there are no visual artifacts or clutter.
+Syntax-highlighting happens live, as you type.  Amazingly, operations
+scale up well with document size.  You can paste in 1,000 lines of
+text, or more, and after a second or two of thought, the editor is
+fully responsive again.  While you keep typing, it unobtrusively
+finishes syntax-highlighting the whole buffer in a matter of seconds.
+Local edits to the text are just as fast on long documents as on short
+ones.  Changes that require large-scale re-highlighting, like opening
+or closing a multi-line comment, affect the text in view almost
+instantaneously, and then ACE.js quitely goes to work on the rest of
+the document over the next few seconds without holding you up.  ACE.js
+supports advanced features like Emacs-style unlimited undo, flashing
+matching parentheses as you type them or move across them, and basic
+auto-indentation.  Full functionality is supported across Internet
+Explorer 6+, Firefox 2+, Safari 3+, and Camino 1.5+.
+
+I've emphasized "scalability" a lot so far, by which I mean efficiency
+and responsiveness in the face of large documents, because that's the
+aspect of ACE that so clearly sets it apart.  But that's only one of
+three "axes" that the ultimate editor needs to excel on.
+
+The second is what I'll call "nativity", meaning how close the editor
+comes to the gold standard of the desktop editor experience.  This
+includes responsiveness (some in-browser editors have sluggish typing
+even on small documents), but also things like undo, copy/paste,
+selection, arrow-keys, shift-arrow-keys, different input methods and
+devices, and so on.
+
+The third axis is "flexibility".  How easy is it to add features?  To
+support more languages for the incremental highlighting, different
+undo models, different indentation schemes, macros that expand as you
+type, auto-complete, go-to-line by number, and whatever else you can
+imagine.
+
+Why am I lecturing you on these theoretical principles?  Well, there's
+an interesting insight that explains a lot about the existing crop of
+editors, and it isn't one you'd hit upon without spending a lot of
+time in the trenches (yes, specifically the trenches of writing an
+in-browser code editor).  Based on the hodge-podge of facilities that
+browsers happen to make available, you basically end up with the
+following slogan: "scalability, nativity, flexibility, pick any two".
+Based on this, we can classify editors into three types, which I'll
+describe briefly from the point of view of someone writing an editor
+(like me); if you're not familiar with browser scripting, hopefully
+this won't be too hard to get through.
+
+Type I editors sacrifice scalability.  The typical implementation is a
+text-area to handle the typing, covered by a block of colored text to
+handle the display.  You (the person making the editor) get a boost in
+nativity at the start, because you inherit the browser's text
+handling, all the stuff I mentioned above, like undo and copy/paste.
+The degree of flexibility is also good, because you can style the
+colored text independently of the editing in the textarea, and you can
+manipulate the textarea easily, such as by assigning a new content
+string.  Unfortunately, this scales quite badly with document size.
+The good Type I editors are slick and responsive, but pretty limited
+in how large files can get.
+
+Type II editors sacrifice nativity.  This is the kind of editor where
+you manually manipulate document (DOM) nodes as the user types.  You
+have to re-implement the desktop's native editing behavior from
+scratch, first putting in support for typing and selecting text (both
+by mouse and keyboard), and hopefully eventually supporting undo and
+copy/paste with other programs (through some elaborate hack).  This
+type is attractive because it offers unlimited flexibility, and
+theoretical scalability.  In practice, you end up with mostly
+flexibility, because getting the nativity right is such a huge task,
+and scalability takes a back seat to general responsiveness.  Type II
+editors are fancy but feel slow and quirky.
+
+Type III editors, as you've probably guessed by now, are the category
+ACE falls into, and are the ones that sacrifice flexibility, the third
+axis, though in fact they make you work for all three axes.  The crazy
+idea here, which seems to have originated with Dutch programmer Marijn
+Haverbeke, is to take advantage of a browser feature called "design
+mode" (or "content editable"), a mode which allows the user to
+directly edit an HTML document.  This feature has quietly been added
+to all major browsers over time.  In fact, it's what GMail uses to let
+users compose rich-text e-mail.  The advantages of basing an editor on
+a design-mode buffer are that such a buffer has a full DOM (document
+model), which allows arbitrary styling and swapping of parts of the
+document, and that native editing operations (selection, copy/paste)
+are mapped by the browser onto operations on the DOM.
+
+What's the downside of a Type III editor?  It's a nightmare to
+implement!  GMail skirts the issue by only using hard-coded browser
+commands like "make the selection bold" or "insert unordered list".
+What happens if you stray from this set of basic commands, and access
+that alluring DOM directly, without careful preparation?  Disaster!
+Building a robust, extensible editor on top of design mode is kind of
+like landing a man safely on the moon, where you design the
+spacecraft, the mission control computer, and the pressurized suit.
+You're constantly trying to insulate yourself from a hostile
+environment.
+
+More specifically, any change your editor makes to the design mode DOM
+causes the browser to instantly lose track of the selection range or
+insertion point if any, the undo history, and basically any other
+useful editing state.  (This can be worked around with a lot of
+selection manipulation, though IE in particular lacks even a way to
+access the current selection relative to the DOM.)  A simple edit like
+the user pressing the "enter" key to start a new line may cause the
+browser to insert a line break tag (BR), or split a block element into
+two, whatever it wishes.  Pasted text is converted into HTML, through
+a somewhat arbitrary process, and inserted into the document.  In
+fact, the DOM is constantly being modified by the browser in response
+to user actions (like typing), and you have to peek at it and
+efficiently make sense of it, determine what's changed, incorporate it
+into your representation, make any of your own changes (e.g. indent a
+line), modify the DOM to display your changes to the user, and have it
+all look like nothing special happened.  A more Draconian policy for
+dealing with the browser, like trapping all mouse and key events,
+would just leave you with a Type II editor.  The key is to treat the
+DOM as a hugely complicated I/O device between you and the browser,
+and carefully make rules to constrain it.
+
+You also deal with the fact that design mode's "native" behavior is
+HTML-oriented, not text-oriented, and the fact that it tends to have a
+lot of quirks and bugs.  You don't get scalability for free, either,
+you need some clever data structures.  For example, determining the
+absolute line number of the blinking insertion point is an
+order-of-document-size operation without the aid of efficient data
+structures that can be maintained as the document changes.
+
+The plus side is that once you've systematically beat design mode into
+submission, you can have an unmatched degree of scalability and
+nativity.  From there, it's just a matter of keeping your layers of
+abstraction scalable, and being aware of "nativity"-style constraints
+(like responsiveness and events), and you can build up to flexibility,
+the crown jewel.  The reward is how easy it is to add new editor
+features!
+
+Speaking of which, here is a list of current ACE features.  Some of
+them are small and just required recognizing their benefit, while
+others are more significant.  Some features, like "Emacs-style undo"
+and "highlight matching parentheses", are significant despite having
+been implemented in a couple hours each, and are signs of what's to
+come in the future of ACE.
+
+General
+  - Numbered lines
+  - Correct vert/horiz scroll-bar behavior
+  - Handles large documents (thousands of lines, but see "quirks")
+Browser support
+  - Internet Explorer 6+, Firefox 2+, Safari 3+, Camino 1.5+
+  - Text size scales with page when changed by user
+Syntax highlighting
+  - Correct JavaScript syntax (including regular expression subtleties)
+  - Extensible for other programming languages
+  - Incremental rehighlighting with minimal recalculation for each edit
+  - Highlight live as you type
+  - Moves highlighting task to background if not finished right away
+Editing
+  - Emacs-style unlimited undo
+  - Native copy/paste, within editor and with other programs
+  - Highlight matching (or mis-matched) parentheses, brackets, and braces
+  - Basic auto-indentation
+  - Multi-stroke international characters on Mac
+Interface
+  - Import/export text string
+  - Toggle editor between ACE and textarea
+  - Resize, focus, register key event handlers
+  - Multiple ACE editors allowed per page
+  - Packaged in one JavaScript file
+  - Can be created inside an iframe, any domain, any nesting
+Future
+  - Super-extensible
+  - More languages?
+  - Smarter auto-indentation?
+  - Indent/unindent selection?
+  - Auto-complete?
+  - Macros?
+  - User extensibility, a la Emacs??
+Bugs/Quirks
+  - Firefox 2/3: Document height and width are limited to 32767 pixels
+      (about 2,045 lines of text at default text size) due to Firefox bug,
+      not scheduled for resolution for FF3 launch
+  
+======
+
+>> TO ADD:
+  - link to demo
+  - what to {say,ask} about {interest, use, licensing, source}?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ACE.js: In-Browser Code Editing Finally Solved
+
+You may have seen them around -- "in-browser code editors" are text
+editors that run over the web in a browser, supporting editing, syntax
+highlighting, indentation, and other features familiar from a desktop
+editor/IDE like Emacs, Eclipse, or TextMate.  Compared to desktop
+editors, the in-browser knock-offs that I've seen leave me very
+dissatisfied.  I can deal without the power-user features, but just in
+terms of basic usability, these web-based editors are sputtering at
+the starting line.  On the whole, they feel unresponsive on small
+files, they slow to a crawl on large files, and they tend to have
+unaddressed quirks, artifacts, and differences from native appearance
+and behavior.  Anyway, that's enough negativity; I have a lot of
+respect for the authors and their hard work, and in writing ACE I'm
+standing on their shoulders.  But you see, I tend to approach projects
+like this with super-high standards, dangerously so even.  Luckily,
+after months of work here at AppJet, there's a happy ending.
+
+[[="I tend to approach projects with super-high standards" is a bit awkward - sounds like tooting your own horn too much for my taste=]]
+
+Here's a walk-through of ACE.js, our new in-browser code editor.  It's 
+[[="it" the walkthrough? or "it" the browser?=]]
+written in self-contained, cross-browser JavaScript that can be
+dropped into any web page.  It looks and feels a lot like a "native"
+editor, meaning typing is fast and there are no artifacts or clutter.
+It does syntax-highlighting live, as you type.  Amazingly, it scales
+up with document size.  You can paste in 1,000 lines of text, or more,
+and after a second or two of thought, the editor is fully responsive
+again.  While you keep typing, it unobtrusively finishes
+syntax-highlighting the whole buffer in a matter of seconds.  Local
+edits to the text are just as fast on long documents as on short ones.
+Changes that require large-scale re-highlighting, like opening or
+closing a multi-line comment, affect the text in view almost
+instantaneously, and then ACE quitely goes to work on the rest of the
+document over the next few seconds without holding you up.  Advanced
+features include Emacs-style unlimited undo, flashing matching
+parentheses as you type them or move across them, and basic
+auto-indentation.  Full functionality is supported on Internet
+Explorer 6+, Firefox 2+, Safari 3+, and Camino 1.5+.
+
+I've emphasized "scalability" a lot so far, by which I mean efficiency
+and responsiveness in the face of large documents, because that's the
+aspect of ACE that so clearly sets it apart.  But that's only one of
+three "axes" that the ultimate editor needs to excel on.
+
+The second is what I'll call "nativity", meaning how close the editor
+comes to the gold standard of the desktop editor experience.  This
+includes responsiveness (some in-browser editors have sluggish typing
+even on small documents), but also things like undo, copy/paste,
+selection, arrow-keys, shift-arrow-keys, different input methods and
+devices, and so on.
+
+The third axis is "flexibility".  How easy is it to add features?  To
+support more languages for the incremental highlighting, different
+undo models, different indentation schemes, macros that expand as you
+type, auto-complete, go-to-line by number, and whatever else you can
+imagine.
+
+Why am I lecturing you on these theoretical principles?  Well, there's
+an interesting insight that explains a lot about the existing crop of
+editors, and it isn't one you'd hit upon without spending a lot of
+time in the trenches (yes, specifically the trenches of writing an
+in-browser code editor).  Based on the hodge-podge of facilities that
+browsers happen to make available, you basically end up with the
+following slogan: "scalability, nativity, flexibility, pick any two".
+Based on this, we can classify editors into three types, which I'll
+describe briefly from the point of view of someone writing an editor
+(like me); if you're not familiar with browser scripting, hopefully
+this won't be too hard to get through.
+
+[[= I'm not a huge fan of "type I-II-III" nomenclature. It's totally opaque. And in this case, they don't even form a continuum, except for type III being better than I and II. =]]
+
+Type I editors sacrifice scalability.  The typical implementation is a
+text-area to handle the typing, covered by a block of colored text to
+handle the display.  You (the person making the editor) get a boost in
+nativity at the start, because you inherit the browser's text
+handling, all the stuff I mentioned above, like undo and copy/paste.
+The degree of flexibility is also good, because you can style the
+colored text independently of the editing in the textarea, and you can
+manipulate the textarea easily, such as by assigning a new content
+string.  Unfortunately, this scales quite badly with document size.
+The good Type I editors are slick and responsive, but pretty limited
+in how large files can get.
+
+Type II editors sacrifice nativity.  This is the kind of editor where
+you manually manipulate document (DOM) nodes as the user types.  You
+have to re-implement the desktop's native editing behavior from
+scratch, first putting in support for typing and selecting text (both
+by mouse and keyboard), and hopefully eventually supporting undo and
+copy/paste with other programs (through some elaborate hack).  This
+type is attractive because it offers unlimited flexibility, and
+theoretical scalability.  In practice, you end up with mostly
+flexibility, because getting the nativity right is such a huge task,
+and scalability takes a back seat to general responsiveness.  Type II
+editors are fancy but feel slow and quirky.
+
+Type III editors, as you've probably guessed by now, are the category
+ACE falls into, and are the ones that sacrifice flexibility, the third
+axis, though in fact they make you work for all three axes.  The crazy
+idea here, which seems to have originated with Dutch programmer Marijn
+Haverbeke, is to take advantage of a browser feature called "design
+mode" (or "content editable"), a mode which allows the user to
+directly edit an HTML document.  This feature has quietly been added
+to all major browsers over time.  In fact, it's what GMail uses to let
+users compose rich-text e-mail.  The advantages of basing an editor on
+a design-mode buffer are that such a buffer has a full DOM (document
+model), which allows arbitrary styling and swapping of parts of the
+document, and that native editing operations (selection, copy/paste)
+are mapped by the browser onto operations on the DOM.
+
+[[= It's not clear how Type III editors sacrifice flexibility =]]
+
+What's the downside of a Type III editor?  It's a nightmare to
+implement!  GMail skirts the issue by only using hard-coded browser
+commands like "make the selection bold" or "insert unordered list".
+What happens if you stray from this set of basic commands, and access
+that alluring DOM directly, without careful preparation?  Disaster!
+Building a robust, extensible editor on top of design mode is kind of
+like landing a man safely on the moon, where you design the
+spacecraft, the mission control computer, and the pressurized suit.
+You're constantly trying to insulate yourself from a hostile
+environment.
+
+More specifically, any change your editor makes to the design mode DOM
+causes the browser to instantly lose track of the selection range or
+insertion point if any, the undo history, and basically any other
+useful editing state.  (This can be worked around with a lot of
+selection manipulation, though IE in particular lacks even a way to
+access the current selection relative to the DOM.)  A simple edit like
+the user pressing the "enter" key to start a new line may cause the
+browser to insert a line break tag (BR), or split a block element into
+two, whatever it wishes.  Pasted text is converted into HTML, through
+a somewhat arbitrary process, and inserted into the document.  In
+fact, the DOM is constantly being modified by the browser in response
+to user actions (like typing), and you have to peek at it and
+efficiently make sense of it, determine what's changed, incorporate it
+into your representation, make any of your own changes (e.g. indent a
+line), modify the DOM to display your changes to the user, and have it
+all look like nothing special happened.  A more Draconian policy for
+dealing with the browser, like trapping all mouse and key events,
+would just leave you with a Type II editor.  The key is to treat the
+DOM as a hugely complicated I/O device between you and the browser,
+and carefully make rules to constrain it. [[= Genius analgy, IMO. :) =]]
+
+You also deal with the fact that design mode's "native" behavior is
+HTML-oriented, not text-oriented, and the fact that it tends to have a
+lot of quirks and bugs.  You don't get scalability for free, either,
+you need some clever data structures.  For example, determining the
+absolute line number of the blinking insertion point is an
+order-of-document-size operation without the aid of efficient data
+structures that can be maintained as the document changes.
+
+The plus side is that once you've systematically beat design mode into
+submission, you can have an unmatched degree of scalability and
+nativity.  From there, it's just a matter of keeping your layers of
+abstraction scalable, and being aware of "nativity"-style constraints
+(like responsiveness and events), and you can build up to flexibility,
+the crown jewel.  The reward is how easy it is to add new editor
+features! [[= I'm kind of confused here. You said ACE is a type III editor, sacrificing flexibility, but now you say that ACE *has* flexibility. Huh? =]]
+
+Speaking of which, here is a list of current ACE features.  Some of
+them are small and just required recognizing their benefit, while
+others are more significant. [[= awkward sentence =]] Some features, like "Emacs-style undo"
+and "highlight matching parentheses", are significant despite having
+been implemented in a couple hours each, and are signs of what's to
+come in the future of ACE.

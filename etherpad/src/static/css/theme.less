@@ -1,0 +1,43 @@
+// White Theme
+
+// @theme_color: #6188CC;
+// @accent_color: #448AA2;
+// @muted_color: #8c8c8c;
+// @background_color: white;
+// @light_border_color: #DDD;
+// @error_color: #FF0000;
+// @success_color: #499D25;
+
+// // Text color for a default field value
+// @default_text_color: #B2B2B2;
+// // Text color once the user edits the field
+// @entered_text_color: black;
+
+
+// Dark Blue theme
+@theme_color: #3B6290;
+@accent_color: #F7CC42;
+@muted_color: #9c9c9c;
+@background_color: #3B6290;
+@light_border_color: #DDD;
+@error_color: #FF0000;
+@success_color: #499D25;
+@focus_color: #96C0E6;
+
+// Text color for a default field value
+@default_text_color: #B2B2B2;
+// Text color once the user edits the field
+@entered_text_color: black;
+// Color for stand out text
+@standout_text_color: lighten(@theme_color, 8%);
+
+@header_bg_color: white;
+
+
+.quick-gradient (@origin: top, @alpha: 0.1) {
+    background-image: -webkit-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: -moz-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: -o-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: -ms-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+}

@@ -1,0 +1,813 @@
+@import "colors.less";
+@import "globals.less";
+@import "mixins.less";
+
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.iphoneshow {
+  display: none;
+}
+
+/* iPhone specific */
+@media only screen and (max-device-width: @mobileMaxDeviceWidth) {
+  body,
+  body > header {
+    margin-left: auto;
+  }
+
+  body > header {
+    min-width: 0;
+  }
+
+  .domain-item-new {
+    display: none;
+  }
+
+  #padchat {
+    display: none;
+  }
+
+  #createpadform {
+    left: 40px;
+    top: -2px;
+  }
+
+  #view-switchers {
+    display: none;
+  }
+
+  #createpadentry.ac_loading + .ac-loading-spinny:before {
+    color: #000;
+  }
+
+  body #padbar,
+  body #padeditor {
+    width: 100%;
+  }
+
+  #topbarBrand2,
+  #topbarBrand3 {
+    display: none;
+  }
+
+  #padbar {
+    background-color: #fff;
+    box-shadow: none;
+    opacity: 1;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #site-toggle {
+    display: none;
+  }
+
+  .pro-body #site-toggle {
+    display: block;
+  }
+
+  #site-iphone-back {
+    display: none;
+  }
+
+  .streamtable .segment {
+    margin-bottom: 10px;
+    padding-right: 0;
+  }
+
+  body:not(.pro-body) #site-iphone-back {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 18px;
+    font-size: 25px;
+    z-index: @zindex_header + 1;
+  }
+
+  #mainbar #follow-container {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 75px;
+    z-index: @zindex_header + 1;
+  }
+
+  body #otherusers-facepile-wrapper {
+    position: absolute;
+    top: -43px;
+    right: 10px;
+    z-index: 101;
+  }
+
+  body #otheruserstable-wrapper.open {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 101;
+    width: 180px;
+  }
+
+  #otheruserstable-wrapper.open:before {
+    left: auto;
+    right: 12px;
+  }
+
+  #padbar {
+    padding: 10px 0;
+  }
+
+  #sidediv {
+    left: 10px;
+  }
+
+  #sharesummarywrapper {
+    display: none;
+  }
+
+  #sharingsettings {
+    margin: 0 0 10px 0;
+  }
+
+  #follow-container .hp-ui-button {
+    border: 0;
+    background-color: transparent !important;
+  }
+
+  #follow-container .hp-ui-button-content {
+    color: @color_actionable;
+  }
+
+  #createpadentry {
+    color: #000;
+    font-size: 12px;
+    width: 80px;
+  }
+
+  #createpadbox .icon-search {
+    font-size: 25px;
+    margin-top: -2px;
+  }
+
+  body .icon-back,
+  body #createpadbox .icon-search,
+  body .icon-menu-web,
+  body #createpadlink .icon-newpad {
+    color: @color_actionable !important;
+  }
+
+  body:not(.pro-body) #createpadlink {
+    display: none;
+  }
+
+  .segment-last-edited-date {
+    display: none;
+  }
+
+  #site-toggle {
+    top: 10px;
+  }
+
+  #padaccess-menu,
+  #related-pads-div {
+    display: none !important;
+  }
+
+  #sharesummarywrapper {
+    float: left;
+  }
+
+  .streamtable .taskCount {
+    display: none !important;
+  }
+
+  #createpadform2 {
+    margin-left: 50px;
+  }
+
+  .pro-body #createpadform2 {
+    margin-left: 35px;
+  }
+
+  .search-focused #createpadform2 {
+    width: 70%;
+  }
+
+  #toolbar {
+    display: none !important;
+  }
+
+  #editbutton,
+  #settingsbutton {
+    display: none;
+  }
+
+  #collections-div {
+    display: none !important;
+  }
+
+  #createpadbox .icon-search {
+    margin-top: 0;
+  }
+
+  body > header {
+    position: absolute;
+  }
+
+  .streamtable .title {
+    width: 66%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .streamtable .taskCount {
+    margin-top: 4px;
+    margin-left: 3px;
+  }
+
+  .hp-profile-photo,
+  #hp-download-pads {
+    float: left;
+  }
+
+  /* fix for hackpad/pad#585 */
+  #non-editor {
+    .user-select-none;
+  }
+
+  /* login dialog start */
+  .accessbox {
+    margin-top: 10px !important;
+    width: 260px !important;
+  }
+
+  .account-container.forgotpass-container {
+    margin-top: 0;
+  }
+
+  .forgotpass-container {
+    width: 90%;
+  }
+
+  #page-login-box {
+    left: 50% !important;
+    width: 220px !important;
+    top: 0px !important;
+    margin-left: -130px !important;
+  }
+
+  #nofacebook {
+    width: 217px !important;
+  }
+
+  #page-loging-lhs {
+    min-height: 0px !important;
+    border-right: 0 !important;
+  }
+
+  #signin-form input[type=text],
+  #signin-form input[type=password],
+  #signup-form input[type=text],
+  #signup-form input[type=password]   {
+    width: 97%;
+    font-size: 16px;
+    height: 30px;
+  }
+
+  .google-signin-button {
+    margin-bottom: 0px;
+  }
+
+  .fb-connect-button {
+    margin-top: 10px;
+  }
+
+  #nofacebook {
+    float: none !important;
+  }
+  /* login dialog end */
+
+  /* this unbreaks android */
+  #fb-root {
+    display: none;
+  }
+
+  #feedbackbutton {
+    display: none;
+  }
+
+  #createpadentry {
+    width: 150px;
+  }
+
+  #padbar {
+    text-align: left;
+  }
+
+  #padpage #padeditor {
+    margin-left: 0;
+  } 
+
+  #site-toggle {
+    position: absolute;
+  }
+
+  body #padpage {
+    width: auto;
+    margin-top: 0;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    min-height: 0;
+    /* work around what appears to be an ios contenteditable bug */
+    overflow: inherit !important;
+    overflow-y: inherit !important;
+  }
+
+  #padeditor,
+  #padeditor iframe {
+    width: 100% !important;
+  }
+
+  #homeleft, #my-pads {
+    margin-left: 0px !important;
+  }
+
+  .pro-body #createpadentry {
+    width: 208px;
+  }
+
+  #createpadlink .hp-ui-button-content {
+    -webkit-font-smoothing: auto;
+  }
+
+  /* stuff for the homepage lists mostly */
+  tr.nav-item {
+    height: 44px;
+  }
+
+  #homeleft {
+    width: 100% !important;
+    padding-bottom: 30px;
+  }
+
+  #homeleft h1,
+  #homeleft h2,
+  #homeleft h3,
+  #homeleft .sidebarheading {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  #homeleft #pad-picker-div,
+  #homeleft #new-collection-pad-btn,
+  #homeleft #download-zip {
+    display: none;
+  }
+
+  #homeright {
+    width: 50%;
+  }
+
+  #padbody #padsidebar {
+    position: static;
+    width: 180px;
+    margin-left: 10px;
+  }
+
+  div.my-account {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  div.my-account table {
+    width: auto;
+  }
+
+  div.my-account table th {
+    width: 100px;
+  }
+
+  #padtable tr {
+    display: block;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #padtable tr + tr {
+    display: block;
+    border-top: 0px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #sidediv tr {
+    border-bottom: 0;
+  }
+
+  td.lastEditedDate:after {
+    content: url('/static/iphone-arrow-10x13.png');
+    float: right;
+    margin-top: -35px;
+  }
+
+  .homepage-section-header {
+    position: relative;
+    top: 5px;
+    padding-left: 10px;
+    color: #999999;
+  }
+
+  #recent-pads,
+  #my-pads,
+  #friend-pads {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #editor {
+    font-size: 14px; /* overridden by body.style */
+    line-height: 20px; /* overridden by body.style */
+    border: 0;
+    -webkit-text-size-adjust: none;
+  }
+
+  div.fpcontent {
+    padding-top: 0px;
+    left:0px;
+    width: 100%;
+  }
+
+  div.hp-pro-admin-fpcontent {
+    width: 90%;
+    padding: 10px;
+    margin: 0 auto 20px auto;
+
+    .tab_container {
+      overflow: auto;
+    }
+
+    .tabs {
+      overflow-x: auto;
+      white-space: nowrap;
+      overflow-y: hidden;
+
+      li {
+        display: inline-block;
+        float: none;
+      }
+    }
+  }
+
+  #padtable td {
+    border: 0px;
+    height: auto;
+  }
+
+  #padtable td.taskCount {
+    display:none;
+  }
+
+  #padtable td.title .title-link,
+  #padtable td.titleConnected .title-link {
+    color: #444444;
+    font-weight: bold;
+  }
+
+  #padtable td.titleConnected .connectedCount {
+    display: inline-block;
+  }
+
+  #padtable td a {
+    padding: 0px 8px;
+    width: 320px;
+    height: 22px;
+  }
+
+  #padtable td.title,
+  #padtable td.titleConnected {
+    padding-top: 4px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 280px;
+    border: 0px;
+  }
+
+  #padtable td.last {
+    text-align: left;
+    margin-top: -3px;
+  }
+
+  #padtable td.lastEditedDate {
+    text-align: left;
+    width: 85%;
+    display: block;
+    border: 0px;
+  }
+
+  #padtable td.actions {
+    display: none;
+  }
+
+  .segment .segment-pic {
+    padding-right: 10px;
+    margin-top: 15px;
+    margin-right: -20px;
+  }
+
+  .segment .segment-info span.lastEditedDate {
+    margin-left: 0px;
+  }
+
+  .segment .segment-wrapper {
+    margin-top: 0px;
+    width: auto;
+  }
+
+  #page-login-box {
+    top: 6px;
+  }
+
+  #topbarBrand {
+    position: static;
+    margin-left: 12px;
+    width: auto;
+  }
+
+  /* no accounts dropdown on iphone! */
+  #account {
+    display: none;
+  }
+
+  .lastEditedDate {
+    margin-left: 12px;
+  }
+
+  #banner{
+    margin: auto;
+    margin-top: 100px;
+  }
+
+  #banner p {
+    font-size: 40px !important;
+  }
+
+  #promo {
+    padding-bottom: 20px;
+  }
+
+  .iphoneshow {
+    display: block;
+  }
+
+  .modaldialog {
+    position: absolute;
+    width: auto !important;
+    margin-left: 0 !important;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+  }
+
+  #padeditor #editor {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  #shortcut-help {
+    bottom: 5%;
+  }
+
+  #shortcut-help .shortcut-column {
+    margin-top: 0;
+  }
+
+  #shortcut-help .shortcut-column:first-child {
+    margin-top: -30px;
+  }
+
+  #shortcut-help .modaldialog-inner {
+    overflow: auto;
+    position: absolute;
+    top: 37px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .user-caret {
+    left: -32px !important;
+    z-index: 0;
+  }
+
+  .user-caret img {
+    height: 16px;
+    width: 16px;
+    border: 0;
+    right: 11px;
+  }
+
+  .user-caret .user-caret-initials {
+    bottom: 31px;
+    right: 11px;
+    line-height: 10px;
+    opacity: 1 !important;
+  }
+
+  .user-caret .user-caret-lbl {
+    display: none;
+  }
+
+  .user-caret.user-caret-offscreen-top:before {
+    top: 3px;
+    right: 4px;
+    border: 3px solid transparent;
+    border-bottom-color: #333;
+    border-bottom-width: 4px;
+  }
+
+  .user-caret.user-caret-offscreen-bottom:before {
+    top: 7px;
+    right: 4px;
+    border: 3px solid transparent;
+    border-top-color: #333;
+    border-top-width: 4px;
+  }
+
+  .streamtable .segment {
+    width: auto;
+  }
+
+  #domain-list .domain-item-new {
+    display: none;
+  }
+
+  .domain-item-overflow {
+    margin-top: -3px;
+  }
+
+  .domain-item-overflow .hp-ui-button {
+    font-size: 13px;
+  }
+
+  .global-msg {
+    width: 300px;
+    margin-left: -160px;
+  }
+
+  body.pro-body > header #site-iphone-back {
+    display: none;
+  }
+
+  body:not(.pro-body) > header #site-iphone-back {
+    display: block;
+  }
+
+  body .streamtable .title-link {
+    font-size: 16px;
+    line-height: 10px;
+  }
+
+  .streamtable .segment-info {
+    font-size: 10px;
+    left: 30px;
+    margin-left: 25px;
+  }
+
+  .streamtable .segment-content {
+    display: none;
+  }
+
+  .streamtable .segment-pic {
+    position: absolute;
+    top: -15px;
+    left: 25px;
+  }
+
+  .segment-group-wrapper {
+    display: none;
+  }
+
+  #editor > div > span.b:only-child,
+  #editor > div.toc-entry > span {
+    font-size: 16px;
+  }
+ 
+  #editor > div:first-child {
+    margin-top: @pad_padding_top;
+    padding-bottom: 3px;
+  }
+
+  #editor > div:first-child span {
+    font-size: 140%;
+    line-height: inherit;
+  }
+
+  div.ace-line {
+    padding-left: 19px;
+    padding-right: 10px;
+  }
+
+  div.ace-line:before {
+    display: block;
+    left: -50px;
+  }
+
+  #editor {
+    padding-top: 1px;
+  }
+
+  div.ace-line.line-list-type-comment:before {
+    left: -10px;
+  }
+
+  div.ace-line:first-child:before {
+    margin-top: 5px;
+  }
+
+  .emptyGutter {
+    padding-left: @left_padding;
+    padding-right: 10px;
+    border-left: @left_border solid white;
+  }
+
+  .emptyGutter,
+  #editor .gutter-noauthor {
+    padding-left: 19px;
+  }
+
+  #editorbottombox {
+    display: none;
+  }
+
+  body ul.listtype-comment li {
+    margin-left: 2em;
+    padding-left: 10px;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  body .line-list-type-comment ul.listtype-comment li:before {
+    margin-left: -43px;
+  }
+
+  ul.listtype-comment li:before,
+  ul.listtype-commentcollapsed li:before {
+    font-size: inherit;
+  }
+
+  ul.listtype-hone {
+    border-bottom: 0;
+    line-height: inherit;
+  }
+
+  ul.listtype-hone li,
+  ul.listtype-hone li span {
+    font-size: 18px;
+  }
+
+  ul.listtype-hthree li {
+    font-size: 14px;
+    margin-left: -21px;
+    padding-left: 21px;
+  }
+
+  #sidediv #sidedivinner div {
+    line-height: 16px;
+  }
+
+  .mobile-app {
+    #editor {
+      padding-top: 10px;
+    }
+
+    #editor > div:first-child {
+      margin-top:5px;
+    }
+
+    #padeditor #editor {
+      border-bottom: 0;
+    }
+
+    #padeditor #sidediv table {
+      padding-top: 5px;
+    }
+  }
+}
+
+/* iPhone specific */
+@media only screen and (max-device-width: @mobileMaxDeviceWidth) {
+  .iphonehide {
+    display: none !important;
+  }
+}
+
+/* iPhone specific */
+@media only screen and (min-device-width: @mobileMaxDeviceWidth) {
+  .desktophide {
+    display: none;
+  }
+}

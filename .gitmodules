@@ -1,0 +1,3 @@
+[submodule "infrastructure/SimpleWebRTC"]
+	path = infrastructure/SimpleWebRTC
+	url = git@github.com:HenrikJoreteg/SimpleWebRTC.git

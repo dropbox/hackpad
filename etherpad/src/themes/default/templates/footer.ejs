@@ -1,0 +1,14 @@
+<%
+  helpers.includeCss("footer.less");
+%>
+
+<% template.define('footer', function() { var ejs_data=''; %>
+<footer id="pad-page-footer" class="hide-before-pad-load iphonehide">
+  &copy; Dropbox Inc.
+  <a href="https://hackpad.com/83netTWokps#Hackpad-Terms-of-Service">Terms</a>
+  <a href="https://hackpad.com/RpTWPko6ER2#Hackpad-Privacy-Policy">Privacy</a>
+  <a id="footer-support-link" href="mailto:<%=helpers.supportEmailAddress()%>">Support</a>
+  <a href="https://hackpad.com/sIkGLftzN7c#About-Hackpad">About</a>
+  <a href="https://hackpad.com/blog">Blog</a>
+</footer>
+<% return ejs_data; }); %>

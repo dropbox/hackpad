@@ -1,0 +1,176 @@
+<%
+  template.inherit('ui.ejs');
+
+  helpers.includeJQuery();
+  helpers.includeJs("cookies.js")
+  helpers.includeJs("pad_shardajax.js");
+  helpers.includeJs("pad_topbar.js");
+  helpers.includeJs("pad_utils.js");
+  helpers.includeJs("domainlist.js");
+  helpers.includeJs("modals.js");
+  helpers.includeJs("jquery.tinysort.js");
+  helpers.includeJs("ipad.js");
+  helpers.includeJs("cspfixes.js");
+
+  helpers.includeCss("base.less");
+  helpers.includeCss("header3.less");
+  helpers.includeMobileCss();
+
+  if (!request.cache.isDesktopApp &&
+      !request.userAgent.isMobile() && !request.cache.isEmbed) {
+    helpers.includeCss("ace2/desktop-web.less");
+    helpers.addBodyClass("desktop-web");
+  }
+
+  helpers.addToHead('<meta name="viewport" content="width=device-width, ' +
+      'initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />');
+  helpers.addToHead('<meta name="apple-mobile-web-app-capable" ' +
+      'content="yes" />');
+%>
+<%
+  function activeIfSection (sectionName) {
+    return sectionName==selectedSection ? 'active' : "inactive";
+  }
+%>
+
+<% template.define('topbar', function() { var ejs_data=''; %>
+
+<%- template.use('button', null, {
+  id: 'site-toggle',
+  type: 'toolbar',
+  fontIcon: 'icon-menu-web',
+  tooltip: N_('Workspaces'),
+  'data-click': 'sitebar-open'
+}); %>
+
+<a href="/" id="site-iphone-back" class="iphoneshow"><i class="icon-back"></i></a>
+
+<header>
+  <div id="guestbanner">
+    <div class="banner-close icon-x">
+    </div>
+    <div id="guest-banner-msg">
+      Hackpads are smart collaborative documents.
+      <a href="#join-hackpad">Join Hackpad Now</a>.
+    </div>
+  </div>
+
+  <div id="site-banner" style="background-image: url('<%- helpers.siteImage() %>'); background-position: left 0px top <%= helpers.siteBannerPosition()%>px"></div>
+  <nav id="padbar">
+    <a href="/" id="topbarBrand">
+      <span id="topbarBrandFullName" class="iphonehide ipadhide"
+          title="<%= helpers.siteName() %>"><%= helpers.siteName() %></span>
+      <span class="iphoneshow ipadshow"><strong>h</strong></span>
+    </a>
+
+    <div id="mainbar">
+      <a href="/" data-tooltip="home" id="topbarBrand2">
+        <i class="icon-home"></i>
+      </a>
+      <a href="/" id="topbarBrand3">
+        <span id="topbarBrandFullName2" class="iphonehide ipadhide"
+            title="<%= helpers.siteName() %>"><%= helpers.siteName() %></span>
+      </a>
+
+      <form id="createpadform" target="_blank" action="/ep/pad/newpad">
+        <%- template.use('button', null, {
+          id: 'createpadlink',
+          type: 'toolbar',
+          fontIcon: 'icon-newpad',
+          buttonType: 'submit',
+          'data-click': (typeof account === 'undefined' || !account) ?
+              "showmodal" : null,
+          'data-modal': "#page-login-box",
+          tooltip: N_('New Hackpad')
+        }); %>
+        <input id="createpadentry-hidden" name="title"
+            value="<%=request.params.q%>" type="hidden"/>
+      </form>
+      <form id="createpadform2" action="/ep/pad/newpad">
+        <div id="createpadbox">
+          <i class="icon-search"></i>
+          <input id="createpadentry" name="title" type="text"
+              value="<%=request.params.q%>" autocomplete="off"
+              autocorrect="off" />
+          <div class="ac-loading-spinny"></div>
+        </div>
+      </form>
+
+      <%- template.use('toolbar'); %>
+
+      <% helpers.includeCss("view_switchers.less"); %>
+
+      <% if (typeof(streamListSwitcher) != 'undefined' ) { %>
+      <div id="view-switchers" class="two-button-toggle">
+        <button class="left stream <%= activeIfSection('stream') %>"
+            data-tooltip="Latest changes"><span class="icon-stream"></span><span class="view-switchers-text">Stream</span></button><button class="right list <%= activeIfSection('home') %>" data-tooltip="Pad List"><span class="icon-list"></span><span class="view-switchers-text">List</span></button>
+      </div>
+      <% } %>
+    </div>
+  </nav>
+</header>
+
+<nav id="sitebar">
+  <h1 id="sitebar-heading"><a href="https://hackpad.com">hackpad</a></h1>
+  <ul id="domain-list">
+    <li class="domain-item domain-item-overflow">
+      <%- template.use('button', null, {
+        label: N_('more'),
+        menu: [{}]
+      }); %>
+    </li>
+    <li class="domain-item domain-item-new">
+      <a href="/ep/new-site" id="create-space">+ new workspace</a>
+    </li>
+  </ul>
+
+  <div id="account">
+    <div id="faccountnav">
+      <% if (typeof(account) != 'undefined' && account) { %>
+        <%- template.use('button', null, {
+          id: 'account-dropdown',
+          type: 'custom',
+          href: '/ep/profile/',
+          label: isMultiAccount ? account.email : account.fullName,
+          menu: [
+            { href: '/ep/profile/', html: template.use('accountProfile'), },
+            { href: '/ep/account/settings/', className: 'fb-logout',
+                label: N_('Account settings'), },
+            { href: '/ep/account/sign-out?switch=1', className: 'fb-logout',
+                label: N_('Switch accounts'), },
+            { href: '/ep/account/sign-out', className: 'fb-logout',
+                label: N_('Logout') },
+          ]
+        }); %>
+      <% } else { %>
+        <a href="#" data-modal="#page-login-box" data-click="showmodal">
+          Sign In
+        </a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+<% if (isDogfood(true)) { %>
+  <%- template.use('button', null, {
+    id: 'debugmenu',
+    type: 'toolbar',
+    className: 'hp-ui-button-menu-right',
+    'data-click': 'preventdefault',
+    label: N_('Debug'),
+    menu: [
+      { id: 'enable-video', label: N_('Live Video') },
+      { id: 'pause-collab', label: N_('Pause Collab') },
+    ]
+  }); %>
+<% } %>
+
+<% return ejs_data; }); %>
+
+
+<%partial accountProfile() %>
+  <img class="profile-pic" src="<%= userPic %>">
+  <span class="profile-name"><%= account.fullName %></span>
+  <span class="profile-email"><%= account.email %></span>
+  <span style="display: block; clear: both"></span>
+<%endpartial %>

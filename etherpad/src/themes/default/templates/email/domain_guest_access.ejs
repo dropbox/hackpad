@@ -1,0 +1,9 @@
+
+<%= invitingAccount.fullName %> invited a guest user <%= guestAccount.fullName %> <% if (guestAccount.fullName != guestAccount.email) { %>(<%= guestAccount.email %>)<% } %>
+to edit '<%= padTitle %>' (<%= padLink %>).
+
+To grant this guest user full access to all <%= request.host %> pads, edit their account role here:
+<%= accountManagerLink %>
+
+--
+If this message was sent in error, please mail <%= helpers.supportEmailAddress() %>.

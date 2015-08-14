@@ -1,0 +1,104 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<%
+ template.inherit('page3.ejs');
+ helpers.includeCss("admin/admin.less");
+ helpers.setHtmlTitle("Hackpad: Administration");
+%>
+
+<% template.define('docBarTitle', function() { var ejs_data=''; %>
+  <td id="docbarpadtitle"><span>Administration</span></td>
+<% return ejs_data; }); %>
+
+<% template.define('docBarItems', function() { var ejs_data=''; %>
+
+<% return ejs_data; }); %>
+
+<% template.define('sideBar', function() { var ejs_data=''; %>
+  <div id="padsidebarfull">
+    <ul>
+      <%- template.use('adminMenu', function() { var ejs_data=''; %>
+        <li>Configuration
+          <ul>
+            <li><a href="/admin/pluginmanager/">Plugin manager</a></li>
+            <li><a href="/admin/beta-valve">Beta Valve</a></li>
+          </ul>
+        </li>
+        <li>Maintenence
+          <ul>
+            <li><a href="/admin/broadcast-message">Pad Broadcast</a></li>
+            <li><a href="/admin/padinspector">Pad Inspector</a></li>
+            <form action="/admin/setadminmode" method="POST">
+              <%- helpers.xsrfTokenElement() %>
+              <input type="hidden" name="v" value="<%= !sessions.isAnEtherpadAdmin() %>"/>
+              <li><% if (sessions.isAnEtherpadAdmin()) { %>
+                <button type="submit">Exit admin mode</button>
+              <% } else { %>
+                <button type="submit">Enter admin mode</button>
+              <% } %>
+            </form>
+            <li><a href="/admin/email/">Send Emails</a></li>
+            <li><a href="/admin/download-user-data/">Download User Data</a></li>
+          </ul>
+        </li>
+        <li>Statistics
+          <ul>
+            <li><a href="/admin/account-manager">Accounts</a></li>
+            <li><a href="/admin/sites/">Sites</a></li>
+            <!-- li><a href="/admin/analytics">Google Analytics</a></li -->
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/diagnostics">Pad Connection Diagnostics</a></li>
+            <li><a href="/admin/timings">Timing data</a></li>
+            <li><a href="/admin/usagestats/">Usage Stats</a></li>
+            <li><a href="/admin/email/stats">Email Stats</a></li>
+           </ul>
+        </li>
+        <li>Debugging
+          <ul>
+            <li>Tools
+              <ul>
+        	<li><a href="/admin/shell">Shell</a></li>
+        	<li><a href="/admin/exceptions">Exceptions Monitor</a></li>
+        	<li><a href="/admin/clientside-errors">Clientside Errors</a></li>
+          <li><a href="/admin/apns">APNS</a></li>
+        	<li><a href="/admin/reload-blog-db">Reload blog DB</a></li>
+        	<!-- li><a href="/admin/flows">Flows (warning: slow)</a></li -->
+              </ul>
+            </li>
+            <li>Information
+              <ul>
+        	<li><a href="/admin/cachebrowser">Cache Browser</a></li>
+        	<li><a href="/admin/config">appjet.config</a></li>
+        	<li><a href="/admin/varz">varz</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      <% return ejs_data; }); %>
+    </ul>
+  </div>
+<% return ejs_data; }); %>
+
+<% template.define('contentArea', function() { var ejs_data=''; %>
+  <div>
+    <div id="AdminWelcome">
+    Welcome to the Hackpad site admin page.<br/><br/>
+    Here you can <a href="/admin/usagestats/">check usage stats</a>,
+    and debug your Hackpad installation.
+    <br/><br/>
+    Please select an administrative task from the right
+  </div>
+</div>
+<% return ejs_data; }); %>

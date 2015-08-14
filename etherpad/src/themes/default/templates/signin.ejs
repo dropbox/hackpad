@@ -1,0 +1,162 @@
+<%
+  template.inherit("ui.ejs");
+
+  helpers.includeJQuery();
+
+  helpers.includeCss("base.less");
+  helpers.includeCss("tabs.less");
+  helpers.includeCss("signin.less");
+  helpers.includeJs("jquery.validate.js");
+  helpers.includeJs("jquery.placeholder.js");
+  helpers.includeJs('tabs.js');
+  helpers.includeJs('home.js');
+  helpers.includeJs("modals.js");
+  helpers.includeJs("pad_facebook.js");
+  helpers.includeJs("cspfixes.js");
+%>
+
+
+<% template.define('connect-buttons', function(type) { var ejs_data=''; %>
+  <!-- Facebook sign-in button -->
+  <% if (helpers.allowFacebookSignin()) { %>
+    <a class="fb-login-required" href="<%=request.url%>"><img
+        class="fb-connect-button" src="<%=helpers.cdn()%>/static/img/facebook-<%= type %>.png"></a>
+  <% } %>
+
+  <!-- Google sign-in button -->
+  <a href="<%=googleSignInUrl%>" class="google-signin-button" target="<%=typeof(googleButtonTarget) != 'undefined' ? googleButtonTarget : '_self'%>"><img src="<%=helpers.cdn()%>/static/img/google-<%= type %>.png" style="border:0px;"></a>
+<% return ejs_data; }); %>
+
+
+<% template.define('app-login-form', function() { var ejs_data=''; %>
+  <%- template.use('connect-buttons',null ,"signin"); %>
+
+  <div id="nofacebook" style="width:194px;">
+    <div class="or-hr"><span> or </span></div>
+
+    <form name="signin-form" id="signin-form" method="post" action="/ep/account/signin">
+      <%- helpers.xsrfTokenElement() %>
+      <div><div style="position:relative"><input type="text" name="email" placeholder="Email" class="login-input" autocorrect="off" autocapitalize="off" style="width:190px" /></div></div>
+      <div><div style="position:relative"><input type="password" name="password" placeholder="Password" class="login-input" style="width:190px" /></div></div>
+      <div style="font-size:12px; color:#999; width:190px; margin-bottom:10px;">
+        <input id="signin-remember-me" type="checkbox" group="1" name="rememberMe" checked="checked" style="margin-right:4px;" />
+        <label for="signin-remember-me">stay signed in</label>
+      </div>
+      <div style="float:left; line-height:30px"> <a href="/ep/account/forgot-password" style="font-size:11px">Forgot password?</a></div>
+      <div style="float:right"><button type="submit" class="white-button">Sign In</button></div>
+      <% if (typeof(cont) != 'undefined') { %>
+        <input type="hidden" name="cont" value="<%=cont%>" />
+      <% } else { %>
+        <input type="hidden" name="cont" value="<%=request.url%>" />
+      <% } %>
+    </form>
+  </div>
+<% return ejs_data; }); %>
+
+
+<% template.define('login-form', function() { var ejs_data=''; %>
+
+  <div id="login-form-wrapper">
+
+  <% if ((typeof(asNewAccount) == "undefined" || asNewAccount == false) && (typeof(signedInAccounts) != 'undefined' && signedInAccounts.length)) { %>
+    <div class="modaldialog-body" style="font-size:16px">
+      Use <b><%= helpers.siteName() %>  </b> as:
+      <br/><br/>
+      <% for (i in signedInAccounts) { %>
+        <div data-click="signin-account" class="signin-as-existing-account" data-id="<%= signedInAccounts[i].id %>" data-cont="<%=encodeURIComponent( typeof(cont)!="undefined" ? cont : request.path)%>">
+          <img src="<%= signedInAccounts[i].userPic %>" class="profile-pic-small" style="float:left; margin-right:10px;"/>
+          <div style="font-size:13px; font-weight:bold;"> <%= signedInAccounts[i].fullName %> </div>
+          <div style="font-size:11px;"><%= signedInAccounts[i].email %> </div>
+          <div style="clear:both"></div>
+        </div>
+      <% } %>
+      <br/>
+
+      <a style="font-size:16px" href="/ep/account/sign-in?cont=<%=encodeURIComponent( typeof(cont)!="undefined" ? cont : request.path)%>&amp;new=1">Sign in using another account</a>
+      <br/> <br/>
+
+    </div>
+  <% } else { %>
+
+  <h1 class="iphonehide">Log in / Sign up</h1>
+  <%- template.use('button', null, {
+    type: 'custom',
+    fontIcon: 'icon-x',
+    'data-click': 'hidemodal',
+    className: 'dialog-cancel-x'
+  }); %>
+
+  <div class="modaldialog-body">
+
+  <%- typeof(errorDiv) != "undefined"? errorDiv() : "" %>
+  <%- typeof(signinNotice) != "undefined"? signinNotice() : "" %>
+
+    <div id="page-loging-lhs">
+      <img width="230" src="<%=helpers.cdn()%>/static/img/pencil-love.png">
+    </div>
+
+    <div id="nofacebook" class="page-login-rhs">
+      <a id="login-google" href="<%=googleSignInUrl%>" class="google-signin-button" target="<%= typeof(googleButtonTarget) != 'undefined' ? googleButtonTarget : '_self' %>">
+        <img src="<%=helpers.cdn()%>/static/img/goog.png">
+        <span>Sign in with <strong>Google</strong></span>
+      </a>
+
+      <% if (helpers.allowFacebookSignin()) { %>
+        <a id="login-facebook" class="fb-login-required" href="<%=request.url%>">
+          <img class="fb-connect-button" src="<%=helpers.cdn()%>/static/img/fb.png">
+          <span>Sign in with <strong>Facebook</strong></span>
+        </a>
+      <% } %>
+
+      <span id="login-or"><span class="page-login-or"></span><span class="page-login-or-lbl">or</span><span class="page-login-or"></span></span>
+
+      <form id="login-form" method="post" action="/ep/account/signin">
+        <%- helpers.xsrfTokenElement() %>
+        <span id="login-email-wrapper" class="login-email-input">
+          <label for="login-email"><i class="icon-privacy-invite"></i></label>
+          <input id="login-email" name="email" type="email" placeholder="Email" autocorrect="off" autocapitalize="off">
+          <%- template.use('button', null, { id: 'login-email-go', label: 'Go' }); %>
+        </span>
+
+        <div id="login-email-secondary">
+          <i class="icon-back"></i>
+          <span id="login-password-wrapper" class="login-email-input">
+            <label for="login-password"><i class="icon-lock"></i></label>
+            <input id="login-password" name="password" type="password" placeholder="Password">
+          </span>
+          <a href="/ep/account/forgot-password" id="login-forgot-password">Forgot password?</a>
+
+          <input id="signin-remember-me" type="hidden" group="1" name="rememberMe" value="1">
+          <input type="hidden" name="cont" value="<% if (typeof(cont) != 'undefined') { %><%=cont%><% } else { %><%=request.url%><% } %>">
+          <% if (typeof(inviteToken) != 'undefined') { %>
+            <input type="hidden" name="inviteToken" value="<%=inviteToken%>">
+          <% } %>
+
+          <div id="login-email-tertiary" class="modal-more-info">
+            <span id="login-full-name-wrapper" class="login-email-input">
+              <label for="login-fullname"><i class="icon-user"></i></label>
+              <input id="login-fullname" name="name" placeholder="Full Name">
+            </span>
+          </div>
+
+          <button id="login-submit" type="submit" disabled>Start using Hackpad</button>
+        </div>
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <% } %>
+  </div>
+<% return ejs_data; }); %>
+
+
+<% template.define('connecting-to-facebook', function() { var ejs_data=''; %>
+  <% if (!session.proAccount) { %>
+  <div id="connecting-to-facebook" class="modaldialog" style="padding:30px; margin-top: 100px">
+    <img alt="" src="<%=helpers.cdn()%>/static/img/status-ball.gif" style="float:right" />
+    <span style="font-size:21px; color:#666">Signing in using Facebook...</span>
+    <div style="margin-top:20px"><%- template.use('button', null, { buttonType: 'submit', label: 'Cancel' }); %></div>
+  </div>
+  <% } %>
+<% return ejs_data; }); %>

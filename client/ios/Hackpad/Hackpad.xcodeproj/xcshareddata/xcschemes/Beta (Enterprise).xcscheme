@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "0500"
+   version = "1.3">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C327FDE415E57F9B002819C7"
+               BuildableName = "Hackpad.app"
+               BlueprintName = "Hackpad"
+               ReferencedContainer = "container:Hackpad.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      buildConfiguration = "Enterprise">
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "16CB5E6617C551A000511849"
+               BuildableName = "HackpadKitTests.octest"
+               BlueprintName = "HackpadKitTests"
+               ReferencedContainer = "container:Hackpad.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "HPCoreDataStackTestCase">
+               </Test>
+               <Test
+                  Identifier = "ImportTests/test_0003_BigPadList10">
+               </Test>
+               <Test
+                  Identifier = "ImportTests/test_0006_BigCollectionList10">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "160CA79A17CFE54500DA1FA5"
+               BuildableName = "HackpadTests.octest"
+               BlueprintName = "HackpadTests"
+               ReferencedContainer = "container:Hackpad.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C327FDE415E57F9B002819C7"
+            BuildableName = "Hackpad.app"
+            BlueprintName = "Hackpad"
+            ReferencedContainer = "container:Hackpad.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+   </TestAction>
+   <LaunchAction
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      buildConfiguration = "Enterprise"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C327FDE415E57F9B002819C7"
+            BuildableName = "Hackpad.app"
+            BlueprintName = "Hackpad"
+            ReferencedContainer = "container:Hackpad.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "OBJC_PRINT_EXCEPTIONS"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
+   </LaunchAction>
+   <ProfileAction
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      buildConfiguration = "Enterprise"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C327FDE415E57F9B002819C7"
+            BuildableName = "Hackpad.app"
+            BlueprintName = "Hackpad"
+            ReferencedContainer = "container:Hackpad.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Enterprise">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Enterprise"
+      customArchiveName = "Hackpad-Enterprise"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>

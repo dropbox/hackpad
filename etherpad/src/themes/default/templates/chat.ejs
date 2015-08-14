@@ -1,0 +1,35 @@
+<%
+  template.inherit('ui.ejs');
+
+  helpers.includeJs("jquery.textcomplete.min.js");
+
+  helpers.includeCss("jquery.textcomplete.css");
+%>
+
+<% template.define('chat', function() { var ejs_data=''; %>
+  <div id="padchat">
+    <div id="padchat-wrapper">
+      <header>
+        <i class="icon-comment"></i>
+        <span id="chat-room-name"><%= helpers.siteName() %> chat</span>
+        <span id="chat-num-online"></span>
+        <%- template.use('button', null, {
+          id: 'chat-settings',
+          fontIcon: 'icon-gear-hollow',
+          type: 'toolbar',
+          className: 'hp-ui-button-menu-reverse hp-ui-button-menu-right',
+          menu: [{ id: 'chat-settings-sound', html: '<i class="icon-checkMark"></i>' + N_('Sound'), }],
+          tooltip: N_('Chat Settings')
+        }); %>
+      </header>
+      <div id="chat-body">
+        <div class="chatlines selected" data-room="site">
+          <a class="chatloadmore" href="#load-more">load more</a>
+          <div class="chatloadingmore">loading...</div>
+        </div>
+        <textarea id="chatentrybox"></textarea>
+      </div>
+    </div>
+    <ul id="padchat-users"></ul>
+  </div>
+<% return ejs_data; }); %>

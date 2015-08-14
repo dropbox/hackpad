@@ -1,0 +1,12 @@
+//
+// Prefix header for all source files of the 'HackpadTests' target in the 'HackpadTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import <HackpadAdditions/HackpadUIAdditions.h>
+    #import <HackpadKit/HackpadKit.h>
+    #import "HPLog.h"
+#endif

@@ -1,0 +1,90 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %><% function formField(id, label, type) {
+    if (!type) { type = "text"; }
+    var val = (oldData[id] || "");
+
+    var d = DIV({className: "formfield"});
+
+    if (type == "checkbox") {
+      d.push(INPUT({type: type, 
+                    id: id, 
+                    name: id,
+                    className: type+"input",
+                    checked: (oldData[id] ? true : undefined)}),
+             LABEL({htmlFor: id, className: type+"label"}, label));
+      d.push(html('<div style="clear: both;"><!-- --></div>'));
+    } else if (type == "text") {
+      d.push(LABEL({className: type+"label", htmlFor: id}, label),
+             INPUT({className: type+"input",
+                    type: type,
+                    id: id, 
+                    name: id, 
+                    maxlength: 80, 
+                    value: val}));
+    } else if (type == "temppass") {
+      if (!val) {
+        val = stringutils.randomString(6).toUpperCase();
+      }
+      d.push(LABEL({className: type+"label", htmlFor: id}, label),
+            INPUT({className: type+"input",
+                  type: "text",
+                  id: id,
+                  name: id,
+                  maxlength: 80,
+                  value: val
+            }));
+    }
+
+    return d;
+} %>
+
+<h3 class="top">Add new account</h3>
+
+<div class="manage-accounts newaccount">
+
+  <%- errorDiv() %>
+
+  <form method="post" action="<%= request.path %>">
+    <%- helpers.xsrfTokenElement() %>
+    
+    <div class="new-account-form">
+     
+      <div class="forminner">
+        <%- formField('email', 'Email:', 'text') %>
+        <%- formField('fullName', 'Full Name:', 'text') %>
+        <%- formField('tempPass', 'Temporary Password:', 'temppass') %>
+        <%- formField('makeAdmin', 'Make this account an administrator?', 'checkbox') %>
+        <%- formField('fbid', 'Facebook ID (leave empty for none)') %>
+      </div>
+
+    </div>
+    <br/><br/>
+    <div class="buttons-wrap">
+      <input class="submit" type="submit" name="btn" value="Create Account" />
+      <input class="submit" type="submit" name="cancel" value="Cancel" />
+    </div>
+
+  </form>
+
+  <p id="bottom-note">An email will be sent to this account with a link to sign in.
+    They will be prompted to change their password the first time they sign in.</p>
+  </p>
+  
+</div>
+
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+  document.getElementById('email').focus()
+</script>
+
+

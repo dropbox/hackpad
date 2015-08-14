@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema name="etherpad" version="1.0">
+  <types>
+    <!-- field type definitions. The "name" attribute is
+       just a label to be used by field definitions.  The "class"
+       attribute and any other attributes determine the real
+       behavior of the fieldType.
+         Class names starting with "solr" refer to java classes in the
+       org.apache.solr.analysis package.
+    -->
+
+    <!-- The StrField type is not analyzed, but indexed/stored verbatim.  
+       - StrField and TextField support an optional compressThreshold which
+       limits compression (if enabled in the derived fields) to values which
+       exceed a certain size (in characters).
+    -->
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+
+    <!-- boolean type: "true" or "false" -->
+    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+
+    <!-- The optional sortMissingLast and sortMissingFirst attributes are
+         currently supported on types that are sorted internally as strings.
+       - If sortMissingLast="true", then a sort on this field will cause documents
+         without the field to come after documents with the field,
+         regardless of the requested sort order (asc or desc).
+       - If sortMissingFirst="true", then a sort on this field will cause documents
+         without the field to come before documents with the field,
+         regardless of the requested sort order.
+       - If sortMissingLast="false" and sortMissingFirst="false" (the default),
+         then default lucene sorting will be used which places docs without the
+         field first in an ascending sort and last in a descending sort.
+    -->    
+
+
+    <!-- numeric field types that store and index the text
+         value verbatim (and hence don't support range queries, since the
+         lexicographic ordering isn't equal to the numeric ordering) -->
+    <fieldType name="integer" class="solr.IntField" omitNorms="true"/>
+    <fieldType name="long" class="solr.LongField" omitNorms="true"/>
+    <fieldType name="float" class="solr.FloatField" omitNorms="true"/>
+    <fieldType name="double" class="solr.DoubleField" omitNorms="true"/>
+
+    <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
+         is a more restricted form of the canonical representation of dateTime
+         http://www.w3.org/TR/xmlschema-2/#dateTime    
+         The trailing "Z" designates UTC time and is mandatory.
+         Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z
+         All other components are mandatory.
+
+         Expressions can also be used to denote calculations that should be
+         performed relative to "NOW" to determine the value, ie...
+
+               NOW/HOUR
+                  ... Round to the start of the current hour
+               NOW-1DAY
+                  ... Exactly 1 day prior to now
+               NOW/DAY+6MONTHS+3DAYS
+                  ... 6 months and 3 days in the future from the start of
+                      the current day
+
+         Consult the DateField javadocs for more information.
+      -->
+    <fieldType name="date" class="solr.DateField" sortMissingLast="true" omitNorms="true"/>
+    <fieldType name="tdate" class="solr.TrieDateField" precisionStep="8" omitNorms="true" positionIncrementGap="0"/>
+
+    <!-- A text field that uses WordDelimiterFilter to enable splitting and matching of
+        words on case-change, alpha numeric boundaries, and non-alphanumeric chars,
+        so that a query of "wifi" or "wi fi" could match a document containing "Wi-Fi".
+        Synonyms and stopwords are customized by external files, and stemming is enabled.
+        Duplicate tokens at the same position (which may result from Stemmed Synonyms or
+        WordDelim parts) are removed.
+        -->
+    <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <charFilter class="org.apache.lucene.analysis.pattern.PatternReplaceCharFilterFactory" pattern="(#)" replacement="ht_"/>
+
+        <tokenizer class="org.apache.lucene.analysis.standard.StandardTokenizerFactory"/>
+        <filter class="org.apache.lucene.analysis.core.LowerCaseFilterFactory"/>
+        <filter class="org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="15" />
+        <!-- <tokenizer class="org.apache.lucene.analysis.standard.StandardTokenizerFactory"/> -->
+        <!-- in this example, we will only use synonyms at query time
+        <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
+        -->
+        <!--
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0"/>
+        -->
+        <!--
+        <filter class="solr.EnglishPorterFilterFactory" protected="protwords.txt"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+        -->
+      </analyzer>
+      <analyzer type="query">
+        <charFilter class="org.apache.lucene.analysis.pattern.PatternReplaceCharFilterFactory" pattern="(#)" replacement="ht_"/>
+
+        <tokenizer class="org.apache.lucene.analysis.standard.StandardTokenizerFactory"/>
+        <!-- <tokenizer class="solr.WhitespaceTokenizerFactory"/> -->
+        <!--<tokenizer class="solr.NGramTokenizerFactory" minGramSize="2" maxGramSize="15" />-->
+        <!--
+        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+        -->
+        <filter class="org.apache.lucene.analysis.core.StopFilterFactory" ignoreCase="false" words="stopwords.txt"/>
+        <!--
+        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0"/>
+        -->
+        <filter class="org.apache.lucene.analysis.core.LowerCaseFilterFactory"/>
+        <!--
+        <filter class="solr.EnglishPorterFilterFactory" protected="protwords.txt"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+        -->
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="termtext" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <charFilter class="org.apache.lucene.analysis.pattern.PatternReplaceCharFilterFactory" pattern="(#)" replacement="ht_"/>
+
+        <tokenizer class="org.apache.lucene.analysis.standard.StandardTokenizerFactory"/>
+        <filter class="org.apache.lucene.analysis.core.LowerCaseFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <charFilter class="org.apache.lucene.analysis.pattern.PatternReplaceCharFilterFactory" pattern="(#)" replacement="ht_"/>
+
+        <tokenizer class="org.apache.lucene.analysis.standard.StandardTokenizerFactory"/>
+        <filter class="org.apache.lucene.analysis.core.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <!-- Use the whitespace tokenizer for snippets due to Lucene bugs:
+         https://issues.apache.org/jira/browse/LUCENE-3920 -->
+    <fieldType name="hltext" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="org.apache.lucene.analysis.core.WhitespaceTokenizerFactory"/>
+        <filter class="org.apache.lucene.analysis.core.LowerCaseFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="org.apache.lucene.analysis.standard.StandardTokenizerFactory"/>
+        <filter class="org.apache.lucene.analysis.core.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+ </types>
+
+
+ <fields>
+   <!-- Valid attributes for fields:
+     name: mandatory - the name for the field
+     type: mandatory - the name of a previously defined type from the <types> section
+     indexed: true if this field should be indexed (searchable or sortable)
+     stored: true if this field should be retrievable
+     compressed: [false] if this field should be stored using gzip compression
+       (this will only apply if the field type is compressable; among
+       the standard field types, only TextField and StrField are)
+     multiValued: true if this field may contain multiple values per document
+     omitNorms: (expert) set to true to omit the norms associated with
+       this field (this disables length normalization and index-time
+       boosting for the field, and saves some memory).  Only full-text
+       fields or fields that need an index-time boost need norms.
+   -->
+
+   <field name="id"          type="string"  indexed="true" stored="true"  required="true"  multiValued="false" />
+   <field name="domainId"    type="integer" indexed="true" stored="true"  required="true"  multiValued="false" />
+   <field name="lastedit"    type="date"    indexed="true" stored="true"  required="true" multiValued="false" />
+   <field name="tlastedit"    type="tdate"    indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="revision"    type="integer" indexed="true" stored="true"  required="true" multiValued="false" />
+   <field name="contents"    type="text"    indexed="true" stored="true"  required="true"  termVectors="true" multiValued="false" />
+   <field name="terms"       type="termtext" indexed="true" stored="false" required="false" termVectors="true" multiValued="false" />
+   <copyField source="contents" dest="terms" />
+   <field name="chat"        type="text"    indexed="true" stored="true"  required="false" termVectors="true" multiValued="true" />
+   <field name="authorId"    type="integer" indexed="true" stored="false" required="false" multiValued="true" />
+   <field name="invitedId"   type="integer" indexed="true" stored="false" required="false" multiValued="true" />
+   <field name="invitedGroupId" type="integer" indexed="true" stored="false" required="false" multiValued="true" />
+   <field name="title"       type="text"    indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="caption"     type="text"    indexed="true" stored="false" required="false" multiValued="false" />
+   <field name="url"         type="string"  indexed="true" stored="false" required="false" multiValued="true" />
+   <field name="guestpolicy" type="string"  indexed="true" stored="true" required="true"  multiValued="false" />
+   <field name="lastEditorId"    type="integer" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="creatorId"    type="integer" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="editorId"    type="integer" indexed="true" stored="false" required="false" multiValued="true" />
+   <field name="visibility" type="string"  indexed="true" stored="false" required="false"  multiValued="false" default="visible"/>
+   <field name="viewsRecent" type="integer"  indexed="true" stored="true" required="false"  multiValued="false" />
+   <field name="viewsTotal" type="integer"  indexed="true" stored="true" required="false"  multiValued="false" />
+   <field name="collectionCount" type="integer"  indexed="true" stored="false" required="false"  multiValued="false"/>
+ </fields>
+
+ <!-- Field to use to determine and enforce document uniqueness.
+      Unless this field is marked with required="false", it will be a required field
+ -->
+ <uniqueKey>id</uniqueKey>
+
+ <!-- field for the QueryParser to use when an explicit fieldname is absent -->
+ <defaultSearchField>contents</defaultSearchField>
+
+ <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
+ <solrQueryParser defaultOperator="OR"/>
+
+ <!-- Similarity is the scoring routine for each document vs. a query.
+      A custom similarity may be specified here, but the default is fine
+      for most applications.  -->
+ <!-- <similarity class="org.apache.lucene.search.DefaultSimilarity"/> -->
+ <similarity class="solr.BM25SimilarityFactory"/>
+
+</schema>

@@ -1,0 +1,337 @@
+@import "colors.less";
+@import "mixins.less";
+
+.group-link {
+  position: relative;  
+  display: inline-block;
+  transition: all 100ms ease-in;
+  margin-right: 20px;
+  max-width: 25%;
+
+  &:hover {
+    cursor:pointer;
+  }
+
+  a {
+    width: 100%;
+  }
+
+  .remove-group-btn {
+    background: none;
+    opacity: 0;
+    background-color: #e39789 !important;
+    height: 14px;
+    width: 14px;
+    color: #fff;
+    text-align: center;
+    text-align: left;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    position: absolute;
+    top: -9px;
+    right: -20px;
+    z-index: 1;
+    border-radius: 8px;
+    transition: opacity 100ms ease-in;
+  }
+
+  &:hover .remove-group-btn {
+    opacity: 1;
+  }
+
+  .remove-group-btn i {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: -2px;
+    margin-top: -2px;
+  }
+}
+
+.collection-pad-link-div {
+  padding-left:23px;
+}
+
+#add-to-collection {
+  color: #888;
+  border-bottom: 1px dotted #666;
+  cursor:pointer;
+  margin-top:4px;
+  font-size: 11px;
+  display: inline-block;
+  max-width: 30%;
+}
+
+#add-to-collection:hover {
+  border-bottom:1px solid #888;
+  color:#666;
+}
+
+#list-of-pads-div a {
+  display: inline-block;
+  padding-top: 4px;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 90%;
+}
+
+#collection-picker-div {
+  display: none;
+  margin-top: 4px;
+  padding-top: 5px;
+}
+
+#groupaccess {
+  display: inline-block;
+}
+
+#members-div {
+  white-space: nowrap;
+}
+
+#collections-recent-list-wrapper {
+
+  .sidebartext {
+    color: #666;
+    padding: 8px 0px 8px 4px;
+  }
+
+  #collections-recent-label {
+    display: none;
+  }
+
+  #collections-recent-list {
+    @border-width: 1px;
+    @hoverBorderColor: #c2cde7;
+    @hoverBackgroundColor: #e7ebf5;
+    @hoverTextColor: #3a5794;
+    .add-group {
+      border: @border-width solid #dfdfdf;
+      color: #666;
+      background-color: #fafafa;
+      padding: 5px 6px;
+      margin-top: -@border-width;
+      cursor: pointer;
+      &:hover {
+        background-color: @hoverBackgroundColor;
+        border-top-color: @hoverBorderColor;
+        color: @hoverTextColor;
+        // Color adjacent element's top border
+        & + .add-group {
+          border-top-color: @hoverBorderColor;
+        }
+        // Where there is no adjacent element
+        &:last-child {
+          border-bottom-color: @hoverBorderColor;
+        }
+      }
+    }
+
+  }
+}
+
+#padeditor #add-to-collection {
+  border-bottom: 1px dashed #ccc;
+  margin-top: 0;
+  margin-right: 5px;
+  float: none;
+  vertical-align: top;
+  display: inline-block !important;
+}
+
+#add-to-collection {
+  display: inline-block;
+  transition: opacity 100ms ease-in;
+}
+
+#add-to-collection:not(.no-collections) {
+  background-color: transparent;
+  opacity: 0;
+}
+
+#add-to-collection .hp-ui-button-content {
+  font-size: 10px;
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: -2px;
+}
+
+#collections-recent-list-wrapper {
+  display: none;
+}
+
+#collection-picker {
+  background-color: transparent;
+  font-family: @base_font_new;
+  color: #fff;
+  border: 0;
+  font-size: 15px;
+  font-weight: 200;
+  width: 200px;
+  padding: 5px 20px;
+}
+
+#add-to-collection li {
+  background-color: transparent;
+}
+
+#add-to-collection .hp-ui-button-menu-wrapper {
+  left: -21px;
+}
+
+#collection-invite-list-item {
+  padding: 0;
+}
+
+#add-to-collection .hp-ui-button-arrow {
+  display: none;
+}
+
+#collections-div a {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#collections-div:hover #add-to-collection,
+#collections-div.sticky #add-to-collection {
+  opacity: 1;
+}
+
+#add-to-collection:hover .hp-ui-button-content {
+  color: @color_actionable;
+}
+
+#collection-invite-form .icon-addcollection {
+  color: #fff;
+  margin-right: -5px;
+  margin-left: 10px;
+}
+
+#collection-picker-div {
+  margin-top: -6px;
+  text-align: left;
+  float: left;
+}
+
+#collections-recent-list-wrapper .sidebartext {
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+#padeditor #collections-div {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  padding-top: 3px;
+  max-width: 50%;
+  min-width: 50%;
+  text-align: right;
+  white-space: nowrap;
+}
+
+#padeditor #collection-list-div {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+}
+
+#collection-list-overflow {
+  display: none;
+  white-space: normal;
+  background-color: rgba(255,255,255,0.8);
+}
+
+.segment-group-wrapper {
+  float: right;
+}
+
+.segment-group-wrapper {
+  display: block;
+  margin-right: 20px;
+  text-align: right;
+  max-width: 50%;
+  height: 19px;
+  overflow: hidden;
+}
+
+.segment-edited-by {
+  width: 45%;
+  text-overflow: ellipsis;
+  height: 20px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#padeditor .group-link-unfiled {
+  cursor: default;
+}
+
+.segment-group-old {
+  display: none;
+}
+
+#padeditor .group-link a,
+.segment-info .segment-group-link {
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: @color_button;
+  line-height: 10px;
+  padding: 4px 6px 3px 6px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  border-radius: 2px;
+}
+
+.segment-info .segment-group-link {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.group-link-unfiled,
+.segment-group-link-unfiled,
+#add-to-collection {
+  display: inline-block;
+  text-transform: uppercase;
+  color: #999;
+  border: 1px dashed #ccc;
+  line-height: 10px;
+  padding: 3px 5px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  border-radius: 2px;
+  vertical-align: top;
+  background-color: rgb(255, 255, 187);
+}
+
+#padeditor .group-link a:hover,
+.segment-group-link:hover {
+  background-color: @color_actionable;
+}
+
+#padeditor .group-link-overflow a {
+  font-size: 25px;
+  line-height: 1px;
+  height: 10px;
+  .user-select-none;
+}
+
+#editname-form {
+  display: inline-block;
+}
+
+#group-name-bar {
+  width:100%;
+  text-align:center;
+  margin-top:20px;
+}

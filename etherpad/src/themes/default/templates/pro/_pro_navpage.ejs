@@ -1,0 +1,82 @@
+
+<%
+  template.inherit('pro/account/_signed_out_modal.ejs');
+  template.inherit('feedback_modal.ejs');
+  template.inherit('ui.ejs');
+%>
+
+<% helpers.addBodyClass(bodyClass); %>
+
+<% helpers.includeJQuery() %>
+
+<% helpers.includeJs("etherpad.js") %>
+
+<% helpers.includeJs("jquery.placeholder.js") %>
+<% helpers.includeJs("jquery-ui-1.8.20.custom.min.js") %>
+<% helpers.includeJs("jquery.ui.touch-punch.min.js") %>
+<% helpers.includeJs("ace2/embed.js"); %>
+<% helpers.includeJs("pro/pro-padlist-client.js") %>
+<% helpers.includeJs("lib/jquery.contextmenu.js") %>
+<% helpers.includeJs("modals.js"); %>
+<% helpers.includeJs("pad_modals.js"); %>
+<% helpers.includeJs("jquery.tinysort.js") %>
+
+<% helpers.includeCss("jquery.contextmenu.css") %>
+<% helpers.includeCss("pro/pro-home.less"); %>
+<% helpers.includeCss("pro/padlist.less"); %>
+<% helpers.includeCss("feedback.less"); %>
+<% helpers.includeCss("collections.less"); %>
+
+<% helpers.includeCss("ace2/editor.less"); %>
+<% helpers.includeCss("ace2/syntax.less"); %>
+<% helpers.includeCss("ace2/inner.less"); %>
+<% helpers.includeCss("lightbox.less"); %>
+
+<% helpers.includeJs("search.js"); %>
+
+
+<% helpers.disableOffline(); %>
+
+<% helpers.addToHead('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />'); %>
+<% helpers.addToHead('<meta name="apple-mobile-web-app-capable" content="yes" />'); %>
+
+<!-- body -->
+
+<%- template.define('body', function() { var ejs_data=''; %>
+
+  <div class="fpcontent">
+    <%- template.use('button', null, {
+      id: 'feedbackbutton',
+      type: 'action',
+      className: 'iphonehide',
+      label: N_('feedback')
+    }); %>
+
+    <div id="homeleft">
+      <%- template.use('homeleft'); %>
+    </div>
+
+    <div id="homeright">
+      <%- template.use('homeright'); %>
+    </div>
+
+    <%- helpers.clearFloats() %>
+
+    <div class="iphoneshow mobile-logout">
+      <a href="/ep/account/sign-out" class="fb-logout">Logout</a>
+    </div>
+
+  </div>
+
+  <%- template.use('button', null, {
+    id: 'hp-pad-actions',
+    type: 'menu-right',
+    menu: [
+      {label: 'txt'}
+    ]
+  }); %>
+
+  <%- template.use('feedbackModal'); %>
+
+<% return ejs_data; }); %>
+

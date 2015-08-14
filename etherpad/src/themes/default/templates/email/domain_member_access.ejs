@@ -1,0 +1,8 @@
+
+<%= invitingAccount.fullName %> invited user <%= memberAccount.fullName %> <% if (memberAccount.fullName != memberAccount.email) { %>(<%= memberAccount.email %>)<% } %> with full membership to <%= request.host %>.
+
+To modify this new member's access privileges, edit their account role here:
+<%= accountManagerLink %>
+
+--
+If this message was sent in error, please mail <%= helpers.supportEmailAddress() %>.

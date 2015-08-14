@@ -1,0 +1,28 @@
+<%
+  template.inherit("signin.ejs");
+  template.inherit("ui.ejs");
+%>
+
+<% template.define('signedOutDialog', function() { var ejs_data=''; %>
+<div id="page-login-box" class="modaldialog" style="right: inherit; left: 50%;">
+  <%- template.use('button', null, {
+    type: 'custom',
+    fontIcon: 'icon-x',
+    'data-click': 'hidemodal',
+    className: 'dialog-cancel-x'
+  }); %>
+  <div>
+    <% if (session.proAccount) { %>
+    <div style="padding-bottom: 14px; text-align: center;">
+      <h3 style="color: #666; font-size: 100%;">Oops, you're signed out!</h3>
+      <!--% } else { %-->
+      <!--h3 style="color: #666; font-size: 100%;">Sign In Instantly</h3-->
+    </div>
+    <% } %>
+    <%- template.use('login-form'); %>
+  </div>
+</div>
+
+<%- template.use('connecting-to-facebook'); %>
+
+<% return ejs_data; }); %>

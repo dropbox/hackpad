@@ -1,0 +1,40 @@
+<% /*
+Copyright 2009 Google Inc.
+Copyright 2010 Pita, Peter Martischka <petermartischka@googlemail.com>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+<%
+  template.inherit('header3.ejs');
+  helpers.addBodyClass("pro-withtopbar");
+  helpers.includeJs("pad_facebook.js");
+  helpers.includeJs('modals.js');
+  helpers.includeJs("jquery.ajaxqueue.js")
+  helpers.includeJs("jquery.autocomplete.js")
+  helpers.includeCss("jquery.autocomplete.less")
+%>
+
+<%- template.use('topbar'); %>
+
+<div id="padpage">
+
+  <!--div id="padtop">
+
+  </div--> <!-- /padtop -->
+
+  <div id="alertbar">
+    <div id="servermsg">
+      <h3><span id="servermsgdate"><!-- --></span></h3>
+      <a id="hidetopmsg" href="#" data-click="hideservermessage">hide</a>
+      <p id="servermsgtext"><!-- --></p>
+    </div>
+  </div>

@@ -1,0 +1,12 @@
+
+<div class="modaldialog" id="bee">
+  <h1>We need to verify your email address.</h1>
+  <form method="post" action="/ep/account/resend-email-verification" name="resend-email-verification-form" id="resend-email-verification-form">
+    <%- helpers.xsrfTokenElement() %>
+    <input type="hidden" name="email" value="<%=email%>"/>
+  </form>
+  <div class="modaldialog-inner">
+  Please click on the link in the verification email we've sent you.  <br/>
+  Or we can <a href="#" data-click="submitmodal" data-modal="#resend-email-verification-form">re-send the verification email</a>.
+  </div>
+</div>

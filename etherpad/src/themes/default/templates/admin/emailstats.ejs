@@ -1,0 +1,48 @@
+
+
+<table cellspacing="10" style="border:1px solid #ccc; padding:10px;">
+<tr>
+<th>
+Pad
+</th>
+<th>
+Sent
+</th>
+<th>
+Clicks
+</th>
+<th>
+CTR
+</th>
+<th>
+Opens
+</th>
+<th>
+Open Rate
+</th>
+</tr>
+<% for (var i=0; i<stats.length; i++) { %>
+<tr>
+<td>
+  <a href="<%= stats[i].url %>"> <%= stats[i].title %> </a>
+</td>
+<td>
+  <%= stats[i].sent %>
+</td>
+<td>
+  <%= stats[i].clicks %>
+</td>
+<td>
+  <%= (Math.floor((stats[i].clicks / stats[i].sent) * 100000))/1000 %>
+</td>
+<td>
+  <%= stats[i].opens %>
+</td>
+<td>
+  <%= (Math.floor((stats[i].opens / stats[i].sent) * 100000))/1000 %>
+</td>
+
+
+</tr>
+<% } %>
+</table>

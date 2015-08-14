@@ -1,0 +1,183 @@
+<% template.inherit('pro/_pro_navpage.ejs'); %>
+<%
+  template.inherit('_invite_control.ejs');
+  template.inherit('pad/pad_userlist.ejs');
+  template.inherit('ui.ejs');
+%>
+
+<% helpers.facebookOpenGraphMetadata({title: groupName, type: 'hackpad:collection', description: groupDescription}); %>
+
+<%
+  helpers.setHtmlTitle(groupName + " - " + request.host);
+  if (isPublic) {
+    helpers.addToHead('<link rel="alternate" title="RSS" href="'+request.scheme+'://'+request.host+'/ep/group/feed?groupId=' + groupId + '" type="application/rss+xml" />');
+  }
+%>
+
+<% helpers.includeJs("jquery.color.js"); %>
+<% helpers.includeJs("jquery.validate.js"); %>
+<% helpers.includeJs("invite.js"); %>
+<% helpers.includeJs("buttons.js"); %>
+
+<% helpers.includeJs("customSelect.jquery.js"); %>
+
+<% helpers.includeJs("cookies.js"); %>
+<% helpers.includeJs("hints.js"); %>
+<% helpers.includeJs("group_home.js"); %>
+
+<%
+  helpers.includeCss("pad.less");
+  helpers.includeCss("padaccess.less");
+  helpers.includeCss("follow.less");
+  helpers.includeCss("collections.less");
+%>
+
+<script type="text/html" id="editname">
+<form id="editname-form" method="post" action="/ep/group/update-name">
+  <%- helpers.xsrfTokenElement() %>
+  <input type="hidden" name="groupId" value="<%= groupId %>" />
+  <input name="name" style="width: 220px;" />
+  <a href="#" class="cancel">Cancel</a>
+</form>
+</script>
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+function goToSection(section) {
+  document.location = document.location.href.split("?")[0] + "?section=" + section;
+}
+</script>
+
+<%- template.define('homeright', function() { var ejs_data=''; %>
+
+<div id="follow-container" style="margin-bottom: 25px; white-space:nowrap;">
+  <%- template.use('button', null, {
+    type: 'secondary',
+    className: 'groupfollow ' + (!following ? '' : 'hidden'),
+    fontIcon: 'icon-follow',
+    'data-click': 'toggle-group-follow',
+    label: N_('Follow')
+  }); %>
+  <%- template.use('button', null, {
+    type: 'secondary',
+    className: 'groupunfollow ' + (!following ? 'hidden' : ''),
+    fontIcon: 'icon-follow',
+    'data-click': 'toggle-group-follow',
+    label: N_('Unfollow')
+  }); %>
+</div>
+
+<div id="members-div" style="margin-top:25px">
+  <div id="sharesummarywrapper" style="display:none">
+    <span class="sidebarheading">Followed by </span> <span id="sharesummary" data-tooltip="Show list" data-altTooltip="Hide List"> </span>
+  </div>
+  <%- template.use('userlist') %>
+
+  <div id="guestprompts"><!-- --></div>
+</div>
+
+<%- template.use('inviteControl', null, "", "invite people", 'groupId', groupId); %>
+
+<div style="clear:both;white-space: nowrap;" >
+
+</div>
+
+<% if (isPublic) { %>
+  <div style="padding-top: 5px;">
+  <a href="/ep/group/feed?groupId=<%=groupId%>" rel="alternate" type="application/rss+xml">
+    Feed
+  </a>
+  </div>
+<% } %>
+
+<% if (!isEmpty) { %>
+<div id="list-of-pads-div" class="sidebar-div iphonehide" style="margin-top:20px">
+  <span class="sidebarheading"> List of Hackpads </span>
+
+  <div style="margin-top:4px">
+    <% for (var i=0; i<listOfPads.length; i++) { %>
+    <div style="font-size:13px;">
+      <a href="/<%=listOfPads[i].localPadId%>#<%=listOfPads[i].title.replace(/ /g, '-')%>" title="<%=listOfPads[i].title%>">
+        <%=listOfPads[i].title%>
+      </a>
+    </div>
+    <% } %>
+  </div>
+
+</div>
+<% } %>
+
+<% if (isGroupOwner) { %>
+
+  <div style="margin-top:30px; border-top: 1px solid #ccc; padding-top:10px">
+  <a href="#" data-click="deletegroup" style="font-size:13px; color: #888;">Delete this collection</a>
+  </div>
+<% } %>
+
+<% return ejs_data; }); %>
+
+
+
+<%- template.define('homeleft', function() { var ejs_data=''; %>
+  <div id="group-name-bar">
+    <%
+      var padaccessMenu = [];
+      if (isSubDomain) {
+        padaccessMenu.push({ id: 'padaccess-deny', html: '<i class="icon-lock"></i>' + N_('invitees only'), });
+        if (isPublicDomain) {
+          padaccessMenu.push({ id: 'padaccess-allow', html: '<i class="icon-privacy-public"></i>' + N_('everyone (public)'), });
+        } else {
+          padaccessMenu.push({ id: 'padaccess-allow', html: '<i class="icon-privacy-inspace"></i>' + N_('site members'), });
+        }
+      } else {
+        padaccessMenu.push({ id: 'padaccess-deny', html: '<i class="icon-lock"></i>' + N_('invitees only'), });
+        padaccessMenu.push({ id: 'padaccess-allow', html: '<i class="icon-privacy-link"></i>' + N_('anyone with link'), });
+      }
+    %>
+    <%- template.use('button', null, {
+      id: 'padaccess-menu',
+      type: 'custom',
+      label: '',
+      disabled: !isGroupOwner,
+      menu: padaccessMenu
+    }); %>
+
+    <div class="sidebarheading <% if (isGroupOwner) { %>renameable<% } %>" id="groupaccess" style="font-size:1.4em; margin-bottom: 0px; "><%= groupName %></div>
+  </div>
+
+  <div id="recent-pads" style="margin-top:25px">
+    <div id="listwrap-pinned" <% if(showPinInCollectionTip) { %>class="always-show-tip"<% } %> >
+      <%- pinnedPadListHtml %>
+    </div>
+    <hr id="pinnedpadsseparator" <% if (!hasPinnedPads && (!showPinInCollectionTip || selectedSection != 'stream')) {%> style="display:none;" <% } %>/>
+    <div id="listwrap" style="clear:both;">
+      <% if (isEmpty) { %>
+
+      <div style=" height:100px; text-align: center; padding-top:60px; font-size:26px; color: #333;">
+      This collection is empty. <br/>  Why not <a href="#" data-click="highlight-pad-picker">add some pads</a> or <a href="/ep/pad/newpad?collection=<%= encodeURIComponent(groupId)%>">create a new pad</a>?
+      </div>
+      <% } %>
+      <% if (groupPads) { %>
+        <%- groupPads %>
+      <% } %>
+    </div>
+  </div>
+
+  <div id="killuser" class="modaldialog" style="width: 400px; margin-left: -200px;">
+    <h1>Stop sharing the collection with <span class="name" style="white-space: nowrap;"></span>?</h1>
+    <div class="modaldialog-inner">
+      <div id="killuser-access" style="padding-bottom: 10px;">This pad is open to "<span class="access"></span>", so <span class="name"></span> will still be able to access it.</div>
+      <form id="killuser-form" action="/ep/group/remove" onsubmit="return modals.submitModal(this);">
+        <%- helpers.xsrfTokenElement() %>
+        <input type="hidden" name="groupId" value="<%= encodeURIComponent(groupId) %>" />
+        <input type="hidden" id="userId" name="userId" />
+        <div class="dialog-buttons">
+          <a data-click="hidemodal">Cancel</a>
+          <%- template.use('button', null, { buttonType: 'submit', className: 'default', label: 'Stop Sharing' }); %>
+        </div>
+        <div style="clear:both"></div>
+      </form>
+    </div>
+  </div>
+
+<% return ejs_data; }); %>
+
+

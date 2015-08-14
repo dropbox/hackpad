@@ -1,0 +1,81 @@
+<%
+  helpers.includeJQuery();
+  helpers.includeJs("modals.js");
+  helpers.includeJs('jquery.validate.js');
+  helpers.includeJs('jquery.placeholder.js');
+
+  helpers.includeCss("base.less");
+  helpers.includeCss("home.less");
+
+  helpers.addToHead("<meta content='hackpad.com' name='title' />");
+  helpers.addToHead("<meta content='Real-time collaborative wiki' name='description' />");
+%>
+<script type="text/javascript" nonce="<%= helpers.cspNonce() %>">
+$(document).ready(function(){
+  modals.showModal("#confirmation-dialog", 0);
+  $("#modaloverlay").hide();
+  $("input").click(function() {
+    this.attr('selected', true);
+  });
+  $("input").blur();
+  $("#confirmation").hide().fadeIn('slow');
+});
+</script>
+<style>
+  label {
+    padding:4px;
+    font-size:15px;
+  }
+  label:hover {
+    background-color:#e9e9e9;
+    cursor: pointer;
+  }
+  input[type=submit] {
+    font-weight:bold;
+    padding-left:10px;
+    padding-right:10px;
+
+  }
+  #confirmation {
+    font-weight:bold;
+  }
+</style>
+<div id="confirmation-dialog" class="modaldialog" >
+  <h1>Notification settings</h2>
+  <div class="modaldialog-inner">
+
+    <p>When <a href="<%=padUrl%>"><%=padTitle%></a> changes:</p>
+
+      <form action="<%=targetUrl%>" method="post" style="line-height:150%; padding-left:10px; padding-top: 10px">
+        <%- helpers.xsrfTokenElement() %>
+
+        <input type="hidden" name="sig" value="<%= sig %>" />
+        <input type="hidden" name="accountId" value="<%= encryptedAccountId %>" />
+
+        <input type="radio" name="followPref" id="option2" value="2"
+        <%= (followPref == 2 ? 'checked="on"' : '') %> >
+        <label for="option2"> Email me changes </label> <br/>
+
+        <!--input type="radio" name="notification-setting" id="option2" value="foooo">
+        <label for="option2"> Email me once a day</label> <br/-->
+
+        <input type="radio" name="followPref" id="option5" value="5"
+        <%= (followPref == 5 ? 'checked="on"' : '') %> >
+        <label for="option5"> Don't email me </label> <br/>
+
+
+        <input type="submit" class="white-button" name="Save" value="Save" style="float:right"></input>
+      </form>
+      <% if (saved) { %>
+        <div style="float:left; margin-top:6px">
+          <span id="confirmation">Setting saved! </span> <a href="/">Return to the homepage</a>
+        </div>
+      <% } %>
+
+
+      <div style="clear:both"/>
+
+  </div>
+</div>
+
+

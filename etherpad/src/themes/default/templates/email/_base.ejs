@@ -1,0 +1,57 @@
+
+<% template.define('body', function() { var ejs_data=''; %>
+
+<html>
+
+<style>
+@media only screen and (max-device-width: 480px) {
+  img {
+    max-width:500px!important;
+  }
+}
+</style>
+
+
+<div style="margin:auto; max-width:700px; color:#222; font-family:arial; font-size:16px;line-height:150%; color:#222">
+
+<div style="color:#587DBD; margin-top:10px;">
+<a href="<%= homeURL %>"><img src="<%=logoURL%>" style="vertical-align:middle; height:42px;"/></a>
+</div>
+<div style="border: 1px solid #ccc; border-top:1px solid #eee; border-bottom:2px solid #ccc; margin-top:20px;<%- optOuterStyling || '' %>">
+<div style="border-left:0px solid #708cbd; padding:20px 30px; background:#E1E7E5 ">
+<div>
+
+<%- template.use('header'); %>
+
+<%- template.use('content'); %>
+
+</div>
+</div>
+</div>
+<%- template.use('footer'); %>
+
+</html>
+
+<% return ejs_data; }); %>
+
+<% template.define('footer', function() { var ejs_data=''; %>
+<div style="font-size:12px; color:#aaa;">
+  This email was sent to <%= email %>. </br>
+  If this message was sent in error, please mail <%= helpers.supportEmailAddress() %>.
+  <!--If you would like to unsubscribe or believe you've received this email in error, <a style="color:#333" href="<%= unsubscribeLink %>">click here</a>.-->
+</div>
+
+<% return ejs_data; }); %>
+
+<% template.define('header', function() { var ejs_data=''; %>
+Hi <%=name%>, <br/>
+<br/>
+<% return ejs_data; }); %>
+
+
+<% template.define('email-button', function(title, url) { var ejs_data=''; %>
+  <div style="text-align:center; height:60px; padding-top:30px; ">
+  <a href="<%= url %>" style="text-decoration:none;"><span style="background-color: #4b8971 ; padding: 10px 20px; border-radius:3px; color:white; font-size:16px;text-shadow: 0px 1px 0px #333;">
+  <%= title %> &nbsp;&nbsp; <img src="<%=helpers.absoluteCDNUrl('/static/img/arrow-right-email.png')%>" style="vertical-align:middle"/></span></a>
+  </div>
+<% return ejs_data; }); %>

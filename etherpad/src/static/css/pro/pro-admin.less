@@ -1,0 +1,324 @@
+@import "/static/css/globals.less";
+
+.pro-body input[placeholder] {
+  font-size: 16px;
+}
+
+.hp-pro-admin-fpcontent {
+  width: 750px;
+  left: 0px;
+  background: white;
+  padding: 20px;
+  margin: 40px auto 20px auto;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,.2);
+  width: ~"calc(@{site_editor_width} - @{mainbar_padding} - @{mainbar_padding})";
+  max-width: ~"calc(@{site_max_width} - @{mainbar_padding} - @{mainbar_padding})";
+  margin-left: @site_left_margin;
+}
+
+#hp-download-pads .hp-ui-button-menu-wrapper:before {
+  display: none;
+}
+
+#add-collaborator {
+  float: right;
+  margin-bottom: 20px;
+}
+
+#submit-credit-card {
+  margin-top: 14px;
+}
+
+/*----------------------------------------------------------------*/
+/* admin leftnav */
+/*----------------------------------------------------------------*/
+
+li.selected {
+  color: #000;
+  font-weight: bold;
+  background: #fff;
+}
+
+/*----------------------------------------------------------------*/
+/* admin content area */
+/*----------------------------------------------------------------*/
+
+#admin-right {
+  padding-left: 1em;
+}
+
+#admin-right h3 {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #666;
+  border-bottom: 1px solid #666;
+  margin: 1.25em 0;
+}
+
+#admin-right h3.top {
+  margin-top: 0;
+}
+
+/*----------------------------------------------------------------*/
+/* server dashboard */
+/*----------------------------------------------------------------*/
+
+#responsecodes-table {
+  border: 1px solid #ccc;
+}
+#responsecodes-table td,
+#responsecodes-table th {
+  padding: .4em;
+}
+#responsecodes-table th {
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  padding-right: 2em;
+}
+
+/*----------------------------------------------------------------*/
+/* license manager */
+/*----------------------------------------------------------------*/
+
+div.lm-error-msg {
+  border: 1px solid #f99;
+  font-weight: bold;
+  background: #fdd;
+  padding: 0 1em;
+  margin-bottom: 1em;
+}
+
+div.lm-notice-msg {
+  border: 1px solid #ccc;
+  font-weight: bold;
+  background: #fff6cc;
+  padding: 0 1em;
+  margin-bottom: 1em;
+}
+
+#lm-status {
+  border: 1px solid #ccc;
+  padding: 1em;
+  background: #dfd;
+}
+
+#lm-status table td {
+  padding: .5em 1.5em .5em 0;
+  border-bottom: 1px solid #ccc;
+  white-space: nowrap;
+}
+
+#lm-edit-button-wrap { margin: 1em 0; }
+
+#lm-edit {
+  background: #eef;
+  border: 1px solid #ccc;
+  padding: 0 1em 1em 1em;
+}
+#lm-edit p {
+  margin: 1em 0 0 0;
+}
+#lm-edit-submit-wrap { margin: 1em 0; }
+
+#lm h3 {
+/*  margin-left: 1em; */
+}
+
+/*----------------------------------------------------------------*/
+/* accountmanager */
+/*----------------------------------------------------------------*/
+
+.manage-accounts {
+ font-size: .76em;
+}
+
+.manage-accounts #message {
+ border: 1px solid #ccc;
+ background: #efe;
+ color: #666;
+ font-weight: bold;
+ padding: 1em;
+}
+
+.manage-accounts #warning {
+  border: 1px solid #ccc;
+  background: #ffd;
+  color: #333;
+  font-weight: bold;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.manage-accounts form#new-account-button {
+  margin: 1em 0;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-bottom: 0;
+}
+
+table#accountlist tr:hover {
+  background: #ffc;
+  cursor: pointer;
+}
+
+table th, table td {
+  white-space: nowrap;
+  padding: .5em 1em .5em .5em;
+  border-bottom: 1px solid #ccc;
+}
+
+table#receiptlist td:first-child, table#t-pro-config th:first-child {
+  white-space: normal;
+}
+
+table th {
+  font-weight: bold;
+  background-color: #eef;
+}
+
+.manage-accounts p.free-notice {
+  font-style: italic;
+  color: #162;
+}
+
+.manage-accounts p.account-tally {
+  font-style: italic;
+}
+
+/* new account form */
+
+.new-account-form {
+  border: 1px solid #ccc;
+  background: #eef;
+  padding: 0;
+  margin: 0;
+}
+
+.new-account-form .forminner {
+  padding: 1em;
+}
+
+.new-account-form div.formfield {
+  margin-top: .5em;
+  padding: 0 1em;
+}
+
+.new-account-form div.formfield label { display: block; margin-top: 1em; }
+.new-account-form div.formfield input.checkboxinput { float: left; width: 20px; }
+.new-account-form div.formfield input.textinput { display: block; width: 240px; }
+.new-account-form div.formfield input.temppassinput { display: block; width: 240px; }
+.new-account-form div.formfield label.checkboxlabel { float: left; margin-top: .333em; padding-left: .25em; }
+.newaccount .buttons-wrap { margin-left: 2em; }
+
+.newaccount #bottom-note {
+  color: #555;
+  margin-left: 2em;
+  width: 50%;
+}
+
+#error-message {
+  border: 1px solid red;
+  background: #fee;
+  padding: 1em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+/* manage account page */
+
+table#manage-account {
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  background: #eef;
+}
+table#manage-account td,
+table#manage-account th {
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 4px 8px;
+}
+table#manage-account th {
+  text-align: right;
+}
+
+#delete-account-page div.confirm {
+  font-weight: bold;
+}
+
+#delete-account-page div.account-info {
+  border: 1px solid #555;
+  background: #fcc;
+  padding: 1em;
+  margin: 1em 0;
+  font-family: monospace;
+}
+
+#delete-account-page div.note {
+  margin-top: 1em;
+  margin-right: 222px;
+  font-size: .9em;
+  color: #555;
+}
+
+
+/*----------------------------------------------------------------*/
+/* PNE server config */
+/*----------------------------------------------------------------*/
+
+table#pne-config {
+  font-family: monospace;
+  font-size: 12px;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  white-space: nowrap;
+  background: #fefefe;
+}
+
+table#pne-config th {
+  border-bottom: 2px solid #666;
+  font-weight: bold;
+}
+table#pne-config td {
+  padding: 2px;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+table#pne-config td.key { 
+  color: #009; 
+  padding-right: 4px; 
+}
+table#pne-config td.val { color: #420; }
+
+/*----------------------------------------------------------------*/
+/* Pro config */
+/*----------------------------------------------------------------*/
+
+div#pro-config-message {
+  border: 1px solid #ccc;
+  padding: 1em;
+  font-weight: bold;
+  margin: 1em 0;
+  background: #cfc;
+}
+
+table#t-pro-config th,
+table#t-pro-config td {
+  border-bottom: 1px solid #aaa;
+  padding: 1em;
+  text-align: top;
+  vertical-align: top;
+}
+
+table#t-pro-config td textarea {
+  width: 100%;
+  height: 260px;
+}
+
+table#t-pro-config th {
+  text-align: right;
+  font-size: smaller;
+}

@@ -1,0 +1,93 @@
+<% /* Copyright 2009 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */ %>
+
+<%
+ template.inherit('admin/page.ejs');
+ helpers.setHtmlTitle("EtherPad: Administration: Statistics");
+
+  helpers.includeJs('statpage.js');
+
+%>
+
+<% template.define('docBarTitle', function() { var ejs_data=''; %>
+  <td id="docbarpadtitle"><span>Statistics</span></td>
+<% return ejs_data; }); %>
+
+<% template.define('contentArea', function() { var ejs_data=''; %>
+  <div id="editorcontainer">
+    <div id="topnav">
+      <% statCategoryNames.forEach(function(catName) { %>
+      <li>
+        <a class="navlink" id="link<%= catName %>" href="<%= request.path %>#<%= catName %>"><%= catName %></a>
+      </li>
+      <% }); %>
+      </ul>
+    </div>
+
+    <div>&nbsp;</div>
+
+    <%- helpers.clearFloats() %>
+
+    <%- optionsForm %>
+
+    <% function formatLatest(latest) {
+      if (typeof(latest) == 'string') {
+        return latest;
+      } else {
+        return latest.map(function(x) { return x.value+" "+x.description; }).join("<br/>");
+      }
+    }
+    %>
+
+    <%
+    function displayStat(statObject) {
+      %>
+      <div class="statentry <%= statObject.specialState %>" id="statentry_<%= statObject.id %>">
+        <h2 class="title"><%= statObject.name %></h2>
+        <div class="statbody">
+          <h3><%= statObject.displayName %></h3>
+          <table class="stats">
+            <tr>
+              <td class="graph">
+                <%- statObject.graph %>
+                <% if (statObject.dataLinks) { %>
+                  <div class="datalinks">(data for <%- statObject.dataLinks.join(", ") %>)</div>
+                <% } %>
+              </td>
+              <td class="latest">
+                <h4>Latest values:</h4>
+                <%- formatLatest(statObject.latest) %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <%
+    }
+
+    function displayCategory(categoryName) {
+      %>
+      <div class="categorywrapper" id="box<%= categoryName %>">
+        <%
+          categoriesToStats[categoryName].filter(function(s){return s;}).forEach(displayStat);
+        %>
+      </div>
+      <%
+    }
+
+    statCategoryNames.forEach(displayCategory);
+
+    %>
+  </div>
+<% return ejs_data; }); %>

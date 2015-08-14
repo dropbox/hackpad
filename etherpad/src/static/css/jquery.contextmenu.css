@@ -1,0 +1,64 @@
+
+/* Gloss Theme */
+/* =========== */
+.context-menu-theme-gloss {
+/*	background:#f4f4f4 url(/static/img/lib/jquery.contextmenu.images/cmenu-gloss-bg.gif) repeat-y left center;*/
+
+	padding:0px;
+	padding-right:0;
+}
+.context-menu-theme-gloss .context-menu-item {
+	text-align:left;
+
+	cursor:pointer;
+	color:black;
+	font-family:Helvetica,Arial;
+	font-size:12px;
+	line-height:20px;
+	height:27px;
+	background-color:white;
+
+	-moz-box-shadow: 0px 0px 5px #ddd;
+	-webkit-box-shadow: 0px 0px 5px #ddd;
+	box-shadow: 0px 0px 5px #ddd;
+	/*border:1px solid transparent;*/
+    /*border:1px solid #f4f4f4; /* IE6 doesn't have "transparent" -- DG */
+}
+.context-menu-theme-gloss .context-menu-separator {
+	margin:0px 0px 0px 32px;
+	font-size:0px;
+	border-top:1px solid #C5C5C5;
+	border-bottom:1px solid #F5F5F5;
+}
+.context-menu-theme-gloss .context-menu-item-hover {
+/*	background:transparent url(/static/img/lib/jquery.contextmenu.images/cmenu-gloss-menu-item-hover.gif) repeat-x left center;*/
+/*	color:#fff;*/
+	background-color: #efefef;
+  	border-radius: 3px;
+  	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	cursor: hand;
+	cursor: pointer;
+}
+.context-menu-theme-gloss .context-menu-item .context-menu-item-inner {
+	padding:4px 16px 4px 16px;
+	margin-left:0px;
+}
+.context-menu-theme-gloss .context-menu-item-hover .context-menu-item-inner {
+}
+.context-menu-theme-gloss .context-menu-item-disabled {
+	color:#A7A7A7;
+}
+
+.context-menu-theme-gloss-cyan .context-menu-item-hover {
+/*	background-image:url(/static/img/lib/jquery.contextmenu.images/cmenu-gloss-cyan-menu-item-hover.gif);
+	border-color:#00c;*/
+}
+
+.context-menu-theme-gloss-semitransparent .context-menu-item-hover {
+/*	background-image:url(/static/img/lib/jquery.contextmenu.images/cmenu-item-gloss-semitransparent-menu-item-hover.png);
+	border-color:#00c;
+	background-color:#30f;*/
+}
+
+

@@ -1,0 +1,8 @@
+data/
+build
+derby.log
+local
+*.swp
+etherpad-pne-*.jar
+
+

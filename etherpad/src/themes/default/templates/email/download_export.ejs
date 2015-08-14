@@ -1,0 +1,17 @@
+<% template.inherit('email/_base.ejs'); %>
+
+
+<% template.define('content', function() { var ejs_data=''; %>
+
+<div>
+Your pads have been succesfully exported.  Enjoy!
+</div>
+
+<%- template.use('email-button', null, "Download Now", downloadUrl) %>
+
+<div style="margin-bottom:20px; margin-top:10px">
+Your friends at Hackpad.
+</div>
+
+<% return ejs_data; }); %>
+

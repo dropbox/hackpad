@@ -1,0 +1,103 @@
+<%
+  template.inherit('ui.ejs');
+%>
+
+<% template.define('ace', function() { var ejs_data=''; %>
+
+<%
+  helpers.includeJs("imgshrink.js");
+  helpers.includeJs("ace2/ace_common.js");
+  helpers.includeJs("ace2/skiplist.js");
+  helpers.includeJs("ace2/virtual_lines.js");
+  helpers.includeJs("ace2/easysync2.js");
+  helpers.includeJs("ace2/cssmanager.js");
+  helpers.includeJs("ace2/colorutils.js");
+  helpers.includeJs("ace2/undomodule.js");
+  helpers.includeJs("ace2/contentcollector.js");
+  helpers.includeJs("ace2/changesettracker.js");
+  helpers.includeJs("ace2/linestylefilter.js");
+  helpers.includeJs("ace2/domline.js");
+  helpers.includeJs("ace2/embedly.js");
+  helpers.includeJs("ace2/ace.js");
+  helpers.includeJs("ace2/ace_observer.js");
+  helpers.includeJs("ace2/ace_toc.js");
+  helpers.includeJs("ace2/ace_line_annotator.js");
+  helpers.includeJs("ace2/ace_util.js");
+  helpers.includeJs("ace2/ace_carets.js");
+  helpers.includeJs("ace2/ace_keystrokes.js");
+  helpers.includeJs("ace2/ace_mouse.js");
+  helpers.includeJs("ace2/ace_media.js");
+  helpers.includeJs("ace2/embed.js");
+  helpers.includeJs("ace2/ace_selection.js");
+  helpers.includeJs("ace2/ace_lists.js");
+  helpers.includeJs("ace2/ace_autolink.js");
+  helpers.includeJs("ace2/ace_code.js");
+  helpers.includeJs("ace2/ace_tables.js");
+  helpers.includeJs("ace2/ace_authors.js");
+  //helpers.includeJs("ace2/ace_legacy.js");
+
+  helpers.includeCss("ace2/editor.less");
+  helpers.includeCss("ace2/syntax.less");
+  helpers.includeCss("ace2/inner.less");
+  helpers.includeCss("jquery.contextMenu2.css");
+
+  helpers.addToHead('\n<style type="text/css" title="dynamicsyntax"></style>\n');
+%>
+
+<div id="editor" class="syntax notranslate" autocorrect="off" autocomplete="off">
+  &nbsp;
+</div>
+<div id="non-editor">
+<div id="sidediv"><!-- --></div>
+<div id="overlaysdiv"><!-- --></div>
+<%- template.use('button', null, {
+  id: 'hp-editor-lang',
+  menu: [
+    {label: 'txt'},
+    {label: 'html'},
+    {label: 'coffee'},
+    {label: 'java'},
+    {label: 'rb'},
+    {label: 'c'},
+    {label: 'c++'},
+    {label: 'js'},
+    {label: 'py'}
+  ]
+}); %>
+<%- template.use('button', null, {
+  id: 'hp-editor-headings',
+  menu: [
+    {id: 'hp-editor-headings-1', label: N_('Heading 1')},
+    {id: 'hp-editor-headings-2', label: N_('Heading 2')},
+    {id: 'hp-editor-headings-3', label: N_('Heading 3')},
+    {id: 'hp-editor-headings-normal', label: N_('Normal')},
+    {id: 'hp-editor-headings-link', label: N_('Link to here')}
+  ]
+}); %>
+<% /* Whitespace is important here. */ %>
+<div id="hp-editor-selection-wrapper"><%- template.use('button', null, {
+    id: 'hp-editor-selection-link',
+    type: 'custom',
+    tooltip: 'Create Link',
+    fontIcon: 'icon-link'
+  }); %><input id="hp-editor-selection-link-url" placeholder="Enter link URL"><%- template.use('button', null, {
+    id: 'hp-editor-selection-link-confirm',
+    type: 'custom',
+    fontIcon: 'icon-checkMark'
+  }); %><%- template.use('button', null, {
+    id: 'hp-editor-selection-link-delete',
+    type: 'custom',
+    tooltip: 'Remove Link',
+    fontIcon: 'icon-delete'
+  }); %><%- template.use('button', null, {
+    id: 'hp-editor-selection-newpad',
+    type: 'custom',
+    tooltip: 'Create New Hackpad',
+    fontIcon: 'icon-newpad'
+  }); %><input id="hp-editor-selection-newpad-title" placeholder="Enter title"><%- template.use('button', null, {
+    id: 'hp-editor-selection-newpad-confirm',
+    type: 'custom',
+    fontIcon: 'icon-checkMark'
+  }); %></div>
+</div>
+<% return ejs_data; }); %>

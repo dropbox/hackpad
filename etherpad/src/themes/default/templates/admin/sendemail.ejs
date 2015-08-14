@@ -1,0 +1,43 @@
+<style>
+  h3 {
+    margin-top:10px;
+    margin-bottom: 10px;
+  }
+</style>
+<form method="post">
+  <%- helpers.xsrfTokenElement() %>
+
+  <h3> Email Pad URL </h3>
+  <input type='text' name='pad' style='width: 100%;height:30px;'/>
+
+  <h3> Email Addresses, one per line: </h3>
+  <textarea name="addresses" style="width: 100%; height: 100px;"></textarea>
+
+  <h3> SQL to select accounts to send mail to: </h3>
+  <textarea name="sqladdresses" style="width: 100%; height: 100px;"></textarea>
+
+  <h3> How many to send </h3>
+  <input type='text' name='count' style='width: 100%;height:30px;'/>
+
+
+  <h3> Email Type </h3>
+
+  <select name="emailtype">
+    <option value="product-update">Product Update</option>
+    <option value="custom">Custom</option>
+  </select>
+  <br/><br/>
+
+  <h3> Campaign ID </h3>
+  <input type='text' name='campaignid' style='width: 100%;height:30px;'/>
+  <br/><br/>
+
+  <br/>
+  <br/>
+
+  <input type='checkbox' name='really'/> Really send?
+  <br/>
+  <br/>
+  <input type="submit" value="Send Now"/>
+
+</form>

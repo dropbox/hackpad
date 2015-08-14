@@ -1,0 +1,281 @@
+@import "colors.less";
+
+.login-input {
+  font-size:12px;
+  height:24px;
+  margin-bottom:12px;
+  margin-top:4px;
+  width:100%;
+  outline:none;
+  padding-left:3px;
+}
+.login-input:focus {
+  background:#fffbdc;
+}
+
+/* for validation errors */
+label.error {
+  color:#ba4552;
+  font-size:11px;
+  margin-bottom:4px;
+  float: right;
+  z-index: 1;
+  position: relative;
+}
+
+.signin-as-existing-account {
+  border:1px solid #ccc;
+  padding:10px; cursor:pointer;
+  text-shadow: none;
+  border-top: 0px;
+}
+.signin-as-existing-account:first-of-type {
+  border:1px solid #ccc;
+}
+.signin-as-existing-account img {
+  max-width: 40px;
+}
+
+
+#page-login-box {
+  width: 630px;
+  margin: 0;
+  padding: 0;
+  margin-left: -630px / 2;
+  top: 100px;
+  background-color: @color_shadow;
+}
+
+#page-login-box label.placeholder,.accessbox label.placeholder {
+  padding-top: 7px;
+}
+
+.fb-connect-button {
+  border: 0px;
+  display: inline-block;
+  margin: 0;
+}
+
+#page-login-box input[type=checkbox] {
+  vertical-align: middle;
+}
+
+
+#page-login-box > label, #page-register-box > label {
+  top: 0px;
+}
+
+#page-loging-lhs {
+  float: left;
+}
+
+.page-login-rhs {
+  float: right;
+  width: 260px;
+  white-space: nowrap;
+}
+
+.google-signin-button {
+  background-color: @color_actionable;
+}
+
+.fb-login-required {
+  background-color: #4169a7;
+}
+
+#login-facebook,
+#login-google {
+  color: #fff;
+}
+
+.google-signin-button,
+.fb-login-required {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 9px 15px;
+  font-size: 14px;
+  line-height: 40px;
+  letter-spacing: 1px;
+  font-weight: 100;
+  margin-bottom: 10px;
+}
+
+.google-signin-button img,
+.fb-login-required img {
+  height: 40px;
+  vertical-align: top;
+}
+
+.page-login-or {
+  border-bottom: 4px dotted #aaa;
+  width: 40%;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.page-login-or-lbl {
+  display: inline-block;
+  vertical-align: top;
+  color: #aaa;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 16px;
+  width: 20%;
+  text-align: center;
+  vertical-align: top;
+  margin-top: 7px;
+}
+
+.login-email-input {
+  position: relative;
+  background-color: #fff;
+  padding: 6px;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.login-email-input i {
+  font-size: 25px;
+  color: @color_actionable;
+  vertical-align: top;
+  margin-top: 1px;
+}
+
+.login-email-input input {
+  height: 28px;
+  width: 80%;
+  border: 0;
+  font-size: 14px;
+  color: @color_actionable;
+}
+
+#login-email-go,
+#login-email-secondary,
+#login-email-tertiary {
+  display: none;
+}
+
+#login-email-go {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#login-form h4 {
+  margin: 15px 0 5px 0;
+}
+
+#login-forgot-password {
+  text-align: right;
+  font-size: 11px;
+  color: @color_actionable;
+  text-decoration: none;
+  display: block;
+  margin-top: 5px;
+}
+
+#login-submit {
+  background-color: @color_actionable;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 15px 0;
+  border: 0;
+  display: block;
+  font-size: 14px;
+  width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+#login-email-secondary {
+  position: relative;
+}
+
+#login-submit[disabled] {
+  background-color: #ccc;
+  cursor: default;
+}
+
+#login-email-wrapper {
+  box-sizing: border-box;
+  transition: top 200ms ease-in-out;
+}
+
+#login-email-wrapper.no-transition {
+  transition: none;
+}
+
+#login-form.active #login-email-wrapper,
+#login-full-name-wrapper {
+  background-color: #c7cdcb;
+  color: @color_actionable;
+}
+
+#login-form.active .login-email-input input {
+  background-color: transparent;
+}
+
+#login-email-secondary .icon-back {
+  position: absolute;
+  display: none;
+  top: -35px;
+  left: -35px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 32px;
+}
+
+@media only screen and (max-device-width: 480px) {
+  body {
+    #page-loging-lhs {
+      display: none;
+    }
+
+    #page-login-box {
+      top: 10px !important;
+      width: 250px !important;
+    }
+
+    .google-signin-button img,
+    .fb-login-required img {
+      height: 20px;
+      margin-top: 10px;
+    }
+
+    .google-signin-button {
+      margin-bottom: 10px;
+    }
+
+    .google-signin-button,
+    .fb-login-required {
+      font-size: 12px;
+    }
+
+    #page-login-box .dialog-cancel-x {
+      display: none;
+    }
+
+    #nofacebook {
+      width: 229px !important;
+    }
+
+    #page-login-box i.icon-back {
+      background-color: #ccc;
+      margin-left: -7px;
+    }
+
+    #login-form h4 {
+      font-size: 13px;
+    }
+  }
+}
