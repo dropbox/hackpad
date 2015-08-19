@@ -2,7 +2,7 @@ INSTALLATION INSTRUCTIONS
 
 INSTALLING ON POSIX COMPATIBLE SYSTEMS
 
-* Install the dependencies: Scala 2.11, Sun Java JDK 7, libmysql-java, mysql
+* Install the dependencies: Scala 2.11, Sun Java JDK 7, mysql
 
 * Edit the file bin/exports.sh (and optionally
   etherpad/bin/etherpad.default) and change the paths to
