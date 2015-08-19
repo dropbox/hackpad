@@ -21,23 +21,21 @@
 #
 ################################################################################
 
+## Change the following lines to fit your development environment.
 
+# These lines assume you installed Scala via Homebrew.
+export SCALA_HOME="/usr/local/Cellar/scala/2.11.7"
+export SCALA="$SCALA_HOME/bin/scala"
+export SCALA_LIBRARY_JAR="$SCALA_HOME/libexec/lib/scala-library.jar"
 
-
-
-#####
-# You have to change following lines to your requirements:
-#
-[ -e "/usr/lib/jvm/java-6-openjdk" ] && export JAVA_HOME="/usr/lib/jvm/java-6-openjdk"
-[ -e "/usr/lib/jvm/java-6-sun" ] && export JAVA_HOME="/usr/lib/jvm/java-6-sun"
-[ -e "/opt/java/64/jre1.6.0_31" ] && export JAVA_HOME="/opt/java/64/jre1.6.0_31"
-export SCALA_HOME="/usr/share/java"
-export SCALA_LIBRARY_JAR="$PWD/lib/scala-library.jar"
-export MYSQL_CONNECTOR_JAR="$PWD/lib/mysql-connector-java-5.1.34-bin.jar"
-[ -e "/usr/lib/jvm/java-6-openjdk" ] && export JAVA_OPTS="-Xbootclasspath/p:../infrastructure/lib/rhino-js-1.7r3.jar:/usr/share/java/scala-library.jar"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home"
 export JAVA="/usr/bin/java"
-export SCALA="/usr/bin/scala"
-export PATH="$JAVA_HOME/bin:$PATH"
+
+## The following lines should not need changing.
+
+export JAVA_OPTS="-Xbootclasspath/p:../infrastructure/lib/rhino-js-1.7r3.jar:$SCALA_LIBRARY_JAR"
+export MYSQL_CONNECTOR_JAR="$PWD/lib/mysql-connector-java-5.1.34-bin.jar"
+export PATH="$JAVA_HOME/bin:$SCALA_HOME/bin:$PATH"
 
 if ! [ -e "$MYSQL_CONNECTOR_JAR" ]; then
         echo "MySql Connector jar '$MYSQL_CONNECTOR_JAR' not found - Download it here: http://dev.mysql.com/downloads/connector/j/3.1.html"
@@ -53,9 +51,3 @@ if ! [ -e "$JAVA" ]; then
         echo "Java cannot be found '$JAVA' not found - Download it here: http://openjdk.java.net/"
         exit 1
 fi
-
-#if ! [ -e "$SCALA" ]; then
-#        echo "Java cannot be found '$SCALA' not found - Download it here: http://www.scala-lang.org/"
-#        exit 1
-#fi
-
