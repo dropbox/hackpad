@@ -22,7 +22,18 @@ INSTALLING ON POSIX COMPATIBLE SYSTEMS
    topdomains
        Example: topdomains = yourhostname.com,localhost
 
-* You can now run etherpad via bin/run.sh
+* You can now run etherpad via bin/run.sh.  Wait for the HTTP server to start
+  listening, then visit http://localhost:9000.
+
+* Create an account in development
+  * Go through the sign up flow.  At this point, you will have created an
+    account, but it needs to be validated.  If this were production, you would
+    go to your email to click a link in a verification email, but since your
+    development environment does not send email, we will resort to haxx.
+  * Inspect the `email_signup` table in MySQL and find the row with your email
+    address.  Note the token.
+  * Visit http://localhost:9000/ep/account/validate-email?email=YOUR_EMAIL&token=TOKEN
+  * Hurrah, you now have an account!
 
 * If you want emoji support go to https://github.com/github/gemoji/tree/master/images/emoji/unicode
   and copy the images into etherpad/src/static/img/emoji/unicode/
