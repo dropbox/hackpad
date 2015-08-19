@@ -146,10 +146,6 @@ var padtopbar = (function() {
       }
     }
 
-    createpadentry.on('input', function() {
-      $('#createpadentry-hidden').val(createpadentry.val());
-    });
-
     createpadentry.on('focus', function() {
       createpadentry.parent().addClass('search-focused');
     });
