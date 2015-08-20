@@ -25,7 +25,6 @@ var padtopbar = (function() {
       function preparse(hideSearchPage, numFound) {
         var val = padutils.escapeHtml(createpadentry.val());
         var rows = [];
-        var createUrl = "ep/pad/newpad?title=" + encodeURIComponent(val);
         if (val) {
           if (!hideSearchPage) {
             rows = rows.concat(preparseSearchPage());
@@ -34,18 +33,6 @@ var padtopbar = (function() {
           rows.push({
             data: ["<span class='ac-results-see-all ac-results-extra'>See all " + (numFound ? numFound : "") + " results <i class='icon-forward'></i></span>",
                    "ep/search/?q=" + encodeURIComponent(val)],
-            value: val,
-            result: val
-          });
-          /*rows.push({
-            data: ["<span class='ac-results-create-lbl ac-results-extra'>Create new pad</span>",
-                   createUrl],
-            value: val,
-            result: val
-          });*/
-          rows.push({
-            data: ["<span class='ac-results-create-val ac-results-extra'><span class='ac-results-create-val-newpad'><i class='icon-newpad'></i></span> " + val + "</span>",
-                   createUrl],
             value: val,
             result: val
           });
