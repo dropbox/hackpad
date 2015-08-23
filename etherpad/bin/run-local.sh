@@ -96,7 +96,7 @@ exec $JAVA -classpath $CP \
     -Xms${MXRAM} \
     -XX:NewSize=768m \
     -XX:PermSize=256m \
-    -XX:MaxPermSize=2048m \
+    -XX:MaxPermSize=512m \
     -Djava.awt.headless=true \
     -Djava.util.logging.config.file=../infrastructure/lib/logging.properties \
     -XX:MaxGCPauseMillis=500 \
