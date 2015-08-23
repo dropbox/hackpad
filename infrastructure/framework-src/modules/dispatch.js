@@ -20,6 +20,7 @@
 
 import("jsutils.eachProperty");
 import("stringutils");
+import("etherpad.log");
 
 jimport("java.lang.System.out.println");
 
@@ -171,4 +172,3 @@ function forward(module) {
     return served;
   };
 }
-
