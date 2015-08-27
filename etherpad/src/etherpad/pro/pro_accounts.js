@@ -531,7 +531,13 @@ function isAccountSignedIn() {
           var email = ssoResult['email'];
           var pass = ssoResult['password'] || "";
           var name = ssoResult['fullname'] || "unnamed";
-          createNewAccount(null, name, email, pass, false, true);
+          createNewAccount(null, name, email, pass,
+            false, // isAdmin
+            true,  // skipValidation
+            null,  // fbid
+            false, // isDomainGuest
+            false  // isLinkedAccount
+          );
           user = getAccountByEmail(email, null);
         }
 
