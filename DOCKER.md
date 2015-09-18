@@ -12,7 +12,7 @@ Getting it running
 
 2. Build the image. From the root of this repo, run:
 
-	docker build -t hackpad .
+		docker build -t hackpad .
 
 3. Run the container. Docker doesn't let you automatically mount a directory on your host machine in the container, so you'll need to specify by hand. 
 
@@ -20,15 +20,15 @@ Getting it running
 
 		docker run -d -p 9000:9000 -v /path/to/this/repo:/etc/hackpad/src hackpad
 
-	It'll build hackpad and run schema migrations and such. If you want to see what's going on, do:
+	This will build hackpad, run schema migrations, and then start the server. It may take a few minutes. If you want to see what's going on, do:
 
 		docker logs -f [container name]
 
-4. Fix networking (one time only). If you're on OS X or Windows, you'll need to set up some port forwarding to have Hackpad work properly. Linux folk can skip this.
+4. Fix networking (one time only). If you're on OS X or Windows, you'll need to set up port forwarding to have Hackpad work properly. Linux folk can skip this.
 
 	1. Open VirtualBox
 
-	2. Select the default image and click Settings
+	2. Select the `default` image and click Settings
 
 	3. Go to Network -> Adapter 1 -> Port forwarding
 
@@ -59,7 +59,7 @@ Getting it running
 
 		2. Run this query and find the token:
 
-			docker exec -it [container name] mysql -D hackpad -e 'select * from email_signup;'
+				docker exec -it [container name] mysql -D hackpad -e 'select * from email_signup;'
 
 		3. Load this in a browser: http://localhost:9000/ep/account/validate-email?email=admin%40localhost.info&token=TOKEN
 
