@@ -20,6 +20,10 @@ Getting it running
 
 		docker run -d -p 9000:9000 -v /path/to/this/repo:/etc/hackpad/src hackpad
 
+	It'll build hackpad and run schema migrations and such. If you want to see what's going on, do:
+
+		docker logs -f [container name]
+
 4. Fix networking (one time only). If you're on OS X or Windows, you'll need to set up some port forwarding to have Hackpad work properly. Linux folk can skip this.
 
 	1. Open VirtualBox
