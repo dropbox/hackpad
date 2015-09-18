@@ -7,15 +7,17 @@ if [ "$1" = 'hackpad' ]; then
 
 	if [ ! -d "$HACKPAD_SRC" ]; then
 		echo "The directory $HACKPAD_SRC doesn't exist."
-		echo "Either your docker image is broken (rebuild from scratch if so) or you're running this script on the host machine and should stop it."
+		echo "You're probably running this on the host machine and not in the Docker container. Don't do that."
+		echo "If this is happening on the Docker container, try building a new image from scratch."
 		exit 1
 	fi
 
 	cd "$HACKPAD_SRC"
 
+	# sanity check that we see any files at all.
 	if [ ! -f "$HACKPAD_SRC/README.md" ]; then
-		echo "I can't find any hackpad source files. Did you forget to mount the volume?"
-		echo "[insert instructions here]"
+		echo "I can't find any Hackpad source files. Did you forget to mount the volume?"
+		echo "e.g., docker run -d -p 9000:9000 -v /path/to/this/repo:/etc/hackpad/src hackpad"
 		exit 1
 	fi
 
@@ -40,7 +42,7 @@ if [ "$1" = 'hackpad' ]; then
 
 
 	echo 
-	echo "Starting server. A fake admin account has been created, use admin@localhost.info"
+	echo "Starting server. The admin account is 'admin@localhost.info'."
 	echo
 
 	./bin/run.sh
