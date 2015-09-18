@@ -61,10 +61,10 @@ fi
 
 
 echo "Creating database ${DATABASE}..."
-echo "create database ${DATABASE};" | echo ${MYSQL_CMD}
+echo "create database ${DATABASE};" | ${MYSQL_CMD}
 
 
 echo "Granting priviliges..."
-echo "grant all privileges on ${DATABASE}.* to 'hackpad'@'localhost' identified by 'password';" | echo ${MYSQL_CMD}
+echo "grant all privileges on ${DATABASE}.* to 'hackpad'@'localhost' identified by 'password';" | ${MYSQL_CMD}
 
 echo "Success"
