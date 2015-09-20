@@ -342,7 +342,6 @@ response.setGzip = function(gzip) {
 
 response.disallowFraming = function() {
   response.setHeader('X-Frame-Options', 'SAMEORIGIN');
-  response.addHeader('Content-Security-Policy', "frame-ancestors 'self'");
 }
 
 response.allowFraming = function() {
