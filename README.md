@@ -11,10 +11,10 @@ This document contains licensing information relating to the use of free and ope
 This document identifies the FOSS packages used in the Hackpad software, the FOSS licenses that Dropbox believes govern those FOSS packages.  While Dropbox has sought to provide complete and accurate licensing information for each FOSS package, Dropbox does not represent or warrant that the licensing information provided herein is correct or error-free.  Recipients of the Hackpad software should investigate the identified FOSS packages to confirm the accuracy of the licensing information provided herein.  Recipients are also encouraged to notify Dropbox of any inaccurate information or errors found in these notices.
 
 
-————————————————————————
+------
 
 
-* Apache License, Version 2.0 *
+## Apache License, Version 2.0
 
 solr
 http://lucene.apache.org/solr/
@@ -34,7 +34,7 @@ https://code.google.com/p/google-toolbox-for-mac/
 OCMock
 https://github.com/erikdoe/ocmock/blob/master/Source/License.txt
 
-* MIT and MIT-Style Licenses *
+## MIT and MIT-Style Licenses
 
 bililiteRange.js
 https://github.com/dwachss/bililiteRange
@@ -153,7 +153,7 @@ https://github.com/Ranks/emojione
 ZeroClipboard
 https://github.com/zeroclipboard/zeroclipboard
 
-* BSD and BSD-Style Licenses *
+## BSD and BSD-Style Licenses
 
 java-apns
 https://github.com/notnoop/java-apns
@@ -173,7 +173,7 @@ http://www.quantum-step.com/download/sources/mystep/OCUnit/SourceCode/SenTesting
 ASIHTTPRequest
 http://allseeing-i.com/ASIHTTPRequest/
 
-* Other Licenses *
+## Other Licenses
 
 jquery.autoresize.js
 https://github.com/warpech/jQuery.fn.autoResize
@@ -183,7 +183,3 @@ https://gist.github.com/benilovj/2009030
 
 Emoji One Artwork
 https://github.com/Ranks/emojione
-
-
-
-
