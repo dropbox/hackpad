@@ -463,7 +463,7 @@ function render_embed_get(opt_iframeOuter) {
 }
 
 
-function render_latex_get() {
+function render_latex_post() {
   var formula = requireParam("formula");
 
   formula = formula.replace(/%/g,"%25");
