@@ -122,8 +122,8 @@ function getS3PolicyAndSig(domain, localPadId, userId) {
   var expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 1);
 
-  function pad(n) { return n < 10 ? '0' + n : n }
-  var utcDateStr = expirationDate.getUTCFullYear() +
+  function pad(n) { return n < 10 ? '0' + n.toString() : n.toString() }
+  var utcDateStr = pad(expirationDate.getUTCFullYear()) +
       pad(expirationDate.getUTCMonth() + 1) +
       pad(expirationDate.getUTCDate());
 
