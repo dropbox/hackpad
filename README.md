@@ -23,13 +23,13 @@ smack api
 http://www.igniterealtime.org/projects/smack/
 
 gdata java client
-https://code.google.com/p/gdata-java-client/
+https://github.com/google/gdata-java-client
 
 FacebookSDK.framework
 https://developers.facebook.com/docs/ios/
 
 GoogleToolbox
-https://code.google.com/p/google-toolbox-for-mac/
+https://github.com/google/google-toolbox-for-mac
 
 OCMock
 https://github.com/erikdoe/ocmock/blob/master/Source/License.txt
@@ -43,7 +43,7 @@ handlebars.js
 https://github.com/wycats/handlebars.js/blob/master/LICENSE
 
 html5shiv
-https://code.google.com/p/html5shiv/
+https://github.com/afarkas/html5shiv
 
 i18next
 http://i18next.com/
@@ -67,7 +67,7 @@ jquery.color.js
 https://github.com/jquery/jquery-color
 
 jquery.contextMenu.js
-https://github.com/medialize/jQuery-contextMenu
+https://github.com/swisnl/jQuery-contextMenu
 
 jquery.customSelect.js
 https://github.com/adamcoulombe/jquery.customSelect
@@ -106,7 +106,7 @@ jquery.transition.js
 https://github.com/louisremi/jquery.transition.js/
 
 less-1.4.1.min.js
-http://www.lesscss.org/
+http://lesscss.org/
 
 LESS Hat
 http://LESSHat.com/
@@ -115,19 +115,19 @@ pagedown
 https://code.google.com/p/pagedown/source/browse/LICENSE.txt
 
 require.js
-http://github.com/jrburke/requirejs
+https://github.com/jrburke/requirejs
 
 selectivizr-min.js
 http://selectivizr.com/
 
 simplewebrtc.bundle.js
-https://github.com/HenrikJoreteg/SimpleWebRTC
+https://github.com/andyet/SimpleWebRTC
 
 socket.io.js
-https://github.com/LearnBoost/socket.io-client
+https://github.com/socketio/socket.io-client
 
 ACE Syntax Highlighter (tokenizer.js)
-http://ace.c9.io/
+https://ace.c9.io/
 
 to-markdown
 https://github.com/domchristie/to-markdown
