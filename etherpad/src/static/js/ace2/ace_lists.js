@@ -399,7 +399,7 @@ ace.lists = function(editor) {
         level = Number(listType[1]);
       }
 
-      var newListType = {'1': 'hone', '2': 'indent', '3' :'hthree',
+      var newListType = {'1': 'hone', '2': 'htwo', '3' :'hthree',
           '0':'indent'}[headingLevel];
       if (newListType == "indent") {
         setLineListType(theLine, "");
