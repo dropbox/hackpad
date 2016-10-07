@@ -650,5 +650,5 @@ function cspNonce() {
 }
 
 function getCSPPolicy() {
-  return _getCSPPolicy() + " 'nonce-" + cspNonce() + "';";
+  return _getCSPPolicy() + "';";
 }
