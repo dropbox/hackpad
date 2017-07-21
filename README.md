@@ -1,7 +1,16 @@
 # About Hackpad
 Hackpad is a web-based realtime wiki, based on the open source EtherPad collaborative document editor.
 
+There is no active development happening in this repository, but we'll maintain a list of active forks to the best of our knowledge.
+Note that none of these are affiliated with Dropbox or hackpad.com in any way.
 
+If you'd like to have your fork listed, send us a pull request.  
+
+Here's the list:
+
+- https://github.com/hackpad/hackpad
+
+---
 The etherpad package is distributed under the Apache License, Version 2.0.
 
 All other packages are redistributed under their original license terms.  See below for a license summary of redistributed software.  More comprehensive license information can be found in the documentation of each package.
